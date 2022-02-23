@@ -24,7 +24,16 @@
     <ClCompile Include="Buttons.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="DataIO.cpp">
+    <ClCompile Include="AccountControl.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Book.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Query.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Manage.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,7 +44,16 @@
     <ClInclude Include="Buttons.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="DataIO.h">
+    <ClInclude Include="AccountControl.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Book.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Query.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Manage.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

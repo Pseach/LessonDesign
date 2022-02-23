@@ -50,46 +50,38 @@ bool insideRectButton(const RectButton* button, int x, int y) {
 
 void drawRectButton(const RectButton* button) {
 	if (button->x == 0 && button->y == 0)setfillcolor(EGERGB(0x00, 0xFF, 0xFF));//setfillcolor(EGERGB(0x1E, 0x90, 0xFF));
-
-	else setfillcolor(EGERGB(0xFF, 0xFF, 0xFF));
+	else setfillcolor(EGERGB(0xEA, 0x51, 0x7F));
 	bar(button->x, button->y, button->x + button->width, button->y + button->height);
-
 }
 
-void DrawPage(int page) {
-	if(page==0){
+int DrawPage(int& page) {
 	setbkmode(TRANSPARENT);
-
 	setcolor(EGERGB(0x00, 0x00, 0x00)); // 文字颜色
 	setfont(ButtonLocation_0.height * 4 / 5, 0, "方正喵呜体");					//字体大小  宽度比例自适应  字体文件
 	drawRectButton(&ButtonLocation_0);
 	xyprintf(ButtonLocation_0.height * 1 / 5 / 2, ButtonLocation_0.height * 1 / 5 / 2, "当前账户：");
 	const int Defaut_Font_Size = ButtonLocation_0.height * 4 / 5;
-	//下方按钮 
-	setfont(Defaut_Font_Size, 0, "方正喵呜体");
-	drawRectButton(&ButtonLocation_1);
-	xyprintf(ButtonLocation_1.x , ButtonLocation_1.y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "添加账户");
+	if(page==0){	//菜单页 下方按钮 
+		drawRectButton(&ButtonLocation_1);
+		xyprintf(ButtonLocation_1.x , ButtonLocation_1.y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "添加账户");
 
-	setfont(Defaut_Font_Size, 0, "方正喵呜体");
-	drawRectButton(&ButtonLocation_2);
-	xyprintf(ButtonLocation_2.x, ButtonLocation_2.y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "登录账户");
+		drawRectButton(&ButtonLocation_2);
+		xyprintf(ButtonLocation_2.x, ButtonLocation_2.y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "登录账户");
 
-	setfont(Defaut_Font_Size, 0, "方正喵呜体");
-	drawRectButton(&ButtonLocation_3);
-	xyprintf(ButtonLocation_3.x, ButtonLocation_3.y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "退出账户");
+		drawRectButton(&ButtonLocation_3);
+		xyprintf(ButtonLocation_3.x, ButtonLocation_3.y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "退出账户");
 
-	setfont(Defaut_Font_Size, 0, "方正喵呜体");
-	drawRectButton(&ButtonLocation_4);
-	xyprintf(ButtonLocation_4.x, ButtonLocation_4.y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "预订系统");
+		drawRectButton(&ButtonLocation_4);
+		xyprintf(ButtonLocation_4.x, ButtonLocation_4.y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "预订系统");
 
-	setfont(Defaut_Font_Size, 0, "方正喵呜体");
-	drawRectButton(&ButtonLocation_5);
-	xyprintf(ButtonLocation_5.x, ButtonLocation_5.y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "查询系统");
+		drawRectButton(&ButtonLocation_5);
+		xyprintf(ButtonLocation_5.x, ButtonLocation_5.y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "查询系统");
 
-	setfont(Defaut_Font_Size, 0, "方正喵呜体");
-	drawRectButton(&ButtonLocation_6);
-	xyprintf(ButtonLocation_6.x, ButtonLocation_6.y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "管理系统");
+		drawRectButton(&ButtonLocation_6);
+		xyprintf(ButtonLocation_6.x, ButtonLocation_6.y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "管理系统");
+		return 0;
+	}
+	if (page == 1) {
 
 	}
-
 }

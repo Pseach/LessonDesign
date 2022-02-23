@@ -22,4 +22,4 @@ bool insideRectButton(const RectButton* button, int x, int y);
 // ªÊ÷∆∞¥≈•
 void drawRectButton(const RectButton* button);
 
-void DrawPage(int page);
+int DrawPage(int& page);

@@ -9,7 +9,6 @@ Windows LandscapeWindows = {//x + 180
     990,540 + 45,
 };
 
-
 int main(){
     MainStart();
     return 0;

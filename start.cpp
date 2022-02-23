@@ -1,9 +1,14 @@
 #include <graphics.h>
 #include <io.h>
 #include <direct.h>
-#include "start.h"	//窗口设置
-#include "Buttons.h"	
-#include "DataIO.h"		
+#include "start.h"		//窗口设置
+#include "Buttons.h"	//按钮相关函数
+#include "AccountControl.h"	//账户控制系统
+#include "Book.h"			//预订系统
+#include "Query.h"			//查询系统
+#include "Manage.h"			//管理系统
+
+#include <cassert>
 
 void CreateFolder();
 
@@ -11,6 +16,7 @@ void CreateFolder();
 
 
 int MainStart() {
+
 	setinitmode(0); //设置初始化图形的选项和模式
 	CreateFolder();	//创建空文件夹放置文件
 	initgraph(LandscapeWindows.x, LandscapeWindows.y, INIT_NOFORCEEXIT); //如果设置width = -1 , height = -1, 那么窗口将会全屏显示 INIT_NOFORCEEXIT , 使关闭窗口的时候不强制退出程序，但窗口会消失，需要配合is_run函数
@@ -21,6 +27,7 @@ int MainStart() {
 	bool redraw = true;
 
 	bool ClickButtonLocation_0 = false;
+
 	bool ClickButtonLocation_1 = false;
 	bool ClickButtonLocation_2 = false;
 	bool ClickButtonLocation_3 = false;
@@ -28,32 +35,43 @@ int MainStart() {
 	bool ClickButtonLocation_5 = false;
 	bool ClickButtonLocation_6 = false;
 
-	int Page = 0;//切换页面来换
+	int Page = 0;//切换页面 换按钮
+
 	for (; is_run(); delay_fps(60)) { 	//is_run()一直返回 true
 		while (mousemsg()) {
 			mouse_msg msg = getmouse();
-
 			//判断鼠标左键点击（左键按下确定位置，抬起为执行时刻）
 			if (msg.is_left()) {
 				if (msg.is_down()) {
 					//检测点击的按钮
-					ClickButtonLocation_0 = insideRectButton(&ButtonLocation_0, msg.x, msg.y);			//点击添加账号
+					ClickButtonLocation_1 = insideRectButton(&ButtonLocation_1, msg.x, msg.y);			//点击添加账号
 
 				}
 				else {
-					//左键抬起，点击动作执行
-					if (ClickButtonLocation_0){
-						ClickButtonLocation_0 = false;
-						redraw = true;
-						Add_User();
+					if (Page == 0) {
+						if (ClickButtonLocation_1) {					//左键抬起，点击动作执行
+							ClickButtonLocation_1 = false;
+							redraw = true;
+							Add_User();
+						}
+
 					}
+					else if (Page == 1) {
+						if (ClickButtonLocation_1) {
+							ClickButtonLocation_1 = false;
+							redraw = true;
+
+						}
+					}
+
+
 				}
 			}
 		}
 		//绘制
 		if (redraw) {
 			cleardevice();
-			DrawPage(0);
+			DrawPage(Page);	//传引用
 			redraw = false;
 		}
 		//cleardevice();	//这个函数用于清除画面内容。具体的，是用当前背景色清空画面

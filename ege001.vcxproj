@@ -140,14 +140,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AccountControl.cpp" />
+    <ClCompile Include="Book.cpp" />
     <ClCompile Include="Buttons.cpp" />
-    <ClCompile Include="DataIO.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Manage.cpp" />
+    <ClCompile Include="Query.cpp" />
     <ClCompile Include="start.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AccountControl.h" />
+    <ClInclude Include="Book.h" />
     <ClInclude Include="Buttons.h" />
-    <ClInclude Include="DataIO.h" />
+    <ClInclude Include="Manage.h" />
+    <ClInclude Include="Query.h" />
     <ClInclude Include="start.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
