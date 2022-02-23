@@ -143,6 +143,8 @@
     <ClCompile Include="AccountControl.cpp" />
     <ClCompile Include="Book.cpp" />
     <ClCompile Include="Buttons.cpp" />
+    <ClCompile Include="DataInput.cpp" />
+    <ClCompile Include="DataInput.h" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Manage.cpp" />
     <ClCompile Include="Query.cpp" />

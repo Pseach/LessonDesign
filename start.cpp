@@ -7,12 +7,10 @@
 #include "Book.h"			//预订系统
 #include "Query.h"			//查询系统
 #include "Manage.h"			//管理系统
+#include "DataInput.h"
 
-#include <cassert>
 
 void CreateFolder();
-
-//窗口
 
 
 int MainStart() {
@@ -24,7 +22,6 @@ int MainStart() {
 	//setinitmode(mode, x, y) x, y 是窗口左上角出现在屏幕的坐标
 	setbkcolor(EGERGB(0xEA, 0x51, 0x7F)); 	//设置背景颜色 
 	ege_enable_aa(true);//抗锯齿
-	bool redraw = true;
 
 	bool ClickButtonLocation_0 = false;
 
@@ -37,21 +34,24 @@ int MainStart() {
 
 	int Page = 0;//切换页面 换按钮
 
+	bool RefreshPage = true;
+
 	for (; is_run(); delay_fps(60)) { 	//is_run()一直返回 true
 		while (mousemsg()) {
 			mouse_msg msg = getmouse();
 			//判断鼠标左键点击（左键按下确定位置，抬起为执行时刻）
 			if (msg.is_left()) {
+
 				if (msg.is_down()) {
 					//检测点击的按钮
-					ClickButtonLocation_1 = insideRectButton(&ButtonLocation_1, msg.x, msg.y);			//点击添加账号
+					ClickButtonLocation_1 = insideRectButton(&ButtonLocation_1, msg.x, msg.y);			//点击位置1的按钮
 
 				}
 				else {
 					if (Page == 0) {
 						if (ClickButtonLocation_1) {					//左键抬起，点击动作执行
 							ClickButtonLocation_1 = false;
-							redraw = true;
+							RefreshPage = true;
 							Add_User();
 						}
 
@@ -59,22 +59,19 @@ int MainStart() {
 					else if (Page == 1) {
 						if (ClickButtonLocation_1) {
 							ClickButtonLocation_1 = false;
-							redraw = true;
+							RefreshPage = true;
 
 						}
 					}
 
-
 				}
 			}
 		}
-		//绘制
-		if (redraw) {
-			cleardevice();
-			DrawPage(Page);	//传引用
-			redraw = false;
+		if (RefreshPage) {			//刷新页面
+			cleardevice();			//清除屏幕
+			DrawPage(Page);			//传引用
+			RefreshPage = false;	//初始化
 		}
-		//cleardevice();	//这个函数用于清除画面内容。具体的，是用当前背景色清空画面
 	}
 
 	closegraph(); 	//关闭图形界面

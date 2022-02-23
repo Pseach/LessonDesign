@@ -36,6 +36,12 @@
     <ClCompile Include="Manage.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="DataInput.h">
+      <Filter>头文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DataInput.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="start.h">

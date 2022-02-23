@@ -1,6 +1,6 @@
 #include"Buttons.h"
 #include <graphics.h>
-#include "start.h" // VerticalWindows 
+#include "start.h" // LandscapeWindows 
 
 //定义按钮，确定区域
 //LandscapeWindows.x = 990 .y=540+45;
