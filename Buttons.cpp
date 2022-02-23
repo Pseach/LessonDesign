@@ -1,33 +1,45 @@
 #include"Buttons.h"
 #include <graphics.h>
+#include "start.h" // VerticalWindows 
 
 //定义按钮，确定区域
-RectButton Now_User_Button = {
-	0 , 0 ,//220, 200,  /* x, y */
-	540 , 90,//200, 80,   /* width, height */
-	//Now_User_Button.fun[10]={}
+//LandscapeWindows.x = 990 .y=540+45;
+const int BUTTONS_X_Len = LandscapeWindows.x / 6, BUTTONS_Y_Len = (LandscapeWindows.y - 45) / 6;
+const int HALF_BUTTON_Y_Len = BUTTONS_Y_Len / 2;
+
+RectButton ButtonLocation_0 = {
+	0 , 0,
+	LandscapeWindows.x , BUTTONS_Y_Len - 30,
 };
-RectButton Add_User_Button = {
-	135 , 144 - 30 ,//220, 200,  /* x, y */
-	270 , 114,//200, 80,   /* width, height */
-	//Add_User_Button.fun[10]={}
+//0
+//1 4
+//2 5
+//3 6
+RectButton ButtonLocation_1 = {
+	BUTTONS_X_Len , 1 * BUTTONS_Y_Len + 1 * HALF_BUTTON_Y_Len ,
+	BUTTONS_X_Len , BUTTONS_Y_Len,
 };
-RectButton Login_Button = {
-	135 , 2 * 144 - 30 ,
-	270 , 114,
-	//Login_Button.fun[10] = {}
+RectButton ButtonLocation_2 = {
+	BUTTONS_X_Len , 2 * BUTTONS_Y_Len + 2 * HALF_BUTTON_Y_Len ,
+	BUTTONS_X_Len , BUTTONS_Y_Len,
 };
-RectButton Change_Login_User_Button = {
-	135 , 3 * 144 - 30 ,
-	270 , 114,
-	//Change_Login_User_Button.fun[10] = {}
-};
-RectButton Exit_Button = {
-	135 , 4 * 144 - 30,
-	270 , 114,
-	//Exit_Button.fun[10] = {}
+RectButton ButtonLocation_3 = {
+	BUTTONS_X_Len , 3 * BUTTONS_Y_Len + 3 * HALF_BUTTON_Y_Len ,
+	BUTTONS_X_Len , BUTTONS_Y_Len,
 };
 
+RectButton ButtonLocation_4 = {
+	BUTTONS_X_Len * 4, 1 * BUTTONS_Y_Len + 1 * HALF_BUTTON_Y_Len ,
+	BUTTONS_X_Len , BUTTONS_Y_Len,
+};
+RectButton ButtonLocation_5 = {
+	BUTTONS_X_Len * 4, 2 * BUTTONS_Y_Len + 2 *HALF_BUTTON_Y_Len ,
+	BUTTONS_X_Len , BUTTONS_Y_Len,
+};
+RectButton ButtonLocation_6 = {
+	BUTTONS_X_Len * 4, 3 * BUTTONS_Y_Len + 3 *HALF_BUTTON_Y_Len ,
+	BUTTONS_X_Len , BUTTONS_Y_Len,
+};
 
 
 bool insideRectButton(const RectButton* button, int x, int y) {
@@ -37,30 +49,47 @@ bool insideRectButton(const RectButton* button, int x, int y) {
 }
 
 void drawRectButton(const RectButton* button) {
-	if (button->x == 0 && button->y == 0)setfillcolor(EGERGB(0x00, 0xBF, 0xFF));//setfillcolor(EGERGB(0x1E, 0x90, 0xFF));
-	else setfillcolor(EGERGB(0xEA, 0x51, 0x7F));
+	if (button->x == 0 && button->y == 0)setfillcolor(EGERGB(0x00, 0xFF, 0xFF));//setfillcolor(EGERGB(0x1E, 0x90, 0xFF));
+
+	else setfillcolor(EGERGB(0xFF, 0xFF, 0xFF));
 	bar(button->x, button->y, button->x + button->width, button->y + button->height);
 
 }
 
-void draw()
-{
+void DrawPage(int page) {
+	if(page==0){
 	setbkmode(TRANSPARENT);
 
-	setcolor(EGERGB(0xFC, 0xD3, 0x37)); // 文字颜色
+	setcolor(EGERGB(0x00, 0x00, 0x00)); // 文字颜色
+	setfont(ButtonLocation_0.height * 4 / 5, 0, "方正喵呜体");					//字体大小  宽度比例自适应  字体文件
+	drawRectButton(&ButtonLocation_0);
+	xyprintf(ButtonLocation_0.height * 1 / 5 / 2, ButtonLocation_0.height * 1 / 5 / 2, "当前账户：");
+	const int Defaut_Font_Size = ButtonLocation_0.height * 4 / 5;
+	//下方按钮 
+	setfont(Defaut_Font_Size, 0, "方正喵呜体");
+	drawRectButton(&ButtonLocation_1);
+	xyprintf(ButtonLocation_1.x , ButtonLocation_1.y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "添加账户");
 
-	drawRectButton(&Now_User_Button);
-	setfont(30, 0, "");						//字体大小  字体文件？
-	xyprintf(30, 30, "当前账户：");
+	setfont(Defaut_Font_Size, 0, "方正喵呜体");
+	drawRectButton(&ButtonLocation_2);
+	xyprintf(ButtonLocation_2.x, ButtonLocation_2.y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "登录账户");
 
-	drawRectButton(&Add_User_Button);
-	setfont(60, 0, "");
-	xyprintf(Add_User_Button.x + 15, Add_User_Button.y + 27, "添加账户");
+	setfont(Defaut_Font_Size, 0, "方正喵呜体");
+	drawRectButton(&ButtonLocation_3);
+	xyprintf(ButtonLocation_3.x, ButtonLocation_3.y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "退出账户");
 
-	drawRectButton(&Login_Button);
-	xyprintf(Login_Button.x + 15, Login_Button.y + 27, "登录账户");
-	drawRectButton(&Change_Login_User_Button);
-	xyprintf(Change_Login_User_Button.x + 15, Change_Login_User_Button.y + 27, "更改账户");
-	drawRectButton(&Exit_Button);
-	xyprintf(Exit_Button.x + 270 / 2 - 60, Exit_Button.y + 27, "退出");
+	setfont(Defaut_Font_Size, 0, "方正喵呜体");
+	drawRectButton(&ButtonLocation_4);
+	xyprintf(ButtonLocation_4.x, ButtonLocation_4.y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "预订系统");
+
+	setfont(Defaut_Font_Size, 0, "方正喵呜体");
+	drawRectButton(&ButtonLocation_5);
+	xyprintf(ButtonLocation_5.x, ButtonLocation_5.y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "查询系统");
+
+	setfont(Defaut_Font_Size, 0, "方正喵呜体");
+	drawRectButton(&ButtonLocation_6);
+	xyprintf(ButtonLocation_6.x, ButtonLocation_6.y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "管理系统");
+
+	}
+
 }

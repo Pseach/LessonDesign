@@ -53,8 +53,7 @@ int Add_User() { //添加账户
 		//scanf("%s%s", Temp_Accounts.Username, Temp_Accounts.Password);
 
 		int Temp_Type = MessageBox(NULL, TEXT("授予账户管理员权限？"), TEXT("用户权限设置"), MB_YESNO | MB_ICONQUESTION);//MB_ICONQUESTION：问号
-
-		inputbox_getline("请输入账号", "请输入账号", Temp_Accounts.Username, 40);      //输入账号
+		inputbox_getline("请输入账号", "请输入账号", Temp_Accounts.Username, 40);      //输入账号//https://xege.org/manual/api/other/inputboxgetline.htm buffer area
 		inputbox_getline("请输入密码", "请输入密码", Temp_Accounts.Password, 40);      //输入密码
 		Temp_Accounts.Type = (Temp_Type == 6) ? 1 : 0;	 //是(Y) 值为6 否(N)值为7;	//标记用户权限
 		Temp_Accounts.HaveComputer = 0;
@@ -79,7 +78,7 @@ int Add_User() { //添加账户
 			FP_Accounts = fopen("Files\\Users.txt", "a");
 			fprintf(FP_Accounts, "%s %s %d %d\n", Temp_Accounts.Username, Temp_Accounts.Password, Temp_Accounts.Type, Temp_Accounts.HaveComputer);
 			fclose(FP_Accounts);
-			return 1;
+			return MessageBox(NULL, TEXT("添加成功！"), TEXT("提醒"), MB_OK);
 		}
 		else {  //找到了，则需要重新输入用户名和密码，再循环刚刚的过程。
 			//printf("\n用户名已存在，请重新输入！\n");
