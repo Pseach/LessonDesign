@@ -1,6 +1,8 @@
 #pragma once
 //二级目录文件
 
+extern int Page = 0;//切换页面 换按钮
+
 //数据结构
 struct Windows { // 窗口数据
 	int x;
@@ -59,5 +61,6 @@ extern const int Defaut_Font_Size;
 
 //函数
 int MainStart();
+int Recovery_Button_State(int& PressButtonId, bool& ButtonLocationI_Press, bool& RefreshPage);
 int Exit();
 

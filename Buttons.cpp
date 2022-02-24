@@ -28,14 +28,21 @@ int InitializeButton() { //°´Å¥³õÊ¼»¯
 		ButtonLocation[i].X = k * BUTTONS_X_Len;
 		ButtonLocation[i].Y = (i - t) * (BUTTONS_Y_Len + HALF_BUTTON_Y_Len);
 		ButtonLocation[i].Width = BUTTONS_X_Len;
-		ButtonLocation[i].Height = BUTTONS_X_Len;
+		ButtonLocation[i].Height = BUTTONS_Y_Len;
 	}//µ÷¸öÆ¤~ÎûÎû
+	//for (int i = 1; i <= 3; i++) {
+	//	ButtonLocation[i].X =  BUTTONS_X_Len;
+	//	ButtonLocation[i].Y = i *(BUTTONS_Y_Len + HALF_BUTTON_Y_Len);
+	//	ButtonLocation[i].Width = BUTTONS_X_Len;
+	//	ButtonLocation[i].Height = BUTTONS_Y_Len;
+	//}
 	//for (int i = 4; i <= 6; i++) {
 	//	ButtonLocation[i].X = 4 * BUTTONS_X_Len;
 	//	ButtonLocation[i].Y = (i - 3) * (BUTTONS_Y_Len + HALF_BUTTON_Y_Len);
 	//	ButtonLocation[i].Width = BUTTONS_X_Len;
-	//	ButtonLocation[i].Height = BUTTONS_X_Len;
+	//	ButtonLocation[i].Height = BUTTONS_Y_Len;
 	//}
+
 	return 1;
 }
 
@@ -46,13 +53,13 @@ bool insideRectButton(const RectButton* button, int x, int y) {
 }
 
 void drawRectButton(const RectButton* button) {
+
 	if ((button->X == 0 && button->Y == 0)||(button->X == ButtonLocation_0.Height * 1 / 5 / 2 + ButtonLocation_0.Height * 4 / 5 * 4 && button->Y == ButtonLocation_0.Height * 1 / 5 / 2)){
 		setfillcolor(EGERGB(0x00, 0xFF, 0xFF));//setfillcolor(EGERGB(0x1E, 0x90, 0xFF));
 	}
 	else {
-		setfillcolor(EGERGB(0xEA, 0x51, 0x7F));
-		//setfillcolor(EGERGB(0x00, 0xFF, 0x7F)); //TextColour
-
+		//setfillcolor(EGERGB(0xEA, 0x51, 0x7F));
+		setfillcolor(EGERGB(0x00, 0xFF, 0x7F)); //TextColour
 	}
 	bar(button->X, button->Y, button->X + button->Width, button->Y + button->Height);
 }
@@ -70,64 +77,69 @@ int searchButton(int x, int y, const RectButton buttonArray[], int length)	//·µ»
 
 	return buttonId;
 }
-
+//			MessageBox(NULL, TEXT("TEXT"), TEXT("TEXT£¡"), MB_YESNO | MB_ICONWARNING | MB_SETFOREGROUND);
 int DrawPage(int& page) {
-
-
-	//color_t lastFillColor = getfillcolor();//Õâ¸öº¯ÊýÓÃÓÚ»ñÈ¡µ±Ç°»æÍ¼Ìî³äÉ« 
-	//for (int i = 0; i < length; i++) {
-	//	//¸ù¾Ý×´Ì¬½øÐÐ²»Í¬µÄ»æÖÆ£¬ÕâÀï°´×´Ì¬¸Ä±äÑÕÉ«
-	//	color_t ButtonsColour;
-	//	if (buttonArray[i].pressed) {
-	//		ButtonsColour = EGEARGB(0x50, 0x1E, 0x90, 0xFF); 	//°´ÁË 
-	//	}
-	//	else {
-	//		ButtonsColour = EGEARGB(0x66, 0x40, 0xE0, 0xD0);		//Ã»°´ 
-	//	}
-	//	//ÎªÁË¼õÉÙÑÕÉ«ÉèÖÃ²Ù×÷½øÐÐµÄÓÅ»¯²Ù×÷£¬ÉÙÁ¿»æÖÆ¿ÉÓÐ¿ÉÎÞ
-	//	if (lastFillColor != ButtonsColour) {
-	//		setfillcolor(ButtonsColour);
-	//		lastFillColor = ButtonsColour;
-	//	}
-	//	// »æÖÆ°´Å¥
-	//	ege_fillellipse(buttonArray[i].x - buttonArray[i].radius,
-	//		buttonArray[i].y - buttonArray[i].radius,
-	//		2 * buttonArray[i].radius,
-	//		2 * buttonArray[i].radius);
 
 	setbkmode(TRANSPARENT);
 	setcolor(EGERGB(0x00, 0x00, 0x00)); // ÎÄ×ÖÑÕÉ«
 	setfont(Defaut_Font_Size, 0, "·½Õýß÷ÎØÌå");					//×ÖÌå´óÐ¡  ¿í¶È±ÈÀý×ÔÊÊÓ¦  ×ÖÌåÎÄ¼þ
 
-	if(page==0){	//²Ëµ¥Ò³ ÏÂ·½°´Å¥ 
+	color_t lastFillColor = getfillcolor();//Õâ¸öº¯ÊýÓÃÓÚ»ñÈ¡µ±Ç°»æÍ¼Ìî³äÉ« 
+	for (int i = 1; i <= 6; i++) {
+		//¸ù¾Ý×´Ì¬½øÐÐ²»Í¬µÄ»æÖÆ£¬ÕâÀï°´×´Ì¬¸Ä±äÑÕÉ«
+		color_t ButtonsColour;
+		if (ButtonLocation[i].Pressed) {
+			ButtonsColour = EGEARGB(0x50, 0x1E, 0x90, 0xFF); 	//°´ÁË 
+			drawRectButton(&ButtonLocation[i]);
+		}
+		else {
+			ButtonsColour = EGEARGB(0x66, 0x40, 0xE0, 0xD0);		//Ã»°´ 
+		}
+		//ÎªÁË¼õÉÙÑÕÉ«ÉèÖÃ²Ù×÷½øÐÐµÄÓÅ»¯²Ù×÷£¬ÉÙÁ¿»æÖÆ¿ÉÓÐ¿ÉÎÞ
+		if (lastFillColor != ButtonsColour) {
+			//setfillcolor(ButtonsColour);
 
-		drawRectButton(&ButtonLocation[1]);
-		xyprintf(ButtonLocation[1].X, ButtonLocation[1].Y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "Ìí¼ÓÕË»§");
-
-		drawRectButton(&ButtonLocation[2]);
-		xyprintf(ButtonLocation[2].X, ButtonLocation[2].Y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "µÇÂ¼ÕË»§");
-
-		drawRectButton(&ButtonLocation[3]);
-		xyprintf(ButtonLocation[3].X, ButtonLocation[3].Y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "ÍË³öÕË»§");
-
-		drawRectButton(&ButtonLocation[4]);
-		xyprintf(ButtonLocation[4].X, ButtonLocation[4].Y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "Ô¤¶©ÏµÍ³");
-
-		drawRectButton(&ButtonLocation[5]);
-		xyprintf(ButtonLocation[5].X, ButtonLocation[5].Y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "²éÑ¯ÏµÍ³");
-
-		drawRectButton(&ButtonLocation[6]);
-		xyprintf(ButtonLocation[6].X, ButtonLocation[6].Y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "¹ÜÀíÏµÍ³");
-		return 0;
+			lastFillColor = ButtonsColour;
+		}
 	}
-	if (page == 1) {
-		drawRectButton(&ButtonLocation[1]);
-		xyprintf(ButtonLocation[1].X, ButtonLocation[1].Y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "³õ²½Ô¤¶¨");
 
-		drawRectButton(&ButtonLocation[2]);
-		xyprintf(ButtonLocation[2].X, ButtonLocation[2].Y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "È¡ÏûÔ¤¶¨");
+		//// »æÖÆ°´Å¥
+		//ege_fillellipse(buttonArray[i].x - buttonArray[i].radius,
+		//	buttonArray[i].y - buttonArray[i].radius,
+		//	2 * buttonArray[i].radius,
+		//	2 * buttonArray[i].radius);
 
-		drawRectButton(&ButtonLocation[3]);
-		xyprintf(ButtonLocation[3].X, ButtonLocation[3].Y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "×îÖÕÔ¤¶¨");
-	}
+
+		if (page == 0) {	//²Ëµ¥Ò³ ÏÂ·½°´Å¥ 
+
+			//drawRectButton(&ButtonLocation[1]);
+			xyprintf(ButtonLocation[1].X, ButtonLocation[1].Y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "Ìí¼ÓÕË»§");
+
+			//drawRectButton(&ButtonLocation[2]);
+			xyprintf(ButtonLocation[2].X, ButtonLocation[2].Y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "µÇÂ¼ÕË»§");
+
+			//drawRectButton(&ButtonLocation[3]);
+			xyprintf(ButtonLocation[3].X, ButtonLocation[3].Y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "ÍË³öÕË»§");
+
+			//drawRectButton(&ButtonLocation[4]);
+			xyprintf(ButtonLocation[4].X, ButtonLocation[4].Y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "Ô¤¶©ÏµÍ³");
+
+			//drawRectButton(&ButtonLocation[5]);
+			xyprintf(ButtonLocation[5].X, ButtonLocation[5].Y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "²éÑ¯ÏµÍ³");
+
+			//drawRectButton(&ButtonLocation[6]);
+			xyprintf(ButtonLocation[6].X, ButtonLocation[6].Y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "¹ÜÀíÏµÍ³");
+			return 0;
+		}
+		if (page == 1) {
+			//drawRectButton(&ButtonLocation[1]);
+			xyprintf(ButtonLocation[1].X, ButtonLocation[1].Y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "³õ²½Ô¤¶¨");
+
+			//drawRectButton(&ButtonLocation[2]);
+			xyprintf(ButtonLocation[2].X, ButtonLocation[2].Y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "È¡ÏûÔ¤¶¨");
+
+			//drawRectButton(&ButtonLocation[3]);
+			xyprintf(ButtonLocation[3].X, ButtonLocation[3].Y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "×îÖÕÔ¤¶¨");
+		}
+	
 }

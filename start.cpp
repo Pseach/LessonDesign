@@ -9,6 +9,7 @@
 #include "Manage.h"			//管理系统
 #include "DataInput.h"		//自定义输入框
 
+int Page = 0;//切换页面 换按钮
 
 void CreateFolder();
 
@@ -21,6 +22,7 @@ const int Defaut_Font_Size = ButtonLocation_0.Height * 4 / 5;
 Windows VerticalWindows = {595,990};
 Windows LandscapeWindows = {990,540 + 45};//Defaut : 990 , 540 + 45 
 //Windows WindowsSize = LandscapeWindows; //莫名其妙有bug
+
 Windows WindowsSize = { 990,540 + 45 };
 
 int MainStart() {
@@ -33,84 +35,135 @@ int MainStart() {
 	//setinitmode(mode, x, y) x, y 是窗口左上角出现在屏幕的坐标
 	setbkcolor(EGERGB(0xEA, 0x51, 0x7F)); 	//设置背景颜色 
 	ege_enable_aa(true);//抗锯齿
-	InitializeButton();
-	bool ClickButtonLocation_0 = false;
+	InitializeButton();	//初始化按钮
 
-	bool ClickButtonLocation_1 = false;
-	bool ClickButtonLocation_2 = false;
-	bool ClickButtonLocation_3 = false;
-	bool ClickButtonLocation_4 = false;
-	bool ClickButtonLocation_5 = false;
-	bool ClickButtonLocation_6 = false;
-
-	int Page = 0;//切换页面 换按钮
 
 	bool RefreshPage = true;
 
-	for (; is_run(); delay_fps(60)) { 	//is_run()一直返回 true
-		Show_Online_Login_User();	// 每次刷新完页面显示当前账户
+	int PressButtonId = -1;//有问题！！！！！！！！！！！！！可优化！！！！！！！！！！！！！！！！！
+	for (; is_run(); delay_fps(60)) {
+		Show_Online_Login_User();	// 每次刷新完页面显示当前账户	//！！！！！！！！！！！！有时候不用刷新！！！！！！！！！！！
 		while (mousemsg()) {
 			mouse_msg msg = getmouse();
-			//判断鼠标左键点击（左键按下确定位置，抬起为执行时刻）
-			if (msg.is_left()) {
+			// 判断鼠标左键按下（左键按下确定位置，同时判断是否为按钮区域
+			// 抬起则解除按下状态
+			int ButtonId = -1;
 
-				if (msg.is_down()) {
-					//检测点击的按钮
+			if (msg.is_left() && msg.is_down()) { //初始化
+				// 检查是否有按钮被按下
+				ButtonId = searchButton(msg.x, msg.y, ButtonLocation, Defaut_Font_Size);
 
-					ClickButtonLocation_1 = insideRectButton(&ButtonLocation[1], msg.x, msg.y);			//点击位置1的按钮
-					ClickButtonLocation_2 = insideRectButton(&ButtonLocation[2], msg.x, msg.y);
-					ClickButtonLocation_3 = insideRectButton(&ButtonLocation[3], msg.x, msg.y);
-					ClickButtonLocation_4 = insideRectButton(&ButtonLocation[4], msg.x, msg.y);
-					ClickButtonLocation_5 = insideRectButton(&ButtonLocation[5], msg.x, msg.y);
-					ClickButtonLocation_6 = insideRectButton(&ButtonLocation[6], msg.x, msg.y);
+				// 将被按下的按钮设置为按下状态
+
+				if (ButtonId != -1) {
+					PressButtonId = ButtonId;
+					ButtonLocation[PressButtonId].Pressed = true;
+					RefreshPage = true;
 				}
-				else {
-					if (Page == 0) {
-						if (ClickButtonLocation_1) {					//左键抬起，点击动作执行
-							ClickButtonLocation_1 = false;
-							RefreshPage = true;
-							Add_User();
-						}
-						if (ClickButtonLocation_2) {					
-							ClickButtonLocation_2 = false;
-							RefreshPage = true;
-							Login_User();
-						}
-						if (ClickButtonLocation_3) {
-							ClickButtonLocation_3 = false;
-							RefreshPage = true;
-							Logout_User();
-						}
-						if (ClickButtonLocation_4) {
-							ClickButtonLocation_4 = false;
-							RefreshPage = true;
-							Page = 1;
-							Book();
 
-						}
-
-					}
-					else if (Page == 1) {
-						if (ClickButtonLocation_1) {
-							ClickButtonLocation_1 = false;
-							RefreshPage = true;
-							 
-						}
-					}
-					 
-				}
 			}
+			else { //使恢复 
+				//左键抬起，如果有按钮被按下，解除按下状态
+
+				//if (PressButtonId != -1) { //点住123456按钮
+				//	ButtonLocation[PressButtonId].Pressed = false;
+				//	PressButtonId = -1;
+				//	RefreshPage = true;
+				//}
+				if (PressButtonId != -1)	//点住123456按钮
+					Recovery_Button_State(PressButtonId, ButtonLocation[PressButtonId].Pressed, RefreshPage);
+				else {						//没点住123456按钮
+					//不知道该做什么
+				}
+
+			}
+
 		}
-		if (RefreshPage) {			//刷新页面
-			cleardevice();			//清除屏幕
-			DrawPage(Page);			//传引用
-			RefreshPage = false;	//初始化
+		// 判断是否需要重绘，减少不必要的绘制操作
+		if (RefreshPage) {
+			cleardevice();
+			DrawPage(Page);
+			RefreshPage = false;
 		}
 	}
 
 	closegraph(); 	//关闭图形界面
 	MessageBox(NULL, TEXT("感谢使用！"), TEXT("机房机位预定系统"), MB_OK | MB_SETFOREGROUND);
 
+	return 0;
+}
+
+int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool& RefreshPage) {//封装 //恢复按钮并且执行操作
+	ButtonLocation[PressButtonId].Pressed = false;	//恢复按钮
+	PressButtonId = -1;								//初始化按钮（不用？）
+	RefreshPage = true;								//使函数执行完刷新页面
+	switch (Page) {
+		case 0: {
+			switch (PressButtonId) {
+				case 1: {Add_User(); break; }
+				case 2: {Login_User(); break; }
+				case 3: {Logout_User(); break; }
+				case 4: {Book(); break; }
+				case 5: {
+
+					break;
+				}
+				case 6: {
+
+					break;
+				}
+			}
+			break;	//Exit Page 0
+		}
+		case 1:	{
+			switch (PressButtonId) {
+				case 1: { break; }
+				case 2: { break; }
+				case 3: { break; }
+				case 4: { break; }
+				case 5: {
+					break;
+				}
+				case 6: {
+
+					break;
+				}
+			}
+			break;	//Exit Page 1
+		}
+		case 2:	{
+			switch (PressButtonId) {
+				case 1: { break; }
+				case 2: { break; }
+				case 3: { break; }
+				case 4: { break; }
+				case 5: {
+					break;
+				}
+				case 6: {
+
+					break;
+				}
+			}
+			break;	//Exit Page 2
+		}
+		case 3: {
+			switch (PressButtonId) {
+				case 1: { break; }
+				case 2: { break; }
+				case 3: { break; }
+				case 4: { break; }
+				case 5: {
+					break;
+				}
+				case 6: {
+
+					break;
+				}
+			}
+			break;	//Exit Page 3
+		}
+	}
 	return 0;
 }
 

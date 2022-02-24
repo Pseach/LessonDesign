@@ -1,5 +1,5 @@
-﻿//一级目录文件
-#include "start.h"
+﻿#include "start.h"
+//一级目录文件
 
 int main(){
     MainStart();

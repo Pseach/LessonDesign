@@ -53,7 +53,7 @@ int Add_User() { //注册/添加用户
 	FP_Accounts = fopen("Files\\Users.txt", "a"); //如果文件不存在，则会创建一个新文件
 	fclose(FP_Accounts);
 	do {	//读取并存储账号密码 
-		User_Type Temp_Accounts;
+		User_Type Temp_Accounts{};
 		Accounts_List Accounts_Head, Accounts_Read, Account_Point;
 
 		int Temp_Type = MessageBox(NULL, TEXT("授予账户管理员权限？"), TEXT("用户权限设置"), MB_YESNO | MB_ICONQUESTION | MB_SETFOREGROUND);//MB_ICONQUESTION：问号https://blog.csdn.net/yuyan987/article/details/78558648
@@ -63,14 +63,16 @@ int Add_User() { //注册/添加用户
 		Temp_Accounts.HaveComputer = 0;
 
 		FP_Accounts = fopen("Files\\Users.txt", "r");//先用只读的方式把文件打开，把数据读出来，放在一个序列中
-		Accounts_Head = (Accounts_List)malloc(sizeof(Accounts_Size));
-		Accounts_Head->Accounts_Next = NULL;
+		if (Accounts_Head = (Accounts_List)malloc(sizeof(Accounts_Size))) {
+			Accounts_Head->Accounts_Next = NULL;
+		}
 		Accounts_Read = Accounts_Head;
 		while (!feof(FP_Accounts)) {      //以尾接法建立一个链表。  feof检测文件是否结束
-			Account_Point = (Accounts_List)malloc(sizeof(Accounts_Size));
-			fscanf(FP_Accounts, "%s %s %d %d\n", Account_Point->Accounts_Data.Username, Account_Point->Accounts_Data.Password, &Account_Point->Accounts_Data.Type, &Account_Point->Accounts_Data.HaveComputer);//读出文件当前记录
-			Accounts_Read->Accounts_Next = Account_Point;
-			Accounts_Read = Account_Point;
+			if (Account_Point = (Accounts_List)malloc(sizeof(Accounts_Size))) {
+				fscanf(FP_Accounts, "%s %s %d %d\n", Account_Point->Accounts_Data.Username, Account_Point->Accounts_Data.Password, &Account_Point->Accounts_Data.Type, &Account_Point->Accounts_Data.HaveComputer);//读出文件当前记录
+				Accounts_Read->Accounts_Next = Account_Point;
+				Accounts_Read = Account_Point;
+			}
 		}
 		Accounts_Read->Accounts_Next = NULL;
 		fclose(FP_Accounts);
@@ -117,7 +119,7 @@ int Login_User(){        	    //登录
 		FP_Accounts = fopen("Files\\Users.txt", "a"); //如果文件不存在，则会创建一个新文件
 		fclose(FP_Accounts);
 
-		User_Type Temp_Accounts;
+		User_Type Temp_Accounts{};
 		Accounts_List Accounts_Head, Accounts_Read, Account_Point;
 
 		bool isFindAccount = 0;
