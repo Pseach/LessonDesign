@@ -59,7 +59,7 @@ int Add_ComputerRoom() { //添加机房
 			return 1;
 		}
 		else {  //找到了，则需要重新输入机房名，再循环刚刚的过程。
-			if (MessageBox(NULL, TEXT("重新添加？"), TEXT("机房已存在！"), MB_YESNO | MB_ICONWARNING) == 7)return 1;
+			if (MessageBox(NULL, TEXT("重新添加？"), TEXT("机房已存在！"), MB_YESNO | MB_ICONWARNING | MB_SETFOREGROUND) == 7)return 1;
 		}
 	} while (1);
 }
@@ -84,7 +84,6 @@ int Add_Computer() { //添加机位
 		Computer_Type Temp_Computers;
 		Computers_List Computers_Head, Computers_Read, Account_Point;
 
-		//int Temp_Type = MessageBox(NULL, TEXT("授予账户管理员权限？"), TEXT("用户权限设置"), MB_YESNO | MB_ICONQUESTION);//MB_ICONQUESTION：问号
 
 		inputbox_getline("请输入机位名 ", "请输入机位名 ", Temp_Computers.Computer_Name, 40);      //输入机位名
 		//Temp_Computers.Computer_State = (Temp_Type == 6) ? 1 : 0;	 //是(Y) 值为6 否(N)值为7;
@@ -118,7 +117,7 @@ int Add_Computer() { //添加机位
 			//printf("\n用户名已存在，请重新输入！\n");
 			//printf("\n输入用户名和密码\n");
 			//scanf("%s%s", Temp_Computers.Computer_Name, Temp_Computers.Computer_Room);
-			if (MessageBox(NULL, TEXT("重新添加？"), TEXT("机位已存在！"), MB_YESNO | MB_ICONWARNING) == 7)return 1;
+			if (MessageBox(NULL, TEXT("重新添加？"), TEXT("机位已存在！"), MB_YESNO | MB_ICONWARNING | MB_SETFOREGROUND | MB_SETFOREGROUND) == 7)return 1;
 		}
 	} while (1);
 }

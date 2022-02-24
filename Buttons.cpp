@@ -2,7 +2,6 @@
 #include <graphics.h>
 #include "start.h" // LandscapeWindows 
 
-//定义按钮，确定区域
 //LandscapeWindows.x = 990 .y=540+45;
 const int BUTTONS_X_Len = LandscapeWindows.x / 6, BUTTONS_Y_Len = (LandscapeWindows.y - 45) / 6;
 const int HALF_BUTTON_Y_Len = BUTTONS_Y_Len / 2;
@@ -11,10 +10,14 @@ RectButton ButtonLocation_0 = {
 	0 , 0,
 	LandscapeWindows.x , BUTTONS_Y_Len - 30,
 };
-//0
-//1 4
-//2 5
-//3 6
+
+RectButton ShowOnline_Login_User = {
+	ButtonLocation_0.height * 1 / 5 / 2 + ButtonLocation_0.height * 4 / 5 * 4,
+	ButtonLocation_0.height * 1 / 5 / 2 ,
+	ButtonLocation_0.height * 4 / 5 * 40,
+	ButtonLocation_0.height * 4 / 5 
+};
+
 RectButton ButtonLocation_1 = {
 	BUTTONS_X_Len , 1 * BUTTONS_Y_Len + 1 * HALF_BUTTON_Y_Len ,
 	BUTTONS_X_Len , BUTTONS_Y_Len,
@@ -49,18 +52,22 @@ bool insideRectButton(const RectButton* button, int x, int y) {
 }
 
 void drawRectButton(const RectButton* button) {
-	if (button->x == 0 && button->y == 0)setfillcolor(EGERGB(0x00, 0xFF, 0xFF));//setfillcolor(EGERGB(0x1E, 0x90, 0xFF));
-	else setfillcolor(EGERGB(0xEA, 0x51, 0x7F));
+	if ((button->x == 0 && button->y == 0)||(button->x == ButtonLocation_0.height * 1 / 5 / 2 + ButtonLocation_0.height * 4 / 5 * 4 && button->y == ButtonLocation_0.height * 1 / 5 / 2)){
+		setfillcolor(EGERGB(0x00, 0xFF, 0xFF));//setfillcolor(EGERGB(0x1E, 0x90, 0xFF));
+	}
+	else {
+		setfillcolor(EGERGB(0xEA, 0x51, 0x7F));
+	}
 	bar(button->x, button->y, button->x + button->width, button->y + button->height);
 }
 
 int DrawPage(int& page) {
 	setbkmode(TRANSPARENT);
 	setcolor(EGERGB(0x00, 0x00, 0x00)); // 文字颜色
-	setfont(ButtonLocation_0.height * 4 / 5, 0, "方正喵呜体");					//字体大小  宽度比例自适应  字体文件
-	drawRectButton(&ButtonLocation_0);
-	xyprintf(ButtonLocation_0.height * 1 / 5 / 2, ButtonLocation_0.height * 1 / 5 / 2, "当前账户：");
-	const int Defaut_Font_Size = ButtonLocation_0.height * 4 / 5;
+	setfont(Defaut_Font_Size, 0, "方正喵呜体");					//字体大小  宽度比例自适应  字体文件
+
+
+
 	if(page==0){	//菜单页 下方按钮 
 		drawRectButton(&ButtonLocation_1);
 		xyprintf(ButtonLocation_1.x , ButtonLocation_1.y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "添加账户");

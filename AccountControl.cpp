@@ -3,8 +3,21 @@
 #include <graphics.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "Buttons.h"
 
 int Online_Login_User() {	//显示当前账户
+	setbkmode(TRANSPARENT);
+	setcolor(EGERGB(0x00, 0x00, 0x00)); // 文字颜色
+
+	setfont(Defaut_Font_Size, 0, "方正喵呜体");					//字体大小  宽度比例自适应  字体文件
+
+	//显示当前账户栏
+	drawRectButton(&ButtonLocation_0);	//“当前账户："
+	xyprintf(ButtonLocation_0.height * 1 / 5 / 2, ButtonLocation_0.height * 1 / 5 / 2, "当前账户：");
+
+	drawRectButton(&ShowOnline_Login_User); //登陆账户为" "
+	xyprintf(ShowOnline_Login_User.x, ShowOnline_Login_User.y, "%s", Online_Login_User_Name);
+
 	return 1;
 }
 
@@ -16,7 +29,7 @@ int Add_User() { //注册/添加用户
 		User_Type Temp_Accounts;
 		Accounts_List Accounts_Head, Accounts_Read, Account_Point;
 
-		int Temp_Type = MessageBox(NULL, TEXT("授予账户管理员权限？"), TEXT("用户权限设置"), MB_YESNO | MB_ICONQUESTION);//MB_ICONQUESTION：问号
+		int Temp_Type = MessageBox(NULL, TEXT("授予账户管理员权限？"), TEXT("用户权限设置"), MB_YESNO | MB_ICONQUESTION | MB_SETFOREGROUND);//MB_ICONQUESTION：问号https://blog.csdn.net/yuyan987/article/details/78558648
 		inputbox_getline("请输入账号", "请输入账号", Temp_Accounts.Username, 40);      //输入账号//https://xege.org/manual/api/other/inputboxgetline.htm buffer area
 		inputbox_getline("请输入密码", "请输入密码", Temp_Accounts.Password, 40);      //输入密码
 		Temp_Accounts.Type = (Temp_Type == 6) ? 1 : 0;	 //是(Y) 值为6 否(N)值为7;	//标记用户权限
@@ -42,10 +55,10 @@ int Add_User() { //注册/添加用户
 			FP_Accounts = fopen("Files\\Users.txt", "a");
 			fprintf(FP_Accounts, "%s %s %d %d\n", Temp_Accounts.Username, Temp_Accounts.Password, Temp_Accounts.Type, Temp_Accounts.HaveComputer);
 			fclose(FP_Accounts);
-			return MessageBox(NULL, TEXT("添加成功！"), TEXT("提醒"), MB_OK);
+			return MessageBox(NULL, TEXT("添加成功！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
 		}
 		else {  //找到了，则需要重新输入用户名和密码，再循环刚刚的过程。
-			if (MessageBox(NULL, TEXT("重新添加？"), TEXT("用户名已存在！"), MB_YESNO | MB_ICONWARNING) == 7)return 1;
+			if (MessageBox(NULL, TEXT("重新添加？"), TEXT("用户名已存在！"), MB_YESNO | MB_ICONWARNING | MB_SETFOREGROUND) == 7)return 1;
 		}
 	} while (1);
 }

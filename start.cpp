@@ -12,6 +12,11 @@
 
 void CreateFolder();
 
+char Online_Login_User_Name[40]={"NONE"}; //初始化用户名
+int Online_Login_User_Type = -1;		  //未知|用户|管理员
+int Online_Login_User_HaveComputer = 0;
+
+const int Defaut_Font_Size = ButtonLocation_0.height * 4 / 5;
 
 int MainStart() {
 
@@ -37,6 +42,7 @@ int MainStart() {
 	bool RefreshPage = true;
 
 	for (; is_run(); delay_fps(60)) { 	//is_run()一直返回 true
+		Online_Login_User();	// 显示当前账户
 		while (mousemsg()) {
 			mouse_msg msg = getmouse();
 			//判断鼠标左键点击（左键按下确定位置，抬起为执行时刻）
@@ -75,7 +81,7 @@ int MainStart() {
 	}
 
 	closegraph(); 	//关闭图形界面
-	MessageBox(NULL, TEXT("感谢使用！"), TEXT(" "), MB_OK);
+	MessageBox(NULL, TEXT("感谢使用！"), TEXT(" "), MB_OK | MB_SETFOREGROUND);
 
 	return 0;
 }
