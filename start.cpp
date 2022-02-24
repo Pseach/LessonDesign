@@ -67,7 +67,12 @@ int MainStart() {
 						if (ClickButtonLocation_2) {					
 							ClickButtonLocation_2 = false;
 							RefreshPage = true;
-							Login();
+							Login_User();
+						}
+						if (ClickButtonLocation_3) {
+							ClickButtonLocation_3 = false;
+							RefreshPage = true;
+							Logout_User();
 						}
 
 					}
