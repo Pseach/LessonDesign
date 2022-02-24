@@ -2,12 +2,12 @@
 #include <io.h>
 #include <direct.h>
 #include "start.h"		//窗口设置
-#include "Buttons.h"	//按钮相关函数
+#include "Buttons.h"	//自定义按钮
 #include "AccountControl.h"	//账户控制系统
 #include "Book.h"			//预订系统
 #include "Query.h"			//查询系统
 #include "Manage.h"			//管理系统
-#include "DataInput.h"
+#include "DataInput.h"		//自定义输入框
 
 
 void CreateFolder();

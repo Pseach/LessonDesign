@@ -3,6 +3,7 @@
 #include <graphics.h>
 #include <stdlib.h>
 #include <stdio.h>
+
 #include "Buttons.h"
 
 int Online_Login_User() {	//显示当前账户
@@ -17,6 +18,28 @@ int Online_Login_User() {	//显示当前账户
 
 	drawRectButton(&ShowOnline_Login_User); //登陆账户为" "
 	xyprintf(ShowOnline_Login_User.x, ShowOnline_Login_User.y, "%s", Online_Login_User_Name);
+
+	{ 
+		int RemindFont_Size = Defaut_Font_Size / 2;
+		setfont(RemindFont_Size, 0, "方正喵呜体", 0, 0, 100, 0, 0, 0);
+		setcolor(EGERGB(0x00, 0x00, 0x00));
+
+		switch(Online_Login_User_Type){
+
+			case -1: {	//未知
+				xyprintf(ButtonLocation_0.width - 4 * RemindFont_Size, ButtonLocation_0.height, "请登录！");//4个字
+				break;
+			}
+			case 0: {	//普通用户
+				xyprintf(ButtonLocation_0.width - 8 * RemindFont_Size, ButtonLocation_0.height, "尊敬的用户您好！");//8个字
+				break;
+			}
+			case 1: {	//管理员
+				xyprintf(ButtonLocation_0.width - 9 * RemindFont_Size, ButtonLocation_0.height, "尊敬的管理员您好！");//9个字
+				break;
+			}
+		}
+	}
 
 	return 1;
 }
