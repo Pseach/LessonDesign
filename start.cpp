@@ -22,6 +22,8 @@ int MainStart() {
 
 	setinitmode(0); //设置初始化图形的选项和模式
 	CreateFolder();	//创建空文件夹放置文件
+
+	//initgraph(VerticalWindows.x, VerticalWindows.y, INIT_NOFORCEEXIT); //如果设置width = -1 , height = -1, 那么窗口将会全屏显示 INIT_NOFORCEEXIT , 使关闭窗口的时候不强制退出程序，但窗口会消失，需要配合is_run函数
 	initgraph(LandscapeWindows.x, LandscapeWindows.y, INIT_NOFORCEEXIT); //如果设置width = -1 , height = -1, 那么窗口将会全屏显示 INIT_NOFORCEEXIT , 使关闭窗口的时候不强制退出程序，但窗口会消失，需要配合is_run函数
 	setcaption("机房机位预定系统");		//设置窗口标题
 	//setinitmode(mode, x, y) x, y 是窗口左上角出现在屏幕的坐标

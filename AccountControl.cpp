@@ -27,15 +27,15 @@ int Show_Online_Login_User() {	//显示当前账户
 		switch(Temp_User.Type){
 
 			case -1: {	//未知
-				xyprintf(ButtonLocation_0.width - 4 * RemindFont_Size, ButtonLocation_0.height, "请登录！");//4个字
+				xyprintf(ButtonLocation_0.width - 4 * RemindFont_Size, ButtonLocation_0.height + RemindFont_Size / 2, "请登录！");//4个字
 				break;
 			}
 			case 0: {	//普通用户
-				xyprintf(ButtonLocation_0.width - 8 * RemindFont_Size, ButtonLocation_0.height, "尊敬的用户您好！");//8个字
+				xyprintf(ButtonLocation_0.width - 8 * RemindFont_Size, ButtonLocation_0.height + RemindFont_Size / 2, "尊敬的用户您好！");//8个字
 				break;
 			}
 			case 1: {	//管理员
-				xyprintf(ButtonLocation_0.width - 9 * RemindFont_Size, ButtonLocation_0.height, "尊敬的管理员您好！");//9个字
+				xyprintf(ButtonLocation_0.width - 9 * RemindFont_Size, ButtonLocation_0.height + RemindFont_Size / 2, "尊敬的管理员您好！");//9个字
 				break;
 			}
 		}

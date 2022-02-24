@@ -2,10 +2,10 @@
 #include "start.h"
 
 Windows VerticalWindows = {
-    540,720,
+    595,990,
 };
 
-Windows LandscapeWindows = {//x + 180
+Windows LandscapeWindows = {//Defaut : 990 , 540 + 45
     990,540 + 45,
 };
 

@@ -58,6 +58,8 @@ void drawRectButton(const RectButton* button) {
 	}
 	else {
 		setfillcolor(EGERGB(0xEA, 0x51, 0x7F));
+		//setfillcolor(EGERGB(0x00, 0xFF, 0x7F)); //TextColour
+
 	}
 	bar(button->x, button->y, button->x + button->width, button->y + button->height);
 }
@@ -70,7 +72,7 @@ int DrawPage(int& page) {
 	if(page==0){	//菜单页 下方按钮 
 
 		drawRectButton(&ButtonLocation_1);
-		xyprintf(ButtonLocation_1.x , ButtonLocation_1.y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "添加账户");
+		xyprintf(ButtonLocation_1.x, ButtonLocation_1.y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "添加账户");
 
 		drawRectButton(&ButtonLocation_2);
 		xyprintf(ButtonLocation_2.x, ButtonLocation_2.y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "登录账户");
