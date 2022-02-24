@@ -1,6 +1,7 @@
 #include"Buttons.h"
 #include <graphics.h>
 #include "start.h" // LandscapeWindows 
+#include "AccountControl.h"
 
 //LandscapeWindows.x = 990 .y=540+45;
 const int BUTTONS_X_Len = LandscapeWindows.x / 6, BUTTONS_Y_Len = (LandscapeWindows.y - 45) / 6;
@@ -66,9 +67,8 @@ int DrawPage(int& page) {
 	setcolor(EGERGB(0x00, 0x00, 0x00)); // 文字颜色
 	setfont(Defaut_Font_Size, 0, "方正喵呜体");					//字体大小  宽度比例自适应  字体文件
 
-
-
 	if(page==0){	//菜单页 下方按钮 
+
 		drawRectButton(&ButtonLocation_1);
 		xyprintf(ButtonLocation_1.x , ButtonLocation_1.y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "添加账户");
 

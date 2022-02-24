@@ -42,6 +42,7 @@ int Show_Online_Login_User() {	//显示当前账户
 	}
 	return 1;
 }
+
 int Add_User() { //注册/添加用户
 	FILE* FP_Accounts = NULL;
 	FP_Accounts = fopen("Files\\Users.txt", "a"); //如果文件不存在，则会创建一个新文件
@@ -83,6 +84,7 @@ int Add_User() { //注册/添加用户
 		}
 	} while (1);
 }
+
 int Login_User(){        	    //登录
 	/// <summary>
 	/// 		//已登录
@@ -160,7 +162,14 @@ int Login_User(){        	    //登录
 	}
 	return 1;
 }
-int Logout_User() {          //退出账户
 
+int Logout_User() {          //退出账户
+	if (Temp_User.Type == -1) {
+		MessageBox(NULL, TEXT("您还没有登录！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
+	}
+	else {
+		Temp_User = { "NONE","NONE",-1,0,0 };
+		MessageBox(NULL, TEXT("您已退出当前账户！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
+	}
 	return 1;
 }
