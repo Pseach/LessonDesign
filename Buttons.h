@@ -3,26 +3,23 @@
 
 
 struct RectButton {// 矩形按钮
-	int x, y;
-	int width, height;
+	int X, Y;
+	int Width, Height;
+	bool Pressed;
 };
 
 extern RectButton ShowOnline_Login_User;
 
 extern RectButton ButtonLocation_0;
-extern RectButton ButtonLocation_1;
-extern RectButton ButtonLocation_2;
-extern RectButton ButtonLocation_3;
-extern RectButton ButtonLocation_4;
-extern RectButton ButtonLocation_5;
-extern RectButton ButtonLocation_6;
 
+extern RectButton ButtonLocation[10];
 
+int InitializeButton();//按钮初始化
 
+bool insideRectButton(const RectButton* button, int x, int y);// 判断点(x, y) 是否在按钮点击区域内
 
-// 判断点(x, y) 是否在按钮点击区域内
-bool insideRectButton(const RectButton* button, int x, int y);
-// 绘制按钮
-void drawRectButton(const RectButton* button);
+void drawRectButton(const RectButton* button);// 绘制按钮
+
+int searchButton(int x, int y, const RectButton buttonArray[], int length);// 查找 (x, y) 所在的按钮，返回按钮ID, 没有返回 -1
 
 int DrawPage(int& page);

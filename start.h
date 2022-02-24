@@ -7,6 +7,7 @@ struct Windows { // 窗口数据
 	int y;
 };
 
+
 typedef struct {  //系统操作用户的数据结构
 	char Username[40];
 	char Password[40];
@@ -47,13 +48,14 @@ typedef struct Computers_Node {
 //窗口配置
 extern Windows VerticalWindows;
 extern Windows LandscapeWindows;
+extern Windows WindowsSize;
 
 //用户当前配置
-
 extern User_Type Temp_User;
 
 //
 extern const int Defaut_Font_Size;
+
 
 //函数
 int MainStart();
