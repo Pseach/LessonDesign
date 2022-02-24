@@ -12,10 +12,10 @@
 
 void CreateFolder();
 
-char Online_Login_User_Name[40]={"NONE"}; //初始化用户名
-int Online_Login_User_Type = -1;		  //未知|用户|管理员
-int Online_Login_User_HaveComputer = 0;
+//账户全局变量
+User_Type Temp_User = { "NONE","NONE",-1,0,0, }; //初始化用户名//初始化密码 //初始化权限 : 未知|用户|管理员//已经有机位了（不用）//登录状态
 
+//字体全局变量
 const int Defaut_Font_Size = ButtonLocation_0.height * 4 / 5;
 
 int MainStart() {
@@ -42,7 +42,7 @@ int MainStart() {
 	bool RefreshPage = true;
 
 	for (; is_run(); delay_fps(60)) { 	//is_run()一直返回 true
-		Online_Login_User();	// 显示当前账户
+		Show_Online_Login_User();	// 显示当前账户
 		while (mousemsg()) {
 			mouse_msg msg = getmouse();
 			//判断鼠标左键点击（左键按下确定位置，抬起为执行时刻）
@@ -51,7 +51,11 @@ int MainStart() {
 				if (msg.is_down()) {
 					//检测点击的按钮
 					ClickButtonLocation_1 = insideRectButton(&ButtonLocation_1, msg.x, msg.y);			//点击位置1的按钮
-
+					ClickButtonLocation_2 = insideRectButton(&ButtonLocation_2, msg.x, msg.y);
+					ClickButtonLocation_3 = insideRectButton(&ButtonLocation_3, msg.x, msg.y);
+					ClickButtonLocation_4 = insideRectButton(&ButtonLocation_4, msg.x, msg.y);
+					ClickButtonLocation_5 = insideRectButton(&ButtonLocation_5, msg.x, msg.y);
+					ClickButtonLocation_6 = insideRectButton(&ButtonLocation_6, msg.x, msg.y);
 				}
 				else {
 					if (Page == 0) {
@@ -59,6 +63,11 @@ int MainStart() {
 							ClickButtonLocation_1 = false;
 							RefreshPage = true;
 							Add_User();
+						}
+						if (ClickButtonLocation_2) {					
+							ClickButtonLocation_2 = false;
+							RefreshPage = true;
+							Login();
 						}
 
 					}
@@ -81,7 +90,7 @@ int MainStart() {
 	}
 
 	closegraph(); 	//关闭图形界面
-	MessageBox(NULL, TEXT("感谢使用！"), TEXT(" "), MB_OK | MB_SETFOREGROUND);
+	MessageBox(NULL, TEXT("感谢使用！"), TEXT("机房机位预定系统"), MB_OK | MB_SETFOREGROUND);
 
 	return 0;
 }

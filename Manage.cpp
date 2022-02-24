@@ -50,7 +50,7 @@ int Add_ComputerRoom() { //添加机房
 		fclose(FP_ComputerRoom);
 
 		ComputerRoom_Point = ComputerRoom_Head->ComputerRoom_Next;
-		while (ComputerRoom_Point && strcmp(Temp_ComputerRoom.ComputerRoom_Name, ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name) != 0)//比对数据，没找到相同用户名，且没找完，继续找
+		while ((ComputerRoom_Point) && (strcmp(Temp_ComputerRoom.ComputerRoom_Name, ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name) != 0)&&(1))//比对数据，没找到相同用户名，且没找完，继续找
 			ComputerRoom_Point = ComputerRoom_Point->ComputerRoom_Next;
 		if (!ComputerRoom_Point) {    //没找到机房名，则以追加的方式写入ComputerRooms.txt文本中，且档次的注册流程完成
 			FP_ComputerRoom = fopen("Files\\ComputerRooms.txt", "a");
@@ -105,7 +105,7 @@ int Add_Computer() { //添加机位
 		fclose(FP_Computers);
 
 		Account_Point = Computers_Head->Computers_Next;
-		while (Account_Point && strcmp(Temp_Computers.Computer_Name, Account_Point->Computers_Data.Computer_Name) != 0)//比对数据，没找到相同用户名，且没找完，继续找
+		while (( Account_Point ) && (strcmp(Temp_Computers.Computer_Name, Account_Point->Computers_Data.Computer_Name) != 0)&&(1))//比对数据，没找到相同用户名，且没找完，继续找
 			Account_Point = Account_Point->Computers_Next;
 		if (!Account_Point) {    //没找到相同用户名，则以追加的方式写入Computers.txt文本中，且档次的注册流程完成
 			FP_Computers = fopen("Files\\Computers.txt", "a");
