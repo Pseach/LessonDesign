@@ -4,6 +4,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+int Query() {
+	return 1;
+}
 int Computer_Query() {		//²éÑ¯»úÎ»
 	return 1;
 }

@@ -97,53 +97,31 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 	ButtonLocation[PressButtonId].Pressed = false;	//恢复按钮
 	PressButtonId = -1;								//初始化按钮（不用？）
 	RefreshPage = true;								//使函数执行完刷新页面
-	switch (Page) {
+	switch (Page) {			//！！！！！！！！可优化！按所用方法标记页码不易进行管理   优化思路：每一页都有自己的分页（OOP）！！！！！！！！
 		case 0: {
 			switch (PressButtonId) {
 				case 1: {Add_User(); break; }
 				case 2: {Login_User(); break; }
 				case 3: {Logout_User(); break; }
-				case 4: {Book(); break; }
-				case 5: {
-
-					break;
-				}
-				case 6: {
-
-					break;
-				}
+				case 4: {Book(); break; }//1
+				case 5: {Query();break;	}//2
+				case 6: {Manage();break;}//3
 			}
 			break;	//Exit Page 0
 		}
 		case 1:	{
 			switch (PressButtonId) {
-				case 1: { break; }
-				case 2: { break; }
-				case 3: { break; }
-				case 4: { break; }
-				case 5: {
-					break;
-				}
-				case 6: {
-
-					break;
-				}
+				case 1: { Pre_Book(); break; }
+				case 2: { Cancel_Pre_Book(); break; }
+				case 3: { Final_Book(); break; }
 			}
 			break;	//Exit Page 1
 		}
 		case 2:	{
 			switch (PressButtonId) {
-				case 1: { break; }
-				case 2: { break; }
-				case 3: { break; }
-				case 4: { break; }
-				case 5: {
-					break;
-				}
-				case 6: {
-
-					break;
-				}
+				case 1: { Computer_Query(); break; }
+				case 2: { Computer_Room_Query(); break; }
+				case 3: { Computer_Room_Browse(); break; }
 			}
 			break;	//Exit Page 2
 		}
@@ -160,6 +138,54 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 
 					break;
 				}
+			}
+			break;	//Exit Page 3
+		}
+		case 4: {
+			switch (PressButtonId) {
+			case 1: { break; }
+			case 2: { break; }
+			case 3: { break; }
+			case 4: { break; }
+			case 5: {
+				break;
+			}
+			case 6: {
+
+				break;
+			}
+			}
+			break;	//Exit Page 3
+		}
+		case 5: {
+			switch (PressButtonId) {
+			case 1: { break; }
+			case 2: { break; }
+			case 3: { break; }
+			case 4: { break; }
+			case 5: {
+				break;
+			}
+			case 6: {
+
+				break;
+			}
+			}
+			break;	//Exit Page 3
+		}
+		case 6: {
+			switch (PressButtonId) {
+			case 1: { break; }
+			case 2: { break; }
+			case 3: { break; }
+			case 4: { break; }
+			case 5: {
+				break;
+			}
+			case 6: {
+
+				break;
+			}
 			}
 			break;	//Exit Page 3
 		}
