@@ -16,20 +16,24 @@ void CreateFolder();
 User_Type Temp_User = { "NONE","NONE",-1,0,0 }; //初始化用户名//初始化密码 //初始化权限 : 未知|用户|管理员//已经有机位了（不用）//登录状态
 
 //字体全局变量
-const int Defaut_Font_Size = ButtonLocation_0.height * 4 / 5;
+const int Defaut_Font_Size = ButtonLocation_0.Height * 4 / 5;
+
+Windows VerticalWindows = {595,990};
+Windows LandscapeWindows = {990,540 + 45};//Defaut : 990 , 540 + 45 
+//Windows WindowsSize = LandscapeWindows; //莫名其妙有bug
+Windows WindowsSize = { 990,540 + 45 };
 
 int MainStart() {
-
-	setinitmode(0); //设置初始化图形的选项和模式
 	CreateFolder();	//创建空文件夹放置文件
 
-	//initgraph(VerticalWindows.x, VerticalWindows.y, INIT_NOFORCEEXIT); //如果设置width = -1 , height = -1, 那么窗口将会全屏显示 INIT_NOFORCEEXIT , 使关闭窗口的时候不强制退出程序，但窗口会消失，需要配合is_run函数
-	initgraph(LandscapeWindows.x, LandscapeWindows.y, INIT_NOFORCEEXIT); //如果设置width = -1 , height = -1, 那么窗口将会全屏显示 INIT_NOFORCEEXIT , 使关闭窗口的时候不强制退出程序，但窗口会消失，需要配合is_run函数
+	setinitmode(0); //设置初始化图形的选项和模式
+	//initgraph(VerticalWindows.x, VerticalWindows.y, INIT_NOFORCEEXIT); //如果设置width = -1 , height = -1, 那么窗口将会全屏显示(懒得修复全屏bug)  INIT_NOFORCEEXIT , 使关闭窗口的时候不强制退出程序，但窗口会消失，需要配合is_run函数
+	initgraph(WindowsSize.x, WindowsSize.y, INIT_NOFORCEEXIT); //如果设置width = -1 , height = -1, 那么窗口将会全屏显示(懒得修复全屏bug) INIT_NOFORCEEXIT , 使关闭窗口的时候不强制退出程序，但窗口会消失，需要配合is_run函数
 	setcaption("机房机位预定系统");		//设置窗口标题
 	//setinitmode(mode, x, y) x, y 是窗口左上角出现在屏幕的坐标
 	setbkcolor(EGERGB(0xEA, 0x51, 0x7F)); 	//设置背景颜色 
 	ege_enable_aa(true);//抗锯齿
-
+	InitializeButton();
 	bool ClickButtonLocation_0 = false;
 
 	bool ClickButtonLocation_1 = false;
@@ -53,12 +57,12 @@ int MainStart() {
 				if (msg.is_down()) {
 					//检测点击的按钮
 
-					ClickButtonLocation_1 = insideRectButton(&ButtonLocation_1, msg.x, msg.y);			//点击位置1的按钮
-					ClickButtonLocation_2 = insideRectButton(&ButtonLocation_2, msg.x, msg.y);
-					ClickButtonLocation_3 = insideRectButton(&ButtonLocation_3, msg.x, msg.y);
-					ClickButtonLocation_4 = insideRectButton(&ButtonLocation_4, msg.x, msg.y);
-					ClickButtonLocation_5 = insideRectButton(&ButtonLocation_5, msg.x, msg.y);
-					ClickButtonLocation_6 = insideRectButton(&ButtonLocation_6, msg.x, msg.y);
+					ClickButtonLocation_1 = insideRectButton(&ButtonLocation[1], msg.x, msg.y);			//点击位置1的按钮
+					ClickButtonLocation_2 = insideRectButton(&ButtonLocation[2], msg.x, msg.y);
+					ClickButtonLocation_3 = insideRectButton(&ButtonLocation[3], msg.x, msg.y);
+					ClickButtonLocation_4 = insideRectButton(&ButtonLocation[4], msg.x, msg.y);
+					ClickButtonLocation_5 = insideRectButton(&ButtonLocation[5], msg.x, msg.y);
+					ClickButtonLocation_6 = insideRectButton(&ButtonLocation[6], msg.x, msg.y);
 				}
 				else {
 					if (Page == 0) {
@@ -80,7 +84,9 @@ int MainStart() {
 						if (ClickButtonLocation_4) {
 							ClickButtonLocation_4 = false;
 							RefreshPage = true;
-							Pre_Book();
+							Page = 1;
+							Book();
+
 						}
 
 					}
@@ -88,10 +94,10 @@ int MainStart() {
 						if (ClickButtonLocation_1) {
 							ClickButtonLocation_1 = false;
 							RefreshPage = true;
-
+							 
 						}
 					}
-
+					 
 				}
 			}
 		}
