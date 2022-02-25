@@ -143,3 +143,8 @@ int DrawPage(int& page) {
 	return 1;
 	
 }
+
+int DrawLinkPage()
+{
+	return 1;
+}

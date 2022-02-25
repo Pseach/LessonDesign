@@ -1,4 +1,5 @@
 #include <graphics.h>
+#include <string>
 #include <io.h>
 #include <direct.h>
 #include "start.h"		//窗口设置
@@ -8,9 +9,9 @@
 #include "Query.h"			//查询系统
 #include "Manage.h"			//管理系统
 #include "DataInput.h"		//自定义输入框
-#include <string>
+using namespace std;
 
-int Page = 0;//切换页面 换按钮
+//int Page = 0;//切换页面 换按钮(弃用)
 
 void CreateFolder(std::string str);
 
@@ -87,7 +88,8 @@ int MainStart() {
 		// 判断是否需要重绘，减少不必要的绘制操作
 		if (RefreshPage) {
 			cleardevice();
-			DrawPage(Page);
+			//DrawPage(Page);//根据页码重新绘制		按钮（名字） (弃用)
+			DrawLinkPage();//根据页面结构体重新绘制 按钮（名字）
 			RefreshPage = false;
 		}
 	}
@@ -104,7 +106,8 @@ int Initialize_Button_State(int& ButtonId, int& PressButtonId, bool& ButtonLocat
 	return 1;
 }
 int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool& RefreshPage) {//封装 //恢复按钮并且执行操作
-
+	//根据页码切换每页功能 (弃用)
+	/*
 	switch (Page) {			//！！！！！！！！可优化！按所用方法标记页码不易进行管理   优化思路：每一页都有自己的分页（OOP）！！！！！！！！
 		case 0: {
 			switch (PressButtonId) {
@@ -198,6 +201,10 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 			break;	//Exit Page 3
 		}
 	}
+	*/
+
+	//根据页面结构体切换每页功能
+
 	ButtonLocation[PressButtonId].Pressed = false;	//恢复按钮
 	PressButtonId = -1;								//初始化按钮（不用？）
 	RefreshPage = true;								//使函数执行完刷新页面

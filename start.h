@@ -1,13 +1,21 @@
 #pragma once
 //二级目录文件
+#include <string> // Page string
 
-extern int Page;//切换页面 换按钮
+//extern int Page;//切换页面 换按钮 (弃用)
 
 //数据结构
 struct Windows { // 窗口数据
 	int x;
 	int y;
 };
+
+typedef struct pages {
+	int Page_Layer; //所在层次 
+	struct pages* Link[7];
+	std::string PageName; //翻不机密层次
+	std::string FunName[7];
+}Page;
 
 typedef struct {  //时间的数据结构
 	int Year;
