@@ -9,7 +9,6 @@
 #include "Query.h"			//查询系统
 #include "Manage.h"			//管理系统
 #include "DataInput.h"		//自定义输入框
-using namespace std;
 
 //int Page = 0;//切换页面 换按钮(弃用)
 

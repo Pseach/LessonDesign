@@ -10,13 +10,6 @@ struct Windows { // 窗口数据
 	int y;
 };
 
-typedef struct pages {
-	int Page_Layer; //所在层次 
-	struct pages* Link[7];
-	std::string PageName; //翻不机密层次
-	std::string FunName[7];
-}Page;
-
 typedef struct {  //时间的数据结构
 	int Year;
 	int Month;

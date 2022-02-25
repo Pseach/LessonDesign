@@ -1,8 +1,5 @@
 #include "Book.h"
 #include "start.h"
-#include <graphics.h>
-#include <stdlib.h>
-#include <stdio.h>
 
 #include "Buttons.h"
 #include "AccountControl.h"

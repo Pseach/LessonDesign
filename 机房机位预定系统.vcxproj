@@ -151,6 +151,7 @@
     <ClCompile Include="DataInput.h" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Manage.cpp" />
+    <ClCompile Include="Page.cpp" />
     <ClCompile Include="Query.cpp" />
     <ClCompile Include="start.cpp" />
   </ItemGroup>
@@ -159,6 +160,7 @@
     <ClInclude Include="Book.h" />
     <ClInclude Include="Buttons.h" />
     <ClInclude Include="Manage.h" />
+    <ClInclude Include="Page.h" />
     <ClInclude Include="Query.h" />
     <ClInclude Include="start.h" />
   </ItemGroup>
