@@ -33,7 +33,7 @@ int Add_ComputerRoom() { //添加机房
 	FP_ComputerRoom = fopen("Files\\ComputerRooms.txt", "a"); //如果文件不存在，则会创建一个新文件
 	fclose(FP_ComputerRoom);
 	do {	//读取并存储账号密码
-		ComputerRoom_Type Temp_ComputerRoom;
+		ComputerRoom_Type Temp_ComputerRoom{};
 		ComputerRoom_List ComputerRoom_Head, ComputerRoom_Read, ComputerRoom_Point;
 
 
@@ -85,7 +85,7 @@ int Add_Computer() { //添加机位
 	FP_Computers = fopen("Files\\Computers.txt", "a"); //如果文件不存在，则会创建一个新文件
 	fclose(FP_Computers);
 	do {	//读取并存储机位名 
-		Computer_Type Temp_Computers;
+		Computer_Type Temp_Computers{};
 		Computers_List Computers_Head, Computers_Read, Account_Point;
 
 

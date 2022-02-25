@@ -91,6 +91,7 @@ extern const int Defaut_Font_Size;
 
 //º¯Êý
 int MainStart();
+int Initialize_Button_State(int& ButtonId, int& PressButtonId, bool& ButtonLocationI_Press, bool& RefreshPage);
 int Recovery_Button_State(int& PressButtonId, bool& ButtonLocationI_Press, bool& RefreshPage);
 int Exit();
 
