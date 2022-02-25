@@ -3,6 +3,7 @@
 
 
 struct RectButton {// ¾ØÐÎ°´Å¥
+	int IsTitle;
 	int X, Y;
 	int Width, Height;
 	bool Pressed;
