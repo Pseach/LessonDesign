@@ -4,6 +4,7 @@
 Page Page_Exit = {};
 Page Temp_FunName = {};
 
+//须由内层向外初始化
 Page Book_Page = {
 	"预定系统",1,
 	{	&Page_Exit,				//[0]
@@ -34,7 +35,7 @@ Page Query_Page = {
 	}
 };
 
-	Page User_Manage = {
+	Page User_Manage_Page = {
 		"账户管理",2,
 		{	&Temp_FunName,		//[0]
 			&Temp_FunName,		//[1]
@@ -79,7 +80,7 @@ Page Query_Page = {
 Page Manage_Page = {
 	"管理系统",1,
 	{	& Page_Exit,						//[0]
-		& User_Manage,						//[1]
+		& User_Manage_Page,					//[1]
 		& Computer_Room_Manage_Page,		//[2]
 		& Computer_Manage_Page,				//[3]
 		& Temp_FunName,		//[4]
