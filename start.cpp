@@ -73,7 +73,7 @@ int MainStart() {
 				if (PressButtonId != -1)	//点住123456按钮
 					Recovery_Button_State(PressButtonId, ButtonLocation[PressButtonId].Pressed, RefreshPage);
 				else {						//没点住123456按钮
-					//不知道该做什么
+					RefreshPage = false; // 不用刷新
 				}
 
 			}
@@ -94,9 +94,7 @@ int MainStart() {
 }
 
 int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool& RefreshPage) {//封装 //恢复按钮并且执行操作
-	ButtonLocation[PressButtonId].Pressed = false;	//恢复按钮
-	PressButtonId = -1;								//初始化按钮（不用？）
-	RefreshPage = true;								//使函数执行完刷新页面
+
 	switch (Page) {			//！！！！！！！！可优化！按所用方法标记页码不易进行管理   优化思路：每一页都有自己的分页（OOP）！！！！！！！！
 		case 0: {
 			switch (PressButtonId) {
@@ -190,6 +188,9 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 			break;	//Exit Page 3
 		}
 	}
+	ButtonLocation[PressButtonId].Pressed = false;	//恢复按钮
+	PressButtonId = -1;								//初始化按钮（不用？）
+	RefreshPage = true;								//使函数执行完刷新页面
 	return 0;
 }
 

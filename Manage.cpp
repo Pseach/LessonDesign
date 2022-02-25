@@ -92,8 +92,8 @@ int Add_Computer() { //添加机位
 		inputbox_getline("请输入机位名 ", "请输入机位名 ", Temp_Computers.Computer_Name, 40);      //输入机位名
 		//Temp_Computers.Computer_State = (Temp_Type == 6) ? 1 : 0;	 //是(Y) 值为6 否(N)值为7;
 		Temp_Computers.Computer_State = 1; // 创建时初始可用
-		Temp_Computers.IsPre_Book = 0;
-		Temp_Computers.IsFinal_Book = 0;
+		//Temp_Computers.IsPre_Book = 0;
+		//Temp_Computers.IsFinal_Book = 0;
 
 		FP_Computers = fopen("Files\\Computers.txt", "r");//先用只读的方式把文件打开，把数据读出来，放在一个序列中
 		Computers_Head = (Computers_List)malloc(sizeof(Computers_Size));
