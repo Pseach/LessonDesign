@@ -1,13 +1,13 @@
 #include "Page.h"
 #include "start.h"
 
-Page Page_Exit = {};
-Page Temp_FunName = {};
+Pages Page_Exit = {};
+Pages Temp_FunName = {};
 
 //须由内层向外初始化
-Page Book_Page = {
+Pages Book_Page = {
 	"预定系统",1,
-	{	&Page_Exit,				//[0]
+	{	&Menu_Page,				//[0]
 		&Temp_FunName,		//[1]
 		&Temp_FunName,		//[2]
 		&Temp_FunName,		//[3]
@@ -20,9 +20,9 @@ Page Book_Page = {
 	}
 };
 
-Page Query_Page = {
+Pages Query_Page = {
 	"查询系统",1,
-	{	&Page_Exit,				//[0]
+	{	&Menu_Page,				//[0]
 		&Temp_FunName,		//[1]
 		&Temp_FunName,		//[2]
 		&Temp_FunName,		//[3]
@@ -35,7 +35,7 @@ Page Query_Page = {
 	}
 };
 
-	Page User_Manage_Page = {
+	Pages User_Manage_Page = {
 		"账户管理",2,
 		{	&Temp_FunName,		//[0]
 			&Temp_FunName,		//[1]
@@ -49,7 +49,7 @@ Page Query_Page = {
 		"","删除账户","更改账户","开关预定功能","","","",
 		}
 	};
-	Page Computer_Room_Manage_Page = {
+	Pages Computer_Room_Manage_Page = {
 		"机房管理",2,
 		{	&Temp_FunName,		//[0]
 			&Temp_FunName,		//[1]
@@ -63,7 +63,7 @@ Page Query_Page = {
 		"","增加机房","删除机房","更改机房","开关机房","","",
 		}
 	};
-	Page Computer_Manage_Page = {
+	Pages Computer_Manage_Page = {
 		"机位管理",2,
 		{	& Temp_FunName,		//[0]
 			& Temp_FunName,		//[1]
@@ -77,9 +77,9 @@ Page Query_Page = {
 		"","增加机位","删除机位","更改机位","开关机位","","",
 		}
 	};
-Page Manage_Page = {
+Pages Manage_Page = {
 	"管理系统",1,
-	{	& Page_Exit,						//[0]
+	{	&Menu_Page,						//[0]
 		& User_Manage_Page,					//[1]
 		& Computer_Room_Manage_Page,		//[2]
 		& Computer_Manage_Page,				//[3]
@@ -92,7 +92,7 @@ Page Manage_Page = {
 	}
 };
 
-Page Menu_Page = {
+Pages Menu_Page = {
 	"菜单",1,
 	{	& Page_Exit,				//[0]
 		& Temp_FunName,		//[1]

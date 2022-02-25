@@ -2,6 +2,8 @@
 #include <graphics.h>
 #include "start.h" // WindowsSize 
 #include "AccountControl.h"
+#include <string>
+#include "Page.h"
 
 //LandscapeWindows.x = 990 .y=540+45;
 const int BUTTONS_X_Len = WindowsSize.x / 6, BUTTONS_Y_Len = (WindowsSize.y - 45) / 6;
@@ -10,7 +12,7 @@ const int HALF_BUTTON_Y_Len = BUTTONS_Y_Len / 2;
 RectButton ButtonLocation_0 = {
 	1 , 
 	0 , 0,
-	WindowsSize.x , BUTTONS_Y_Len - 30,
+	WindowsSize.x , BUTTONS_Y_Len * 2 / 3,
 };
 
 RectButton ShowOnline_Login_User = {
@@ -24,6 +26,7 @@ RectButton ShowOnline_Login_User = {
 RectButton ButtonLocation[10];
 
 int InitializeButton() { //∞¥≈•≥ı ºªØ
+	ButtonLocation[0] = { 0,WindowsSize.x - Defaut_Font_Size ,ButtonLocation_0.Height ,Defaut_Font_Size ,Defaut_Font_Size };
 	int t = 0, k = 1;
 	for (int i = 1; i <= 6; i++) {
 		ButtonLocation[i].IsTitle = 0;
@@ -93,6 +96,14 @@ int searchButton(int x, int y, const RectButton buttonArray[], int length) {	//∑
 	return buttonId;
 }
 //			MessageBox(NULL, TEXT("TEXT"), TEXT("TEXT£°"), MB_YESNO | MB_ICONWARNING | MB_SETFOREGROUND);
+int DrawButtons(Pages pages_name) {
+	for (int i = 1; i <= 6; i++) {
+		std::string str = pages_name.FunName[i];
+		const char* p = str.c_str();
+		xyprintf(ButtonLocation[i].X, ButtonLocation[i].Y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "%s", p);
+	}
+	return 1;
+}
 int DrawPage(int& page) {
 
 	setbkmode(TRANSPARENT);
@@ -100,7 +111,7 @@ int DrawPage(int& page) {
 	setfont(Defaut_Font_Size, 0, "∑Ω’˝ﬂ˜ŒÿÃÂ");					//◊÷ÃÂ¥Û–°  øÌ∂»±»¿˝◊‘  ”¶  ◊÷ÃÂŒƒº˛
 
 	//color_t lastFillColor = WHITE;//EGEARGB(WHITE);//= getfillcolor();//’‚∏ˆ∫Ø ˝”√”⁄ªÒ»°µ±«∞ªÊÕºÃÓ≥‰…´ 
-	for (int i = 1; i <= 6; i++) {
+	for (int i = 0; i <= 6; i++) {
 		//∏˘æ›◊¥Ã¨Ω¯––≤ªÕ¨µƒªÊ÷∆£¨’‚¿Ô∞¥◊¥Ã¨∏ƒ±‰—’…´
 		//color_t ButtonsColour;
 		if (ButtonLocation[i].Pressed) {
@@ -117,34 +128,14 @@ int DrawPage(int& page) {
 		//	lastFillColor = ButtonsColour;
 		//}
 	}
-		if (page == 0) {	//≤Àµ•“≥ œ¬∑Ω∞¥≈• 
-			//drawRectButton(&ButtonLocation[1]);
-			xyprintf(ButtonLocation[1].X, ButtonLocation[1].Y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "ÃÌº”’Àªß");
-			//drawRectButton(&ButtonLocation[2]);
-			xyprintf(ButtonLocation[2].X, ButtonLocation[2].Y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "µ«¬º’Àªß");
-			//drawRectButton(&ButtonLocation[3]);
-			xyprintf(ButtonLocation[3].X, ButtonLocation[3].Y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "ÕÀ≥ˆ’Àªß");
-			//drawRectButton(&ButtonLocation[4]);
-			xyprintf(ButtonLocation[4].X, ButtonLocation[4].Y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "‘§∂©œµÕ≥");
-			//drawRectButton(&ButtonLocation[5]);
-			xyprintf(ButtonLocation[5].X, ButtonLocation[5].Y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "≤È—ØœµÕ≥");
-			//drawRectButton(&ButtonLocation[6]);
-			xyprintf(ButtonLocation[6].X, ButtonLocation[6].Y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "π‹¿ÌœµÕ≥");
-			return 0;
-		}
-		if (page == 1) {
-			//drawRectButton(&ButtonLocation[1]);
-			xyprintf(ButtonLocation[1].X, ButtonLocation[1].Y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "≥ı≤Ω‘§∂®");
-			//drawRectButton(&ButtonLocation[2]);
-			xyprintf(ButtonLocation[2].X, ButtonLocation[2].Y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "»°œ˚‘§∂®");
-			//drawRectButton(&ButtonLocation[3]);
-			xyprintf(ButtonLocation[3].X, ButtonLocation[3].Y + (BUTTONS_Y_Len - Defaut_Font_Size) / 2, "◊Ó÷’‘§∂®");
-		}
+	xyprintf(ButtonLocation[0].X, ButtonLocation[0].Y , "°¡");
+	if (page == 0)	DrawButtons(Menu_Page);
+	if (page == 1)	DrawButtons(Book_Page); 
+	if (page == 2)	DrawButtons(Query_Page);
+	if (page == 3)	DrawButtons(Manage_Page);
+	if (page == 4)	DrawButtons(User_Manage_Page);
+	if (page == 5)	DrawButtons(Computer_Room_Manage_Page);
+	if (page == 6)	DrawButtons(Computer_Manage_Page);
 	return 1;
 	
-}
-
-int DrawLinkPage()
-{
-	return 1;
 }

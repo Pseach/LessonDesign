@@ -12,7 +12,6 @@ int Show_Online_Login_User() {	//显示当前账户
 	setcolor(EGERGB(0x00, 0x00, 0x00)); // 文字颜色
 
 	setfont(Defaut_Font_Size, 0, "方正喵呜体");					//字体大小  宽度比例自适应  字体文件
-
 	//显示当前账户栏
 	drawRectButton(&ButtonLocation_0);	//“当前账户："
 	xyprintf(ButtonLocation_0.Height * 1 / 5 / 2, ButtonLocation_0.Height * 1 / 5 / 2, "当前账户：");
@@ -27,19 +26,21 @@ int Show_Online_Login_User() {	//显示当前账户
 		//setcolor(WHITE);
 
 		switch(Temp_User.Type){
-
 			case -1: {	//未知
-				xyprintf(ButtonLocation_0.Width - 4 * RemindFont_Size, ButtonLocation_0.Height + RemindFont_Size / 2, "请登录！");//4个字	//右上角
+				xyprintf(ButtonLocation_0.Height / 5, ButtonLocation_0.Height + RemindFont_Size / 2, "请登录！");//4个字	//左上角
+				//xyprintf(ButtonLocation_0.Width - 4 * RemindFont_Size, ButtonLocation_0.Height + RemindFont_Size / 2, "请登录！");//4个字	//右上角
 				//xyprintf(ButtonLocation_0.width - 4 * RemindFont_Size, WindowsSize.y - RemindFont_Size * 3 / 2, "请登录！");//4个字		//右下角
 				break;
 			}
 			case 0: {	//普通用户
-				xyprintf(ButtonLocation_0.Width - 8 * RemindFont_Size, ButtonLocation_0.Height + RemindFont_Size / 2, "尊敬的用户您好！");//8个字
+				xyprintf(ButtonLocation_0.X, ButtonLocation_0.Height + RemindFont_Size / 2, "尊敬的用户您好！");//8个字
+				//xyprintf(ButtonLocation_0.Width - 8 * RemindFont_Size, ButtonLocation_0.Height + RemindFont_Size / 2, "尊敬的用户您好！");//8个字
 				//xyprintf(ButtonLocation_0.width - 8 * RemindFont_Size, WindowsSize.y - RemindFont_Size * 3 / 2, "尊敬的用户您好！");//8个字
 				break;
 			}
 			case 1: {	//管理员
-				xyprintf(ButtonLocation_0.Width - 9 * RemindFont_Size, ButtonLocation_0.Height + RemindFont_Size / 2, "尊敬的管理员您好！");//9个字
+				xyprintf(ButtonLocation_0.X, ButtonLocation_0.Height + RemindFont_Size / 2, "尊敬的管理员您好！");//9个字
+				//xyprintf(ButtonLocation_0.Width - 9 * RemindFont_Size, ButtonLocation_0.Height + RemindFont_Size / 2, "尊敬的管理员您好！");//9个字
 				//xyprintf(ButtonLocation_0.width - 9 * RemindFont_Size, WindowsSize.y - RemindFont_Size * 3 / 2, "尊敬的管理员您好！");//9个字
 				break;
 			}

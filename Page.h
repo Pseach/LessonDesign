@@ -8,16 +8,16 @@ typedef struct pages {//所在层次 ,*各个开关[]，功能[],该页名称
 	int Page_Layer; 
 	struct pages* Link[7];
 	std::string FunName[7];
-}Page;
+}Pages;
 
-extern Page Page_Exit;
-extern Page Temp_FunName; // 不会乱序赋值
+extern Pages Page_Exit;
+extern Pages Temp_FunName; // 不会乱序赋值
 
-extern Page Menu_Page;
-extern Page Book_Page;
-extern Page Query_Page;
-extern Page Manage_Page;
-extern Page User_Manage_Page;
-extern Page Computer_Room_Manage_Page;
-extern Page Computer_Manage_Page;
+extern Pages Menu_Page;
+extern Pages Book_Page;
+extern Pages Query_Page;
+extern Pages Manage_Page;
+extern Pages User_Manage_Page;
+extern Pages Computer_Room_Manage_Page;
+extern Pages Computer_Manage_Page;
 

@@ -1,8 +1,7 @@
 #pragma once
 //二级目录文件
-#include <string> // Page string
 
-//extern int Page;//切换页面 换按钮 (弃用)
+extern int Page;//切换页面 换按钮
 
 //数据结构
 struct Windows { // 窗口数据

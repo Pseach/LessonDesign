@@ -1,5 +1,4 @@
 #include <graphics.h>
-#include <string>
 #include <io.h>
 #include <direct.h>
 #include "start.h"		//窗口设置
@@ -9,9 +8,9 @@
 #include "Query.h"			//查询系统
 #include "Manage.h"			//管理系统
 #include "DataInput.h"		//自定义输入框
-#include "Page.h"			//页面
-
-//int Page = 0;//切换页面 换按钮(弃用)
+#include <string>
+#include "Page.h"
+int Page = 0;//切换页面 换按钮
 
 void CreateFolder(std::string str);
 
@@ -88,8 +87,7 @@ int MainStart() {
 		// 判断是否需要重绘，减少不必要的绘制操作
 		if (RefreshPage) {
 			cleardevice();
-			//DrawPage(Page);//根据页码重新绘制		按钮（名字） (弃用)
-			DrawLinkPage();//根据页面结构体重新绘制 按钮（名字）
+			DrawPage(Page);
 			RefreshPage = false;
 		}
 	}
@@ -106,22 +104,23 @@ int Initialize_Button_State(int& ButtonId, int& PressButtonId, bool& ButtonLocat
 	return 1;
 }
 int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool& RefreshPage) {//封装 //恢复按钮并且执行操作
-	//根据页码切换每页功能 (弃用)
-	/*
-	switch (Page) {			//！！！！！！！！可优化！按所用方法标记页码不易进行管理   优化思路：每一页都有自己的分页（OOP）！！！！！！！！
+
+	switch (Page) {			//！！！！！！！！可优化！按所用方法标记页码不易进行管理   优化思路：每一页都有自己的分页！！！！！！！！(优化个屁！弃用（不会重载）)
 		case 0: {
 			switch (PressButtonId) {
+				case 0: {Page = 0; break; }
 				case 1: {Add_User(); break; }
 				case 2: {Login_User(); break; }
 				case 3: {Logout_User(); break; }
-				case 4: {Book(); break; }//1
-				case 5: {Query();break;	}//2
-				case 6: {Manage();break;}//3
+				case 4: {Page = 1; Book();  break; }//1
+				case 5: {Page = 2; Query(); break;	}//2
+				case 6: {Page = 3; Manage();break;}//3
 			}
 			break;	//Exit Page 0
 		}
 		case 1:	{
 			switch (PressButtonId) {
+				case 0: {Page = 0; break; }
 				case 1: { Pre_Book(); break; }
 				case 2: { Cancel_Pre_Book(); break; }
 				case 3: { Final_Book(); break; }
@@ -130,6 +129,7 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 		}
 		case 2:	{
 			switch (PressButtonId) {
+				case 0: {Page = 0; break; }
 				case 1: { Computer_Query(); break; }
 				case 2: { Computer_Room_Query(); break; }
 				case 3: { Computer_Room_Browse(); break; }
@@ -138,6 +138,7 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 		}
 		case 3: {
 			switch (PressButtonId) {
+				case 0: {Page = 0; break; }
 				case 1: { break; }
 				case 2: { break; }
 				case 3: { break; }
@@ -201,10 +202,6 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 			break;	//Exit Page 3
 		}
 	}
-	*/
-
-	//根据页面结构体切换每页功能
-
 	ButtonLocation[PressButtonId].Pressed = false;	//恢复按钮
 	PressButtonId = -1;								//初始化按钮（不用？）
 	RefreshPage = true;								//使函数执行完刷新页面
@@ -212,11 +209,9 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 }
 
 void CreateFolder(std::string str){// 创建文件夹（需要 #include <io.h> 以及 #include <direct.h>）
-
-	char folderName[] = "str";    //文件夹名称
-
-	if (_access(folderName, 0) == -1) {    // 文件夹不存在则创建文件夹
-		(void)_mkdir(folderName);
+	const char* p = str.c_str();
+	if (_access(p, 0) == -1) {    // 文件夹不存在则创建文件夹
+		(void)_mkdir(p);
 	}
 }
 
