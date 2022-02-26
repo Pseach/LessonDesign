@@ -72,12 +72,12 @@ int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什
 			while (!feof(FP_BookData)) {      //以尾接法建立一个链表。  feof检测文件是否结束
 				if (Book_Point = (Books_List)malloc(sizeof(Books_Size))) {
 					fscanf(FP_BookData, "%d/%d/%d %d:%d:%d Long:%d UserName:%s BookRoom:%s BookComputer:%s BookState:%d\n",
-						&Temp_Book.Book_Time.Year, &Temp_Book.Book_Time.Month, &Temp_Book.Book_Time.Day,
-						&Temp_Book.Book_Time.Hour, &Temp_Book.Book_Time.Minute, &Temp_Book.Book_Time.Second,
-						&Temp_Book.Book_Time_Long.Hour, Temp_Book.User_Book_Data.Username,
-						Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name,
-						Temp_Book.ComputerRoom_Book_Data.Computer_Data.Computer_Name,
-						Temp_Book.Computer_Book_Data.Computer_Book_State//应该是这个
+						&Book_Point->Book_Data.Book_Time.Year, &Book_Point->Book_Data.Book_Time.Month, &Book_Point->Book_Data.Book_Time.Day,
+						&Book_Point->Book_Data.Book_Time.Hour, &Book_Point->Book_Data.Book_Time.Minute, &Book_Point->Book_Data.Book_Time.Second,
+						&Book_Point->Book_Data.Book_Time_Long.Hour, Book_Point->Book_Data.User_Book_Data.Username,
+						Book_Point->Book_Data.ComputerRoom_Book_Data.ComputerRoom_Name,
+						Book_Point->Book_Data.ComputerRoom_Book_Data.Computer_Data.Computer_Name,
+						Book_Point->Book_Data.Computer_Book_Data.Computer_Book_State//应该是这个
 					);//读出文件当前记录
 					Books_Read->Books_Next = Book_Point;
 					Books_Read = Book_Point;

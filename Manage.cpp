@@ -80,6 +80,7 @@ int Transform_Computer(){	//开放|关闭机位
 	return 1;
 }
 int Add_Computer() { //添加机位（管理员才能管理？）
+
 	FILE* FP_Computers = NULL;
 	FP_Computers = fopen("Files\\Computers.txt", "a"); //如果文件不存在，则会创建一个新文件
 	fclose(FP_Computers);
@@ -110,16 +111,13 @@ int Add_Computer() { //添加机位（管理员才能管理？）
 		Computer_Point = Computers_Head->Computers_Next;
 		while (( Computer_Point ) && (strcmp(Temp_Computers.Computer_Name, Computer_Point->Computers_Data.Computer_Name) != 0)&&(1))//比对数据，没找到相同用户名，且没找完，继续找
 			Computer_Point = Computer_Point->Computers_Next;
-		if (!Computer_Point) {    //没找到相同用户名，则以追加的方式写入Computers.txt文本中，且档次的注册流程完成
+		if (!Computer_Point) {    //没找到机位名，则以追加的方式写入Computers.txt文本中，且档次的注册流程完成
 			FP_Computers = fopen("Files\\Computers.txt", "a");
 			fprintf(FP_Computers, "%s\n", Temp_Computers.Computer_Name);
 			fclose(FP_Computers);
 			return MessageBox(NULL, TEXT("添加成功！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
 		}
-		else {  //找到了，则需要重新输入用户名和密码，再循环刚刚的过程。
-			//printf("\n用户名已存在，请重新输入！\n");
-			//printf("\n输入用户名和密码\n");
-			//scanf("%s%s", Temp_Computers.Computer_Name, Temp_Computers.Computer_Room);
+		else {  //找到了，则需要重新输入机位名，再循环刚刚的过程。
 			if (MessageBox(NULL, TEXT("重新添加？"), TEXT("机位已存在！"), MB_YESNO | MB_ICONWARNING | MB_SETFOREGROUND | MB_SETFOREGROUND) == 7)return 1;
 		}
 	} while (1);
