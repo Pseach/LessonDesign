@@ -50,13 +50,11 @@ int MainStart() {
 			// 判断鼠标左键按下（左键按下确定位置，同时判断是否为按钮区域
 			// 抬起则解除按下状态
 			int ButtonId = -1;
-
 			if (msg.is_left() && msg.is_down()) { //初始化
 				// 检查是否有按钮被按下
 				ButtonId = searchButton(msg.x, msg.y, ButtonLocation, Defaut_Font_Size);
 
 				// 将被按下的按钮设置为按下状态
-
 				//if (ButtonId != -1) {
 				//	PressButtonId = ButtonId;
 				//	ButtonLocation[PressButtonId].Pressed = true;
@@ -81,9 +79,7 @@ int MainStart() {
 				else {						//没点住123456按钮
 					//RefreshPage = false; // 不用刷新?
 				}
-
 			}
-
 		}
 		// 判断是否需要重绘，减少不必要的绘制操作
 		if (RefreshPage) {
@@ -92,7 +88,6 @@ int MainStart() {
 			RefreshPage = false;
 		}
 	}
-
 	closegraph(); 	//关闭图形界面
 	MessageBox(NULL, TEXT("感谢使用！"), TEXT("机房机位预定系统"), MB_OK | MB_SETFOREGROUND);
 
@@ -143,7 +138,7 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 				case 1: {Page = 4; break; }
 				case 2: {Page = 5; break; }
 				case 3: {Page = 6; break; }
-				case 4: { break; }
+				case 4: {Page = 7; break; }
 				case 5: {
 					break;
 				}
@@ -207,7 +202,7 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 		}
 		case 7: {
 			switch (PressButtonId) {
-			case 0: {Page; break; }
+			case 0: {Page = 3; break; }
 			case 1: { break; }
 			case 2: { break; }
 			case 3: { break; }
@@ -222,7 +217,6 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 			}
 			break;	//Exit Page 3
 		}
-
 	}
 	ButtonLocation[PressButtonId].Pressed = false;	//恢复按钮
 	PressButtonId = -1;								//初始化按钮（不用？）

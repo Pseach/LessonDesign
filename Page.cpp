@@ -34,7 +34,7 @@ Pages Query_Page = {
 	"×","机位查询","机房查询","浏览机房","","","",
 	}
 };
-
+	
 	Pages User_Manage_Page = {
 		"账户管理",2,
 		{	&Temp_FunName,		//[0]
@@ -75,6 +75,20 @@ Pages Query_Page = {
 		},
 		{
 		"","增加机位","删除机位","更改机位","开关机位","","",
+		}
+	};
+	Pages Book_Manage_Page = {
+		"预定管理",2,
+		{	&Temp_FunName,		//[0]
+			&Temp_FunName,		//[1]
+			&Temp_FunName,		//[2]
+			&Temp_FunName,		//[3]
+			&Temp_FunName,		//[4]
+			&Temp_FunName,		//[5]
+			&Temp_FunName,		//[6]
+		},
+		{
+		"","浏览预定信息","同意预定请求","","","","",
 		}
 	};
 Pages Manage_Page = {

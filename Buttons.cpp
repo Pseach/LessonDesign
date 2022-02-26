@@ -6,7 +6,7 @@
 #include "Page.h"
 
 const int ButtonNumber = 6;
-
+const int PageNum = 7;
 //(WindowsSize.y - 45) / 6 * 2 / 3
 //LandscapeWindows.x = 990 .y=540+45;
 const int BUTTONS_X_Len = WindowsSize.x / 6, BUTTONS_Y_Len = (WindowsSize.y - 45) / 6;
@@ -114,7 +114,7 @@ int DrawPage(int& page) {
 	setfont(Defaut_Font_Size, 0, "方正喵呜体");					//字体大小  宽度比例自适应  字体文件
 
 	//color_t lastFillColor = WHITE;//EGEARGB(WHITE);//= getfillcolor();//这个函数用于获取当前绘图填充色 
-	for (int i = 0; i <= ButtonNumber; i++) {
+	for (int i = 0; i <= PageNum; i++) {
 		//根据状态进行不同的绘制，这里按状态改变颜色
 		//color_t ButtonsColour;
 		if (ButtonLocation[i].Pressed) {
@@ -132,14 +132,25 @@ int DrawPage(int& page) {
 		//}
 	}
 
-	xyprintf(ButtonLocation[0].X, ButtonLocation[0].Y , "×");
-	if (page == 0)	DrawButtons(Menu_Page);
-	if (page == 1)	DrawButtons(Book_Page); 
-	if (page == 2)	DrawButtons(Query_Page);
-	if (page == 3)	DrawButtons(Manage_Page);
-	if (page == 4)	DrawButtons(User_Manage_Page);
-	if (page == 5)	DrawButtons(Computer_Room_Manage_Page);
-	if (page == 6)	DrawButtons(Computer_Manage_Page);
+	if(page)xyprintf(ButtonLocation[0].X, ButtonLocation[0].Y , "×");
+	switch (page) {
+		case 0: {DrawButtons(Menu_Page); break; }
+		case 1: {DrawButtons(Book_Page); break; }
+		case 2: {DrawButtons(Query_Page); break; }
+		case 3: {DrawButtons(Manage_Page); break; }
+		case 4: {DrawButtons(User_Manage_Page); break; }
+		case 5: {DrawButtons(Computer_Room_Manage_Page); break; }
+		case 6: {DrawButtons(Computer_Manage_Page); break; }
+		case 7: {DrawButtons(Book_Manage_Page); break; }
+	}
+	//if (page == 0)	DrawButtons(Menu_Page);
+	//if (page == 1)	DrawButtons(Book_Page); 
+	//if (page == 2)	DrawButtons(Query_Page);
+	//if (page == 3)	DrawButtons(Manage_Page);
+	//if (page == 4)	DrawButtons(User_Manage_Page);
+	//if (page == 5)	DrawButtons(Computer_Room_Manage_Page);
+	//if (page == 6)	DrawButtons(Computer_Manage_Page);
+	//if (page == 7)	DrawButtons(Book_Manage_Page);
 	return 1;
 	
 }

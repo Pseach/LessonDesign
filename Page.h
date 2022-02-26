@@ -20,4 +20,4 @@ extern Pages Manage_Page;
 extern Pages User_Manage_Page;
 extern Pages Computer_Room_Manage_Page;
 extern Pages Computer_Manage_Page;
-
+extern Pages Book_Manage_Page;
