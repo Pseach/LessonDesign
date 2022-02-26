@@ -7,30 +7,62 @@ extern int Page;//切换页面 换按钮
 struct Windows { // 窗口数据
 	int x;
 	int y;
+	Windows& operator=(Windows& value) {
+		x = value.x;
+		y = value.y;
+		return *this;
+	}//无效果???（）
 };
 
-typedef struct {  //时间的数据结构
+typedef struct time{  //时间的数据结构
 	int Year;
 	int Month;
 	int Day;
+	int Hour;
+	int Minute;
+	int Second;
 	int Time_Mod;	// 按手动调节 | 按系统时间 （可能用？）
+	time& operator=(time& value){
+		Year = value.Year;
+		Month = value.Month;
+		Day = value.Day;
+		Second = value.Second;
+		return *this;
+	}
+	bool operator< (time const& value) const {
+		if (Year != value.Year) return Year < value.Year;
+		else if (Month != value.Month) return Month < value.Month;
+		else if (Day != value.Day) return Day < value.Day;
+		else if (Second != value.Second) return Second < value.Second;
+	}
+	bool operator> (time const& value) const {
+		if (Year != value.Year) return Year > value.Year;
+		else if (Month != value.Month) return Month > value.Month;
+		else if (Day != value.Day) return Day > value.Day;
+		else if (Second != value.Second) return Second > value.Second;
+	}
+	bool operator= (time const& value) const {
+		return ((Year == value.Year) && (Month == value.Month) && (Day == value.Day) && (Second == value.Second));
+	}
+	bool operator!= (time const& value) const {
+		return ((Year != value.Year) || (Month != value.Month) || (Day != value.Day) || (Second != value.Second));
+	}
 }Time_Type;
-
 typedef struct {  //机位的数据结构
 	char Computer_Name[40];				//机位名字 
 	char Computer_Room[40];				//哪个机房 
 	int Computer_State;					//可用|不可用	1|0
-	//int IsPre_Book;						//被初步预定
-	//int IsFinal_Book; 					//被最终预定
+	int Computer_Book_State;			//机位预定状态（没有被预定or初步预定or终极预定）
 }Computer_Type;
 
 typedef struct {  //机房的数据结构
 	char ComputerRoom_Name[40];				//机房名字
 	int ComputerRoom_State;				//可用|不可用	1|0
-	Computer_Type Computer_Data;		//（可能）用于按机房查询所有机位功能
+	//Time_Type ComputerRoom_CanBook_Time;		//机房的允许预定时间（直接全局管理）
+	Computer_Type Computer_Data;		//用于按机房查询所有机位功能
 }ComputerRoom_Type;
 
-typedef struct {  //系统操作用户的数据结构
+typedef struct usertpye{  //系统操作用户的数据结构
 	char Username[40];
 	char Password[40];
 	int Type;					//用户|管理员
@@ -38,13 +70,23 @@ typedef struct {  //系统操作用户的数据结构
 
 	int Login_User_Type;		//未知|用户|管理员
 	int Logined;				//登录状态
+	//usertpye& operator=(usertpye& value) {
+	//	strcpy(Username, value.Username);
+	//	strcpy(Password, value.Password);
+	//	Type = value.Type;
+	//	HaveComputer = value.HaveComputer;
+	//	Login_User_Type = value.Login_User_Type;
+	//	Logined = value.Logined;
+	//	return *this;
+	//}//无效果???（）
 }User_Type;
 
 typedef struct {  //预定信息的数据结构
-	Time_Type Book_Time_Data;					//预定的时间
-	Time_Type Computer_Book_Time_Data;			//机位的预定时间
+	Time_Type Book_Time;						//预定的时间
+	Time_Type Book_Time_Long;					//机位的预定时长
 	User_Type User_Book_Data;					//预定用户数据（名字）
-	int Computer_Book_State;					//机位预定状态（没有被预定or初步预定or终极预定）
+	ComputerRoom_Type ComputerRoom_Book_Data;   //预定机房数据
+	Computer_Type Computer_Book_Data;			//预定机位数据
 }Book_Type;
 
 //book数据

@@ -1,4 +1,5 @@
 #include <graphics.h>
+#include <string>
 #include <io.h>
 #include <direct.h>
 #include "start.h"		//窗口设置
@@ -8,18 +9,14 @@
 #include "Query.h"			//查询系统
 #include "Manage.h"			//管理系统
 #include "DataInput.h"		//自定义输入框
-#include <string>
 #include "Page.h"
+
 int Page = 0;//切换页面 换按钮
 
 void CreateFolder(std::string str);
 
-
 //账户全局变量
 User_Type Temp_User = { "NONE","NONE",-1,0,0 }; //初始化用户名//初始化密码 //初始化权限 : 未知|用户|管理员//已经有机位了（不用）//登录状态
-
-//字体全局变量
-const int Defaut_Font_Size = ButtonLocation_0.Height * 4 / 5;
 
 Windows VerticalWindows = {595,990};
 Windows LandscapeWindows = {990,540 + 45};//Defaut : 990 , 540 + 45 
@@ -27,7 +24,11 @@ Windows LandscapeWindows = {990,540 + 45};//Defaut : 990 , 540 + 45
 
 Windows WindowsSize = { 990,540 + 45 };
 
+//字体全局变量
+const int Defaut_Font_Size = (WindowsSize.y - 45) / 6 * 2 / 3 * 4 / 5;
+
 int MainStart() {
+
 	CreateFolder("Files");	//创建空文件夹放置文件
 
 	setinitmode(0); //设置初始化图形的选项和模式
@@ -112,9 +113,9 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 				case 1: {Add_User(); break; }
 				case 2: {Login_User(); break; }
 				case 3: {Logout_User(); break; }
-				case 4: {Page = 1; Book();  break; }//1
-				case 5: {Page = 2; Query(); break;	}//2
-				case 6: {Page = 3; Manage();break;}//3
+				case 4: {Page = 1;  break; }//1
+				case 5: {Page = 2;  break;	}//2
+				case 6: {Page = 3;  break;}//3
 			}
 			break;	//Exit Page 0
 		}
@@ -123,7 +124,7 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 				case 0: {Page = 0; break; }
 				case 1: { Pre_Book(); break; }
 				case 2: { Cancel_Pre_Book(); break; }
-				case 3: { Final_Book(); break; }
+				case 3: { Query_IsBooK(); break; }
 			}
 			break;	//Exit Page 1
 		}
@@ -139,9 +140,9 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 		case 3: {
 			switch (PressButtonId) {
 				case 0: {Page = 0; break; }
-				case 1: { break; }
-				case 2: { break; }
-				case 3: { break; }
+				case 1: {Page = 4; break; }
+				case 2: {Page = 5; break; }
+				case 3: {Page = 6; break; }
 				case 4: { break; }
 				case 5: {
 					break;
@@ -155,6 +156,7 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 		}
 		case 4: {
 			switch (PressButtonId) {
+			case 0: {Page = 3; break; }
 			case 1: { break; }
 			case 2: { break; }
 			case 3: { break; }
@@ -171,6 +173,7 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 		}
 		case 5: {
 			switch (PressButtonId) {
+			case 0: {Page = 3; break; }
 			case 1: { break; }
 			case 2: { break; }
 			case 3: { break; }
@@ -187,6 +190,7 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 		}
 		case 6: {
 			switch (PressButtonId) {
+			case 0: {Page = 3; break; }
 			case 1: { break; }
 			case 2: { break; }
 			case 3: { break; }
@@ -201,6 +205,24 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 			}
 			break;	//Exit Page 3
 		}
+		case 7: {
+			switch (PressButtonId) {
+			case 0: {Page; break; }
+			case 1: { break; }
+			case 2: { break; }
+			case 3: { break; }
+			case 4: { break; }
+			case 5: {
+				break;
+			}
+			case 6: {
+
+				break;
+			}
+			}
+			break;	//Exit Page 3
+		}
+
 	}
 	ButtonLocation[PressButtonId].Pressed = false;	//恢复按钮
 	PressButtonId = -1;								//初始化按钮（不用？）

@@ -33,13 +33,13 @@ int Show_Online_Login_User() {	//显示当前账户
 				break;
 			}
 			case 0: {	//普通用户
-				xyprintf(ButtonLocation_0.X, ButtonLocation_0.Height + RemindFont_Size / 2, "尊敬的用户您好！");//8个字
+				xyprintf(ButtonLocation_0.X / 5, ButtonLocation_0.Height + RemindFont_Size / 2, "尊敬的用户您好！");//8个字
 				//xyprintf(ButtonLocation_0.Width - 8 * RemindFont_Size, ButtonLocation_0.Height + RemindFont_Size / 2, "尊敬的用户您好！");//8个字
 				//xyprintf(ButtonLocation_0.width - 8 * RemindFont_Size, WindowsSize.y - RemindFont_Size * 3 / 2, "尊敬的用户您好！");//8个字
 				break;
 			}
 			case 1: {	//管理员
-				xyprintf(ButtonLocation_0.X, ButtonLocation_0.Height + RemindFont_Size / 2, "尊敬的管理员您好！");//9个字
+				xyprintf(ButtonLocation_0.X / 5, ButtonLocation_0.Height + RemindFont_Size / 2, "尊敬的管理员您好！");//9个字
 				//xyprintf(ButtonLocation_0.Width - 9 * RemindFont_Size, ButtonLocation_0.Height + RemindFont_Size / 2, "尊敬的管理员您好！");//9个字
 				//xyprintf(ButtonLocation_0.width - 9 * RemindFont_Size, WindowsSize.y - RemindFont_Size * 3 / 2, "尊敬的管理员您好！");//9个字
 				break;

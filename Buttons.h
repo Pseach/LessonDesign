@@ -1,6 +1,7 @@
 #pragma once
 //三级目录文件
 
+extern const int ButtonNumber;
 
 struct RectButton {// 矩形按钮
 	int IsTitle;

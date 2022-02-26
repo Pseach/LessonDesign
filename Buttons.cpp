@@ -5,6 +5,9 @@
 #include <string>
 #include "Page.h"
 
+const int ButtonNumber = 6;
+
+//(WindowsSize.y - 45) / 6 * 2 / 3
 //LandscapeWindows.x = 990 .y=540+45;
 const int BUTTONS_X_Len = WindowsSize.x / 6, BUTTONS_Y_Len = (WindowsSize.y - 45) / 6;
 const int HALF_BUTTON_Y_Len = BUTTONS_Y_Len / 2;
@@ -111,7 +114,7 @@ int DrawPage(int& page) {
 	setfont(Defaut_Font_Size, 0, "方正喵呜体");					//字体大小  宽度比例自适应  字体文件
 
 	//color_t lastFillColor = WHITE;//EGEARGB(WHITE);//= getfillcolor();//这个函数用于获取当前绘图填充色 
-	for (int i = 0; i <= 6; i++) {
+	for (int i = 0; i <= ButtonNumber; i++) {
 		//根据状态进行不同的绘制，这里按状态改变颜色
 		//color_t ButtonsColour;
 		if (ButtonLocation[i].Pressed) {
@@ -128,6 +131,7 @@ int DrawPage(int& page) {
 		//	lastFillColor = ButtonsColour;
 		//}
 	}
+
 	xyprintf(ButtonLocation[0].X, ButtonLocation[0].Y , "×");
 	if (page == 0)	DrawButtons(Menu_Page);
 	if (page == 1)	DrawButtons(Book_Page); 
