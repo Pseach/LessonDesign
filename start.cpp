@@ -15,8 +15,8 @@ int Page = 0;//切换页面 换按钮
 
 void CreateFolder(std::string str);
 
-//账户全局变量
-User_Type Temp_User = { "NONE","NONE",-1,0,0 }; //初始化用户名//初始化密码 //初始化权限 : 未知|用户|管理员//已经有机位了（不用）//登录状态
+//账户全局变量		//用户|管理员 -1|0|1//是否拥有机位//登录状态
+User_Type Temp_User = { "NONE","NONE",-1,0,0}; //初始化用户名//初始化密码 //初始化权限 : 未知|用户|管理员//已经有机位了（不用）//登录状态
 
 Windows VerticalWindows = {595,990};
 Windows LandscapeWindows = {990,540 + 45};//Defaut : 990 , 540 + 45 
@@ -108,9 +108,10 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 				case 1: {Add_User(); break; }
 				case 2: {Login_User(); break; }
 				case 3: {Logout_User(); break; }
-				case 4: {Page = 1;  break; }//1
-				case 5: {Page = 2;  break;	}//2
-				case 6: {Page = 3;  break;}//3
+				case 4: {Page = 1;  break; }
+				case 5: {Page = 2;  break;	}
+				case 6: if (Temp_User.Type == 0) { MessageBox(NULL, TEXT("您不是管理员！无权做此操作！"), TEXT("权限管理"), MB_OK | MB_SETFOREGROUND); break; }//如果是普通用户，无法点开，并提醒
+						{Page = 3;  break;}
 			}
 			break;	//Exit Page 0
 		}

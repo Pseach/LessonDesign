@@ -77,7 +77,7 @@ int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什
 						&Book_Point->Book_Data.Book_Time_Long.Hour, Book_Point->Book_Data.User_Book_Data.Username,
 						Book_Point->Book_Data.ComputerRoom_Book_Data.ComputerRoom_Name,
 						Book_Point->Book_Data.ComputerRoom_Book_Data.Computer_Data.Computer_Name,
-						Book_Point->Book_Data.Computer_Book_Data.Computer_Book_State//应该是这个
+						&Book_Point->Book_Data.Computer_Book_Data.Computer_Book_State//应该是这个
 					);//读出文件当前记录
 					Books_Read->Books_Next = Book_Point;
 					Books_Read = Book_Point;

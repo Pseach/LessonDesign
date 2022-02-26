@@ -58,7 +58,7 @@ int Add_User() { //注册/添加用户
 		User_Type Temp_Accounts{};
 		Accounts_List Accounts_Head, Accounts_Read, Account_Point;
 
-		int Temp_Type = MessageBox(NULL, TEXT("授予账户管理员权限？"), TEXT("用户权限设置"), MB_YESNO | MB_ICONQUESTION | MB_SETFOREGROUND);//MB_ICONQUESTION：问号https://blog.csdn.net/yuyan987/article/details/78558648
+		int Temp_Type = MessageBox(NULL, TEXT("授予账户管理员权限？"), TEXT("添加用户"), MB_YESNO | MB_ICONQUESTION | MB_SETFOREGROUND);//MB_ICONQUESTION：问号https://blog.csdn.net/yuyan987/article/details/78558648
 		inputbox_getline("请输入账号", "请输入账号", Temp_Accounts.Username, 40);      //输入账号//https://xege.org/manual/api/other/inputboxgetline.htm buffer area
 		inputbox_getline("请输入密码", "请输入密码", Temp_Accounts.Password, 40);      //输入密码
 		Temp_Accounts.Type = (Temp_Type == 6) ? 1 : 0;	 //是(Y) 值为6 否(N)值为7;	//标记用户权限
@@ -148,7 +148,8 @@ int Login_User(){        	    //登录
 						fclose(FP_Accounts);
 						strcpy(Temp_User.Username, Temp_Accounts.Username);
 						Temp_User.Type = Temp_Accounts.Type;	//更换当前登录状态
-						Temp_User.Logined = 1;	
+						Temp_User.Logined = 1;			//变更登录状态已登录
+						//Temp_User.Login_User_Type = 1;	//变更登录种类
 						return MessageBox(NULL, TEXT("登录成功！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
 					}else { //密码错误
 						if ((MessageBox(NULL, TEXT("密码错误！\n是否重新输入账号密码?"), TEXT("账号已找到找到！"), MB_YESNO | MB_ICONWARNING | MB_SETFOREGROUND) == 6) ? 1 : 0) {//是 1
@@ -177,7 +178,11 @@ int Logout_User() {          //退出账户
 		MessageBox(NULL, TEXT("您还没有登录！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
 	}
 	else {
-		Temp_User = { "NONE","NONE",-1,0,0 };
+		//User_Type Temp_User = { "NONE","NONE",-1,0,0 };//?
+		Temp_User.Type = -1;
+		Temp_User.Logined = 0;
+		strcpy(Temp_User.Username, "NONE");
+		strcpy(Temp_User.Password, "NONE");
 		MessageBox(NULL, TEXT("您已退出当前账户！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
 	}
 	return 1;
