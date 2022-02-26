@@ -83,7 +83,7 @@ typedef struct usertpye{  //系统操作用户的数据结构
 
 typedef struct {  //预定信息的数据结构
 	Time_Type Book_Time;						//预定的时间
-	Time_Type Book_Time_Long;					//机位的预定时长
+	Time_Type Book_Time_Long;					//机位的预定时长//单位小时
 	User_Type User_Book_Data;					//预定用户数据（名字）
 	ComputerRoom_Type ComputerRoom_Book_Data;   //预定机房数据
 	Computer_Type Computer_Book_Data;			//预定机位数据
@@ -113,10 +113,10 @@ typedef struct Computers_Node {
 	struct Computers_Node* Computers_Next;
 }Computers_Size, * Computers_List;
 
-typedef struct Book_Node {
+typedef struct Books_Node {
 	Book_Type Book_Data;
-	struct Book_Node* Book_Next;
-}Book_Size, * Book_List;
+	struct Books_Node* Books_Next;
+}Books_Size, * Books_List;
 
 
 //窗口配置

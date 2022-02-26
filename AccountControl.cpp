@@ -5,6 +5,7 @@
 #include <stdio.h>
 
 #include "Buttons.h"
+extern User_Type Temp_User;
 
 int Show_Online_Login_User() {	//显示当前账户
 
@@ -115,12 +116,11 @@ int Login_User(){        	    //登录
 		MessageBox(NULL, TEXT("您已登录！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
 	}
 	else {
-
 		FILE* FP_Accounts = NULL;
 		FP_Accounts = fopen("Files\\Users.txt", "a"); //如果文件不存在，则会创建一个新文件
 		fclose(FP_Accounts);
 
-		User_Type Temp_Accounts{};
+		User_Type Temp_Accounts={};
 		Accounts_List Accounts_Head, Accounts_Read, Account_Point;
 
 		bool isFindAccount = 0;
@@ -148,6 +148,7 @@ int Login_User(){        	    //登录
 						fclose(FP_Accounts);
 						strcpy(Temp_User.Username, Temp_Accounts.Username);
 						Temp_User.Type = Temp_Accounts.Type;	//更换当前登录状态
+						Temp_User.Logined = 1;	
 						return MessageBox(NULL, TEXT("登录成功！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
 					}else { //密码错误
 						if ((MessageBox(NULL, TEXT("密码错误！\n是否重新输入账号密码?"), TEXT("账号已找到找到！"), MB_YESNO | MB_ICONWARNING | MB_SETFOREGROUND) == 6) ? 1 : 0) {//是 1

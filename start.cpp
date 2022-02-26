@@ -174,7 +174,7 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 		case 5: {
 			switch (PressButtonId) {
 			case 0: {Page = 3; break; }
-			case 1: { break; }
+			case 1: { Add_Computer_Room(); break; }
 			case 2: { break; }
 			case 3: { break; }
 			case 4: { break; }
@@ -191,7 +191,7 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 		case 6: {
 			switch (PressButtonId) {
 			case 0: {Page = 3; break; }
-			case 1: { break; }
+			case 1: {Add_Computer(); break; }
 			case 2: { break; }
 			case 3: { break; }
 			case 4: { break; }
