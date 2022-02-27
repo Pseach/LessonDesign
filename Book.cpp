@@ -134,7 +134,7 @@ int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什
 			Books_Read = Books_Head;
 			while (!feof(FP_BookData)) {      //以尾接法建立一个链表。  feof检测文件是否结束
 				if (Book_Point = (Books_List)malloc(sizeof(Books_Size))) {
-					fscanf(FP_BookData, "%d/%d/%d %d:%d:%d Long:%d\tUserName:%s\tBookRoom:%s\tBookComputer:%s\tBookState:%d\n",
+					fscanf(FP_BookData, "%d/%d/%d %d：%d：%d Long：%d\tUserName：%s\tBookRoom：%s\tBookComputer：%s\tBookState：%d\n",
 						&Book_Point->Book_Data.Book_Time.Year, &Book_Point->Book_Data.Book_Time.Month, &Book_Point->Book_Data.Book_Time.Day,
 						&Book_Point->Book_Data.Book_Time.Hour, &Book_Point->Book_Data.Book_Time.Minute, &Book_Point->Book_Data.Book_Time.Second,
 						&Book_Point->Book_Data.Book_Time_Long.Hour, Book_Point->Book_Data.User_Book_Data.Username,
@@ -158,7 +158,7 @@ int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什
 			if (!Book_Point) {    //没找到，则以追加的方式写入BookLog.txt文本中
 				FP_BookData = fopen("Files\\BookLog.txt", "a");
 				Temp_Book.Computer_Book_Data.Computer_Book_State = 1;//（待同意的初步预定）
-				fprintf(FP_BookData,"%d/%d/%d %d:%d:%d Long:%d\tUserName:%s\t BookRoom:%s\tBookComputer:%s\tBookState:%d\n",
+				fprintf(FP_BookData,"%d/%d/%d %d：%d：%d Long：%d\tUserName：%s\t BookRoom：%s\tBookComputer：%s\tBookState：%d\n",
 					Temp_Book.Book_Time.Year, Temp_Book.Book_Time.Month ,Temp_Book.Book_Time.Day,
 					Temp_Book.Book_Time.Hour, Temp_Book.Book_Time.Minute, Temp_Book.Book_Time.Second,
 					Temp_Book.Book_Time_Long.Hour, Temp_Book.User_Book_Data.Username,

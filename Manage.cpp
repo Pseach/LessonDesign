@@ -16,14 +16,14 @@ int ComputerRoom_Num() {
 	fclose(FP_ComputerRoom);
 		ComputerRoom_Type Temp_ComputerRoom = {};
 		ComputerRoom_List ComputerRoom_Head, ComputerRoom_Read, ComputerRoom_Point;
-
+		
 		FP_ComputerRoom = fopen("Files\\ComputerRooms.txt", "r");//ÏÈÓÃÖ»¶ÁµÄ·½Ê½°ÑÎÄ¼ş´ò¿ª£¬°ÑÊı¾İ¶Á³öÀ´£¬·ÅÔÚÒ»¸öĞòÁĞÖĞ
 		ComputerRoom_Head = (ComputerRoom_List)malloc(sizeof(ComputerRoom_Size));
 		ComputerRoom_Head->ComputerRoom_Next = NULL;
 		ComputerRoom_Read = ComputerRoom_Head;
 		while (!feof(FP_ComputerRoom)) {      //ÒÔÎ²½Ó·¨½¨Á¢Ò»¸öÁ´±í¡£  feof¼ì²âÎÄ¼şÊÇ·ñ½áÊø
-			ComputerRoom_Point = (ComputerRoom_List)malloc(sizeof(ComputerRoom_Size));
-			if(fscanf(FP_ComputerRoom, "%s\n", ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name))num++;//¶Á³öÎÄ¼şµ±Ç°¼ÇÂ¼ //¶Áµ½²Ånum++
+			ComputerRoom_Point = (ComputerRoom_List)malloc(sizeof(ComputerRoom_Size));////////////////ÎŞÂÛ»ú·¿¿ª¹Ø£¬¶¼ËãÒ»¸ö£¨Ö»°´Ãû×ÖÀ´£©
+			if(fscanf(FP_ComputerRoom, "ComputerRoomName£º%s\tState£º%d\n", ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name, &ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_State))num++;//¶Á³öÎÄ¼şµ±Ç°¼ÇÂ¼ //¶Áµ½²Ånum++
 			ComputerRoom_Read->ComputerRoom_Next = ComputerRoom_Point;
 			ComputerRoom_Read = ComputerRoom_Point;
 		}
@@ -46,7 +46,8 @@ bool HaveComputerRoom(char Static_ComputerRoomName[]) {//Ö»´«Êı×éµÄ»°£¬´«¹ıÀ´Ö»Ê
 	ComputerRoom_Read = ComputerRoom_Head;
 	while (!feof(FP_ComputerRoom)) {      //ÒÔÎ²½Ó·¨½¨Á¢Ò»¸öÁ´±í¡£  feof¼ì²âÎÄ¼şÊÇ·ñ½áÊø
 		ComputerRoom_Point = (ComputerRoom_List)malloc(sizeof(ComputerRoom_Size));
-		fscanf(FP_ComputerRoom, "%s\n", ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name);//¶Á³öÎÄ¼şµ±Ç°¼ÇÂ¼
+
+		fscanf(FP_ComputerRoom, "ComputerRoomName£º%s\tState£º%d\n", ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name, &ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_State);//¶Á³öÎÄ¼şµ±Ç°¼ÇÂ¼
 		ComputerRoom_Read->ComputerRoom_Next = ComputerRoom_Point;
 		ComputerRoom_Read = ComputerRoom_Point;
 	}
@@ -74,6 +75,8 @@ bool HaveComputer(char Static_ComputerName[]) {
 	fclose(FP_Computers);
 
 	bool IsHave = 0;
+	ComputerRoom_Type Temp_ComputerRoom = {};
+	Computer_Type Temp_Computers = {};
 	Computers_List Computers_Head, Computers_Read, Computers_Point;
 
 	FP_Computers = fopen("Files\\Computers.txt", "r");//ÏÈÓÃÖ»¶ÁµÄ·½Ê½°ÑÎÄ¼ş´ò¿ª£¬°ÑÊı¾İ¶Á³öÀ´£¬·ÅÔÚÒ»¸öĞòÁĞÖĞ
@@ -82,7 +85,7 @@ bool HaveComputer(char Static_ComputerName[]) {
 	Computers_Read = Computers_Head;
 	while (!feof(FP_Computers)) {      //ÒÔÎ²½Ó·¨½¨Á¢Ò»¸öÁ´±í¡£  feof¼ì²âÎÄ¼şÊÇ·ñ½áÊø
 		Computers_Point = (Computers_List)malloc(sizeof(Computers_Size));
-		fscanf(FP_Computers, "%s\n", Computers_Point->Computers_Data.Computer_Name);//¶Á³öÎÄ¼şµ±Ç°¼ÇÂ¼
+		fscanf(FP_Computers, "FromComputerRoom£º%s\tComputer£º%s\tComputer_State£º%d\n", Temp_ComputerRoom.ComputerRoom_Name, Computers_Point->Computers_Data.Computer_Name, &Temp_Computers.Computer_State);//¶Á³öÎÄ¼şµ±Ç°¼ÇÂ¼
 		Computers_Read->Computers_Next = Computers_Point;
 		Computers_Read = Computers_Point;
 	}
@@ -104,10 +107,10 @@ bool HaveComputer(char Static_ComputerName[]) {
 	return IsHave;
 }
 
-bool HaveComputerFromRoom(char Static_ComputerName[]) {
-
-	return 1;
-}
+//bool HaveComputerFromRoom(char Static_ComputerName[]) {
+//
+//	return 1;
+//}
 //ÓÃ»§¹ÜÀíÏµÍ³
 int User_Manage(){				//¹ÜÀíÓÃ»§
 	return 1;
@@ -135,8 +138,8 @@ int Add_Computer_Room() { //Ìí¼Ó»ú·¿£¨¹ÜÀíÔ±²ÅÄÜ¹ÜÀí£¿£©
 	do {	//¶ÁÈ¡²¢´æ´¢
 		ComputerRoom_Type Temp_ComputerRoom={};
 		ComputerRoom_List ComputerRoom_Head, ComputerRoom_Read, ComputerRoom_Point;
-
-		inputbox_getline("ÇëÊäÈë»ú·¿Ãû³Æ", "ÇëÊäÈë»ú·¿Ãû³Æ", Temp_ComputerRoom.ComputerRoom_Name, 40);      //ÊäÈë»ú·¿Ãû
+		
+		inputbox_getline("ÇëÊäÈëÒªÌí¼Ó»ú·¿µÄÃû³Æ", "ÇëÊäÈëÒªÌí¼Ó»ú·¿µÄÃû³Æ", Temp_ComputerRoom.ComputerRoom_Name, 40);      //ÊäÈë»ú·¿Ãû
 		Temp_ComputerRoom.ComputerRoom_State = 1;	//´´½¨Ê±±ê¼Ç¿ÉÓÃ
 
 		FP_ComputerRoom = fopen("Files\\ComputerRooms.txt", "r");//ÏÈÓÃÖ»¶ÁµÄ·½Ê½°ÑÎÄ¼ş´ò¿ª£¬°ÑÊı¾İ¶Á³öÀ´£¬·ÅÔÚÒ»¸öĞòÁĞÖĞ
@@ -145,7 +148,7 @@ int Add_Computer_Room() { //Ìí¼Ó»ú·¿£¨¹ÜÀíÔ±²ÅÄÜ¹ÜÀí£¿£©
 		ComputerRoom_Read = ComputerRoom_Head;
 		while (!feof(FP_ComputerRoom)) {      //ÒÔÎ²½Ó·¨½¨Á¢Ò»¸öÁ´±í¡£  feof¼ì²âÎÄ¼şÊÇ·ñ½áÊø
 			ComputerRoom_Point = (ComputerRoom_List)malloc(sizeof(ComputerRoom_Size));
-			fscanf(FP_ComputerRoom, "%s\n", ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name);//¶Á³öÎÄ¼şµ±Ç°¼ÇÂ¼
+			fscanf(FP_ComputerRoom, "ComputerRoomName£º%s\tState£º%d\n", ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name, &ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_State);//¶Á³öÎÄ¼şµ±Ç°¼ÇÂ¼
 			ComputerRoom_Read->ComputerRoom_Next = ComputerRoom_Point;
 			ComputerRoom_Read = ComputerRoom_Point;
 		}
@@ -153,11 +156,14 @@ int Add_Computer_Room() { //Ìí¼Ó»ú·¿£¨¹ÜÀíÔ±²ÅÄÜ¹ÜÀí£¿£©
 		fclose(FP_ComputerRoom);
 
 		ComputerRoom_Point = ComputerRoom_Head->ComputerRoom_Next;
+
 		while ((ComputerRoom_Point) && (strcmp(Temp_ComputerRoom.ComputerRoom_Name, ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name) != 0)&&(1))//±È¶ÔÊı¾İ£¬Ã»ÕÒµ½ÏàÍ¬ÓÃ»§Ãû£¬ÇÒÃ»ÕÒÍê£¬¼ÌĞøÕÒ
 			ComputerRoom_Point = ComputerRoom_Point->ComputerRoom_Next;
+
 		if (!ComputerRoom_Point) {    //Ã»ÕÒµ½»ú·¿Ãû£¬ÔòÒÔ×·¼ÓµÄ·½Ê½Ğ´ÈëComputerRooms.txtÎÄ±¾ÖĞ£¬ÇÒµµ´ÎµÄ×¢²áÁ÷³ÌÍê³É
 			FP_ComputerRoom = fopen("Files\\ComputerRooms.txt", "a");
-			fprintf(FP_ComputerRoom, "%s\n", Temp_ComputerRoom.ComputerRoom_Name);
+			//fprintf(FP_ComputerRoom, "ComputerRoomName£º%s\tState£º%d\n", Temp_ComputerRoom.ComputerRoom_Name, ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_State);
+			fprintf(FP_ComputerRoom, "ComputerRoomName£º%s\tState£º%d\n", Temp_ComputerRoom.ComputerRoom_Name, Temp_ComputerRoom.ComputerRoom_State);
 			fclose(FP_ComputerRoom);
 			return MessageBox(NULL, TEXT("Ìí¼Ó³É¹¦£¡"), TEXT("ÌáĞÑ"), MB_OK | MB_SETFOREGROUND);
 		}
@@ -180,50 +186,83 @@ int Transform_Computer(){	//¿ª·Å|¹Ø±Õ»úÎ»
 	return 1;
 }
 int Add_Computer() { //Ìí¼Ó»úÎ»£¨¹ÜÀíÔ±²ÅÄÜ¹ÜÀí£¿£©
-	if (ComputerRoom_Num()) {//ÓĞ»ú·¿¾ÍÖ´ĞĞ-----------------------------------------------------//»¹ÒªÊäÈëËùÔÚ»ú·¿£¬¼ì²éÊÇ·ñÓÉ´Ë»ú·¿
-		FILE* FP_Computers = NULL;
-		FP_Computers = fopen("Files\\Computers.txt", "a"); //Èç¹ûÎÄ¼ş²»´æÔÚ£¬Ôò»á´´½¨Ò»¸öĞÂÎÄ¼ş
-		fclose(FP_Computers);
-		do {	//¶ÁÈ¡²¢´æ´¢»úÎ»Ãû 
-			Computer_Type Temp_Computers = {};
-			Computers_List Computers_Head, Computers_Read, Computer_Point;
-
-
-			inputbox_getline("ÇëÊäÈë»úÎ»Ãû ", "ÇëÊäÈë»úÎ»Ãû ", Temp_Computers.Computer_Name, 40);      //ÊäÈë»úÎ»Ãû
-			//Temp_Computers.Computer_State = (Temp_Type == 6) ? 1 : 0;	 //ÊÇ(Y) ÖµÎª6 ·ñ(N)ÖµÎª7;
-			Temp_Computers.Computer_State = 1; // ´´½¨Ê±³õÊ¼¿ÉÓÃ
-			//Temp_Computers.IsPre_Book = 0;
-			//Temp_Computers.IsFinal_Book = 0;
-
-			FP_Computers = fopen("Files\\Computers.txt", "r");//ÏÈÓÃÖ»¶ÁµÄ·½Ê½°ÑÎÄ¼ş´ò¿ª£¬°ÑÊı¾İ¶Á³öÀ´£¬·ÅÔÚÒ»¸öĞòÁĞÖĞ
-			Computers_Head = (Computers_List)malloc(sizeof(Computers_Size));
-			Computers_Head->Computers_Next = NULL;
-			Computers_Read = Computers_Head;
-			while (!feof(FP_Computers)) {      //ÒÔÎ²½Ó·¨½¨Á¢Ò»¸öÁ´±í¡£  feof¼ì²âÎÄ¼şÊÇ·ñ½áÊø
-				Computer_Point = (Computers_List)malloc(sizeof(Computers_Size));
-				fscanf(FP_Computers, "%s\n", Computer_Point->Computers_Data.Computer_Name);//¶Á³öÎÄ¼şµ±Ç°¼ÇÂ¼
-				Computers_Read->Computers_Next = Computer_Point;
-				Computers_Read = Computer_Point;
-			}
-			Computers_Read->Computers_Next = NULL;
-			fclose(FP_Computers);
-
-			Computer_Point = Computers_Head->Computers_Next;
-			while ((Computer_Point) && (strcmp(Temp_Computers.Computer_Name, Computer_Point->Computers_Data.Computer_Name) != 0) && (1))//±È¶ÔÊı¾İ£¬Ã»ÕÒµ½ÏàÍ¬ÓÃ»§Ãû£¬ÇÒÃ»ÕÒÍê£¬¼ÌĞøÕÒ
-				Computer_Point = Computer_Point->Computers_Next;
-			if (!Computer_Point) {    //Ã»ÕÒµ½»úÎ»Ãû£¬ÔòÒÔ×·¼ÓµÄ·½Ê½Ğ´ÈëComputers.txtÎÄ±¾ÖĞ£¬ÇÒµµ´ÎµÄ×¢²áÁ÷³ÌÍê³É
-				FP_Computers = fopen("Files\\Computers.txt", "a");
-				fprintf(FP_Computers, "%s\n", Temp_Computers.Computer_Name);
+	do{
+		//if (ComputerRoom_Num()) {//ÓĞ»ú·¿¾ÍÖ´ĞĞ
+			ComputerRoom_Type Temp_ComputerRoom = {}; 
+			ComputerRoom_List ComputerRoom_Head, ComputerRoom_Read, ComputerRoom_Point;
+			inputbox_getline("ÇëÊäÈë»úÎ»ËùÔÚ»ú·¿Ãû³Æ", "ÇëÊäÈë»úÎ»ËùÔÚ»ú·¿Ãû³Æ", Temp_ComputerRoom.ComputerRoom_Name, 40);      //ÊäÈëËùÔÚ»ú·¿
+			if (HaveComputerRoom(Temp_ComputerRoom.ComputerRoom_Name)) {	//¼ì²éÊÇ·ñÓĞ´Ë»ú·¿
+				FILE* FP_Computers = NULL;
+				FP_Computers = fopen("Files\\Computers.txt", "a"); //Èç¹ûÎÄ¼ş²»´æÔÚ£¬Ôò»á´´½¨Ò»¸öĞÂÎÄ¼ş
 				fclose(FP_Computers);
-				return MessageBox(NULL, TEXT("Ìí¼Ó³É¹¦£¡"), TEXT("ÌáĞÑ"), MB_OK | MB_SETFOREGROUND);
+				do {	//¶ÁÈ¡²¢´æ´¢»úÎ»Ãû 
+					//Computer_Type Temp_ComputerRoom.Computer_Data = {};
+					Computers_List Computers_Head, Computers_Read, Computer_Point;
+
+					inputbox_getline("ÇëÊäÈë»úÎ»Ãû ", "ÇëÊäÈë»úÎ»Ãû ", Temp_ComputerRoom.Computer_Data.Computer_Name, 40);      //ÊäÈë»úÎ»Ãû
+					//Temp_ComputerRoom.Computer_Data.Computer_State = (Temp_Type == 6) ? 1 : 0;	 //ÊÇ(Y) ÖµÎª6 ·ñ(N)ÖµÎª7;
+					Temp_ComputerRoom.Computer_Data.Computer_State = 1; // ´´½¨Ê±³õÊ¼¿ÉÓÃ
+					//Temp_ComputerRoom.Computer_Data.IsPre_Book = 0;
+					//Temp_ComputerRoom.Computer_Data.IsFinal_Book = 0;
+					
+					FP_Computers = fopen("Files\\Computers.txt", "r");//ÏÈÓÃÖ»¶ÁµÄ·½Ê½°ÑÎÄ¼ş´ò¿ª£¬°ÑÊı¾İ¶Á³öÀ´£¬·ÅÔÚÒ»¸öĞòÁĞÖĞ
+
+					ComputerRoom_Head = (ComputerRoom_List)malloc(sizeof(ComputerRoom_List));
+					Computers_Head = (Computers_List)malloc(sizeof(Computers_Size));
+
+					ComputerRoom_Head->ComputerRoom_Next = NULL;
+					Computers_Head->Computers_Next = NULL;
+
+					ComputerRoom_Read = ComputerRoom_Head;
+					Computers_Read = Computers_Head;
+
+					while (!feof(FP_Computers)) {      //ÒÔÎ²½Ó·¨½¨Á¢Ò»¸öÁ´±í¡£  feof¼ì²âÎÄ¼şÊÇ·ñ½áÊø
+						ComputerRoom_Point = (ComputerRoom_List)malloc(sizeof(ComputerRoom_Size));
+						Computer_Point = (Computers_List)malloc(sizeof(Computers_Size)); 
+						fscanf(FP_Computers, "FromComputerRoom£º%s\tComputer£º%s\tComputer_State£º%d\n", ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name, Computer_Point->Computers_Data.Computer_Name, &Computer_Point->Computers_Data.Computer_State);//¶Á³öÎÄ¼şµ±Ç°¼ÇÂ¼
+						
+						ComputerRoom_Read->ComputerRoom_Next = ComputerRoom_Point;
+						Computers_Read->Computers_Next = Computer_Point;
+
+						ComputerRoom_Read = ComputerRoom_Point;
+						Computers_Read = Computer_Point;
+					}
+					ComputerRoom_Read->ComputerRoom_Next = NULL;
+					Computers_Read->Computers_Next = NULL;
+					fclose(FP_Computers);
+					
+					ComputerRoom_Point = ComputerRoom_Head->ComputerRoom_Next;
+					Computer_Point = Computers_Head->Computers_Next;
+
+
+					//while ((ComputerRoom_Point) && (strcmp(Temp_ComputerRoom.ComputerRoom_Name, ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name) != 0) && (1))//±È¶ÔÊı¾İ£¬Ã»ÕÒµ½ÏàÍ¬ÓÃ»§Ãû£¬ÇÒÃ»ÕÒÍê£¬¼ÌĞøÕÒ
+
+
+					while ((ComputerRoom_Point) && (strcmp(Temp_ComputerRoom.Computer_Data.Computer_Name, Computer_Point->Computers_Data.Computer_Name) != 0))//±È¶ÔÊı¾İ£¬Ã»ÕÒµ½ÏàÍ¬ÓÃ»§Ãû£¬ÇÒÃ»ÕÒÍê£¬¼ÌĞøÕÒ
+						ComputerRoom_Point = ComputerRoom_Point->ComputerRoom_Next;
+
+					while ((Computer_Point) && (strcmp(Temp_ComputerRoom.Computer_Data.Computer_Name, Computer_Point->Computers_Data.Computer_Name) != 0))//±È¶ÔÊı¾İ£¬Ã»ÕÒµ½ÏàÍ¬ÓÃ»§Ãû£¬ÇÒÃ»ÕÒÍê£¬¼ÌĞøÕÒ
+						Computer_Point = Computer_Point->Computers_Next;
+
+					if (!Computer_Point) {    //Ã»ÕÒµ½»úÎ»Ãû£¬ÔòÒÔ×·¼ÓµÄ·½Ê½Ğ´ÈëComputers.txtÎÄ±¾ÖĞ£¬ÇÒµµ´ÎµÄ×¢²áÁ÷³ÌÍê³É
+						FP_Computers = fopen("Files\\Computers.txt", "a");
+						fprintf(FP_Computers, "FromComputerRoom£º%s\tComputer£º%s\tComputer_State£º%d\n", Temp_ComputerRoom.ComputerRoom_Name,Temp_ComputerRoom.Computer_Data.Computer_Name, Temp_ComputerRoom.Computer_Data.Computer_State);
+						fclose(FP_Computers);
+						return MessageBox(NULL, TEXT("Ìí¼Ó³É¹¦£¡"), TEXT("ÌáĞÑ"), MB_OK | MB_SETFOREGROUND);
+					}
+					else {  //ÕÒµ½ÁË£¬ÔòĞèÒªÖØĞÂÊäÈë»úÎ»Ãû£¬ÔÙÑ­»·¸Õ¸ÕµÄ¹ı³Ì¡£
+						if (MessageBox(NULL, TEXT("ÖØĞÂÌí¼Ó£¿"), TEXT("»úÎ»ÒÑ´æÔÚ£¡"), MB_YESNO | MB_ICONWARNING | MB_SETFOREGROUND | MB_SETFOREGROUND) == 7)return 1;
+					}
+				} while (1);
 			}
-			else {  //ÕÒµ½ÁË£¬ÔòĞèÒªÖØĞÂÊäÈë»úÎ»Ãû£¬ÔÙÑ­»·¸Õ¸ÕµÄ¹ı³Ì¡£
-				if (MessageBox(NULL, TEXT("ÖØĞÂÌí¼Ó£¿"), TEXT("»úÎ»ÒÑ´æÔÚ£¡"), MB_YESNO | MB_ICONWARNING | MB_SETFOREGROUND | MB_SETFOREGROUND) == 7)return 1;
-			}
-		} while (1);
-	}
-	else if (MessageBox(NULL, TEXT("»¹Ã»ÓĞÈÎºÎ»ú·¿£¡ÊÇ·ñÌí¼Ó»ú·¿£¿"), TEXT("ÌáĞÑ"), MB_YESNO | MB_SETFOREGROUND | MB_SETFOREGROUND) == 6)Add_Computer_Room();
-		 else return 1;
+			else {	//Èç¹ûÊäÈëµÄ»ú·¿²»´æÔÚ
+				if (MessageBox(NULL, TEXT("ËùÊäÈëµÄ»ú·¿²»´æÔÚ£¡ÊÇ·ñÌí¼Ó»ú·¿£¿"), TEXT("ÌáĞÑ"), MB_YESNO | MB_SETFOREGROUND | MB_SETFOREGROUND) == 6) { Add_Computer_Room(); }
+				else return 0;//²»¼Ó¾Í×ß¿ª
+			}		
+		//}
+		//else if (MessageBox(NULL, TEXT("»¹Ã»ÓĞÈÎºÎ»ú·¿£¡ÊÇ·ñÌí¼Ó»ú·¿£¿"), TEXT("ÌáĞÑ"), MB_YESNO | MB_SETFOREGROUND | MB_SETFOREGROUND) == 6) { Add_Computer_Room(); break;}
+		//	 else return 0;//²»¼Ó¾Í×ß¿ª
+	} while (1);
 }
 int Delete_Computer(){	//É¾³ı»úÎ»
 	return 1;
