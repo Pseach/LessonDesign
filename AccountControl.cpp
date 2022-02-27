@@ -181,6 +181,7 @@ int Logout_User() {          //ÍË³öÕË»§
 		//User_Type Temp_User = { "NONE","NONE",-1,0,0 };//?
 		strcpy(Temp_User.Username, "NONE");
 		strcpy(Temp_User.Password, "NONE");
+		Temp_User.HaveComputer = 0;
 		Temp_User.Type = -1;
 		Temp_User.Logined = 0;
 

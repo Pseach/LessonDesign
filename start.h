@@ -52,14 +52,14 @@ typedef struct {  //机位的数据结构
 	char Computer_Name[40];				//机位名字 
 	char Computer_Room[40];				//哪个机房 
 	int Computer_State;					//可用|不可用	1|0
-	int Computer_Book_State;			//机位预定状态（没有被预定or初步预定or终极预定）
+	int Computer_Book_State;			//机位预定状态（没有被预定or初步预定or终极预定）(用于在预定文件中查询历史记录时用（文件中如果数据是0就不看了，不对此条做操作）)
 }Computer_Type;
 
 typedef struct {  //机房的数据结构
 	char ComputerRoom_Name[40];				//机房名字
 	int ComputerRoom_State;				//可用|不可用	1|0
+	Computer_Type Computer_Data;		//用于按机房查询所有机位功能(?)
 	//Time_Type ComputerRoom_CanBook_Time;		//机房的允许预定时间（直接全局管理）
-	Computer_Type Computer_Data;		//用于按机房查询所有机位功能
 }ComputerRoom_Type;
 
 typedef struct usertpye{  //系统操作用户的数据结构
@@ -69,6 +69,7 @@ typedef struct usertpye{  //系统操作用户的数据结构
 	int HaveComputer;			//是否拥有机位
 	//int Login_User_Type;		//未知|用户|管理员 -1|0|1		//?????????
 	int Logined;				//登录状态
+	int CanBook;				//预定功能
 	//usertpye& operator=(usertpye& value) {
 	//	strcpy(Username, value.Username);
 	//	strcpy(Password, value.Password);

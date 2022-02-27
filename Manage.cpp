@@ -104,6 +104,10 @@ bool HaveComputer(char Static_ComputerName[]) {
 	return IsHave;
 }
 
+bool HaveComputerFromRoom(char Static_ComputerName[]) {
+
+	return 1;
+}
 //用户管理系统
 int User_Manage(){				//管理用户
 	return 1;
@@ -176,7 +180,7 @@ int Transform_Computer(){	//开放|关闭机位
 	return 1;
 }
 int Add_Computer() { //添加机位（管理员才能管理？）
-	if (ComputerRoom_Num()) {//有机房就执行
+	if (ComputerRoom_Num()) {//有机房就执行-----------------------------------------------------//还要输入所在机房，检查是否由此机房
 		FILE* FP_Computers = NULL;
 		FP_Computers = fopen("Files\\Computers.txt", "a"); //如果文件不存在，则会创建一个新文件
 		fclose(FP_Computers);

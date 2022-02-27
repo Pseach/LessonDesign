@@ -42,6 +42,7 @@ int MyAtoi(const char* str) {
 }
 
 int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什么的（已被预定））
+	//////////////////////////////////////////////////////还缺少功能：检测同一时间段是否预定多台电脑（book state）以及某台电脑是否被预约了（不能两人一台电脑？）
 	FILE* FP_BookData = NULL;
 	FP_BookData = fopen("Files\\BookLog.txt", "a"); //文件用于存储 ，，，，机位是否被占用，各种数据
 	fclose(FP_BookData);
@@ -59,8 +60,8 @@ int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什
 	/// </summary>
 	if (Temp_User.Logined) { //已登录 
 		do {
-			Book_Type Temp_Book = {};
 
+			Book_Type Temp_Book = {};
 			time_t timep;
 			struct tm* Time_Point;
 			time(&timep);
@@ -107,18 +108,8 @@ int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什
 				Temp_Book.Book_Time_Long.Hour = MyAtoi(ch_time);
 			} while (error != correct);
 			strcpy(Temp_Book.User_Book_Data.Username, Temp_User.Username);		//把输入的临时信息放到临时预定的数据结构体里
-
-
-			//do {//根据输入机房，查找是否有对应机位---------------------------优化！！！！(没对应机位的时候，问是否添加的时候，直接添加所输入的机位而不是再输)
-			//inputbox_getline("请输入机房名称", "请输入机房名称", Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name, 40);
-			//if (HaveComputerRoom(Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name)) {			//输入机房名称查询有无
-			//	inputbox_getline("请输入机位名称", "请输入机位名称", Temp_Book.ComputerRoom_Book_Data.Computer_Data.Computer_Name, 40) ; break;			//有的话输入对应机位
-			//}else if (MessageBox(NULL, TEXT("您输入的机房中无对应机位！是否添加对应机位?"), TEXT("提醒"), MB_YESNO | MB_SETFOREGROUND | MB_SETFOREGROUND) == 6)Add_Computer();	//无就添加机位
-			//	else return 0;//不添加机位怎么预定，退出预定机位功能！	//不添加就退出
-			//} while (HaveComputerRoom(Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name));	
 			
-			
-			do {
+			do {//---------------------------优化！！！！(没对应机位的时候，问是否添加的时候，直接添加所输入的机位而不是再输)
 				inputbox_getline("请输入添加机位所在机房名称", "请输入添加机位所在机房名称", Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name, 40);	//先输入机房
 				if (HaveComputerRoom(Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name)) {			//输入机房名称查询有无
 					inputbox_getline("请输入机位名称", "请输入机位名称", Temp_Book.ComputerRoom_Book_Data.Computer_Data.Computer_Name, 40);	//有的话输入机位
@@ -143,7 +134,7 @@ int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什
 			Books_Read = Books_Head;
 			while (!feof(FP_BookData)) {      //以尾接法建立一个链表。  feof检测文件是否结束
 				if (Book_Point = (Books_List)malloc(sizeof(Books_Size))) {
-					fscanf(FP_BookData, "%d/%d/%d %d:%d:%d Long:%d UserName:%s BookRoom:%s BookComputer:%s BookState:%d\n",
+					fscanf(FP_BookData, "%d/%d/%d %d:%d:%d Long:%d\tUserName:%s\tBookRoom:%s\tBookComputer:%s\tBookState:%d\n",
 						&Book_Point->Book_Data.Book_Time.Year, &Book_Point->Book_Data.Book_Time.Month, &Book_Point->Book_Data.Book_Time.Day,
 						&Book_Point->Book_Data.Book_Time.Hour, &Book_Point->Book_Data.Book_Time.Minute, &Book_Point->Book_Data.Book_Time.Second,
 						&Book_Point->Book_Data.Book_Time_Long.Hour, Book_Point->Book_Data.User_Book_Data.Username,
@@ -167,7 +158,7 @@ int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什
 			if (!Book_Point) {    //没找到，则以追加的方式写入BookLog.txt文本中
 				FP_BookData = fopen("Files\\BookLog.txt", "a");
 				Temp_Book.Computer_Book_Data.Computer_Book_State = 1;//（待同意的初步预定）
-				fprintf(FP_BookData,"%d/%d/%d %d:%d:%d Long:%d UserName:%s BookRoom:%s BookComputer:%s BookState:%d\n",
+				fprintf(FP_BookData,"%d/%d/%d %d:%d:%d Long:%d\tUserName:%s\t BookRoom:%s\tBookComputer:%s\tBookState:%d\n",
 					Temp_Book.Book_Time.Year, Temp_Book.Book_Time.Month ,Temp_Book.Book_Time.Day,
 					Temp_Book.Book_Time.Hour, Temp_Book.Book_Time.Minute, Temp_Book.Book_Time.Second,
 					Temp_Book.Book_Time_Long.Hour, Temp_Book.User_Book_Data.Username,

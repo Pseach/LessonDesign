@@ -16,7 +16,7 @@ int Page = 0;//切换页面 换按钮
 void CreateFolder(std::string str);
 
 //账户全局变量		//用户|管理员 -1|0|1//是否拥有机位//登录状态
-User_Type Temp_User = { "NONE","NONE",-1,0,0}; //初始化用户名//初始化密码 //初始化权限 : 未知|用户|管理员//已经有机位了（不用）//登录状态
+User_Type Temp_User = { "NONE","NONE",-1,0,0}; //初始化用户名//初始化密码 //初始化权限 : 未知|用户|管理员//已经有机位了//登录状态
 
 Windows VerticalWindows = {595,990};
 Windows LandscapeWindows = {990,540 + 45};//Defaut : 990 , 540 + 45 
