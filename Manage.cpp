@@ -58,11 +58,11 @@ bool HaveComputerRoom(char Static_ComputerRoomName[]) {//÷ª¥´ ˝◊Èµƒª∞£¨¥´π˝¿¥÷ª 
 		ComputerRoom_Point = ComputerRoom_Point->ComputerRoom_Next;
 	}
 	if (!ComputerRoom_Point) {    //√ª’“µΩª˙∑ø√˚
-		MessageBox(NULL, TEXT("√ª’“µΩ£°"), TEXT("√ª’“µΩ£°"), MB_OK | MB_ICONWARNING | MB_SETFOREGROUND);
+		//MessageBox(NULL, TEXT("√ª’“µΩ£°"), TEXT("√ª’“µΩ£°"), MB_OK | MB_ICONWARNING | MB_SETFOREGROUND);
 		IsHave=0;
 	}
 	else {  //’“µΩ¡À
-		MessageBox(NULL, TEXT("’“µΩ¡À£°"), TEXT("’“µΩ¡À£°"), MB_OK | MB_ICONWARNING | MB_SETFOREGROUND);
+		//MessageBox(NULL, TEXT("’“µΩ¡À£°"), TEXT("’“µΩ¡À£°"), MB_OK | MB_ICONWARNING | MB_SETFOREGROUND);
 		IsHave = 1;
 
 	}
