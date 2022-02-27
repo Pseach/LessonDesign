@@ -235,9 +235,6 @@ int Add_Computer() { //添加机位（管理员才能管理？）
 					Computer_Point = Computers_Head->Computers_Next;
 
 
-					//while ((ComputerRoom_Point) && (strcmp(Temp_ComputerRoom.ComputerRoom_Name, ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name) != 0) && (1))//比对数据，没找到相同用户名，且没找完，继续找
-
-
 					while ((ComputerRoom_Point) && (strcmp(Temp_ComputerRoom.Computer_Data.Computer_Name, Computer_Point->Computers_Data.Computer_Name) != 0))//比对数据，没找到相同用户名，且没找完，继续找
 						ComputerRoom_Point = ComputerRoom_Point->ComputerRoom_Next;
 
