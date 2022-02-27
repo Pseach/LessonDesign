@@ -75,9 +75,9 @@ int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什
 			Books_List Books_Head, Books_Read, Book_Point;
 
 			Temp_Book.Book_Time.Year = Time_Point->tm_year + 1900;
-			Temp_Book.Book_Time.Month = Time_Point->tm_mon + 1;
-			Temp_Book.Book_Time.Day = Time_Point->tm_mday;
-			Temp_Book.Book_Time.Hour = Time_Point->tm_hour + 8;
+			Temp_Book.Book_Time.Month = Time_Point->tm_mon + 1;//0~11
+			Temp_Book.Book_Time.Day = ((Time_Point->tm_hour + 8) >= 24) ? (Time_Point->tm_mday + 1) : (Time_Point->tm_mday);	//补回来
+			Temp_Book.Book_Time.Hour = ((Time_Point->tm_hour + 8) >= 24) ? (Time_Point->tm_hour + 8 - 24) : (Time_Point->tm_hour + 8);//可能出现“26”小时等意外数据
 			Temp_Book.Book_Time.Minute = Time_Point->tm_min;
 			Temp_Book.Book_Time.Second = Time_Point->tm_sec;
 
@@ -132,9 +132,9 @@ int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什
 				Books_Head->Books_Next = NULL;
 			}
 			Books_Read = Books_Head;
-			while (!feof(FP_BookData)) {      //以尾接法建立一个链表。  feof检测文件是否结束
+			while (!feof(FP_BookData)) {      //以尾接法建立一个链表。  feof检测文件是否结束	%02d-%02d-%02d
 				if (Book_Point = (Books_List)malloc(sizeof(Books_Size))) {
-					fscanf(FP_BookData, "%d/%d/%d %d%d:%d Long：%d\tUserName：%s\tBookRoom：%s\tBookComputer：%s\tBookState：%d\n",
+					fscanf(FP_BookData, "%d/%02d/%02d %02d:%02d:%02d Long：%d\tUserName：%s\tBookRoom：%s\tBookComputer：%s\tBookState：%d\n",
 						&Book_Point->Book_Data.Book_Time.Year, &Book_Point->Book_Data.Book_Time.Month, &Book_Point->Book_Data.Book_Time.Day,
 						&Book_Point->Book_Data.Book_Time.Hour, &Book_Point->Book_Data.Book_Time.Minute, &Book_Point->Book_Data.Book_Time.Second,
 						&Book_Point->Book_Data.Book_Time_Long.Hour, Book_Point->Book_Data.User_Book_Data.Username,
@@ -158,7 +158,7 @@ int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什
 			if (!Book_Point) {    //没找到，则以追加的方式写入BookLog.txt文本中
 				FP_BookData = fopen("Files\\BookLog.txt", "a");
 				Temp_Book.Computer_Book_Data.Computer_Book_State = 1;//（待同意的初步预定）
-				fprintf(FP_BookData,"%d/%d/%d %d:%d:%d Long：%d\tUserName：%s\t BookRoom：%s\tBookComputer：%s\tBookState：%d\n",
+				fprintf(FP_BookData,"%d/%02d/%02d %02d:%02d:%02d Long：%d\tUserName：%s\t BookRoom：%s\tBookComputer：%s\tBookState：%d\n",
 					Temp_Book.Book_Time.Year, Temp_Book.Book_Time.Month ,Temp_Book.Book_Time.Day,
 					Temp_Book.Book_Time.Hour, Temp_Book.Book_Time.Minute, Temp_Book.Book_Time.Second,
 					Temp_Book.Book_Time_Long.Hour, Temp_Book.User_Book_Data.Username,

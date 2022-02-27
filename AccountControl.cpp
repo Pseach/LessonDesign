@@ -3,22 +3,31 @@
 #include <graphics.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 
 #include "Buttons.h"
 //extern User_Type Temp_User;
 
 int Show_Online_Login_User() {	//显示当前账户
-
+	//LPCSTR Font1="\u65b9\u6b63\u55b5\u545c\u4f53";
 	setbkmode(TRANSPARENT);
 	setcolor(EGERGB(0x00, 0x00, 0x00)); // 文字颜色
-
 	setfont(Defaut_Font_Size, 0, "方正喵呜体");					//字体大小  宽度比例自适应  字体文件
 	//显示当前账户栏
 	drawRectButton(&ButtonLocation_0);	//“当前账户："
-	xyprintf(ButtonLocation_0.Height * 1 / 5 / 2, ButtonLocation_0.Height * 1 / 5 / 2, "当前账户：");
+	xyprintf(ButtonLocation_0.Height * 1 / 5 / 2, ButtonLocation_0.Height * 1 / 5 / 2, "当前账户:");
 
 	drawRectButton(&ShowOnline_Login_User); //登陆账户为" "
 	xyprintf(ShowOnline_Login_User.X, ShowOnline_Login_User.Y, "%s", Temp_User.Username);
+
+	time_t timep;
+	struct tm* Time_Point;
+	time(&timep);
+	Time_Point = gmtime(&timep);
+	//Temp_Book.Book_Time.Year = Time_Point->tm_year + 1900;
+	//Temp_Book.Book_Time.Month = Time_Point->tm_mon + 1;
+	//Temp_Book.Book_Time.Day = Time_Point->tm_mday;
+	xyprintf(WindowsSize.x - 4 * Defaut_Font_Size, ButtonLocation_0.Height * 1 / 5 / 2, "%02d:%02d:%02d", ((Time_Point->tm_hour + 8) >= 24) ? (Time_Point->tm_hour + 8 - 24) : (Time_Point->tm_hour + 8), Time_Point->tm_min, Time_Point->tm_sec);
 
 	{ 
 		int RemindFont_Size = Defaut_Font_Size / 2;
@@ -71,7 +80,7 @@ int Add_User() { //注册/添加用户
 		Accounts_Read = Accounts_Head;
 		while (!feof(FP_Accounts)) {      //以尾接法建立一个链表。  feof检测文件是否结束
 			if (Account_Point = (Accounts_List)malloc(sizeof(Accounts_Size))) {
-				fscanf(FP_Accounts, "%s %s %d %d\n", Account_Point->Accounts_Data.Username, Account_Point->Accounts_Data.Password, &Account_Point->Accounts_Data.Type, &Account_Point->Accounts_Data.HaveComputer);//读出文件当前记录
+				fscanf(FP_Accounts, "%s\t%s\t%d\t%d\n", Account_Point->Accounts_Data.Username, Account_Point->Accounts_Data.Password, &Account_Point->Accounts_Data.Type, &Account_Point->Accounts_Data.HaveComputer);//读出文件当前记录
 				Accounts_Read->Accounts_Next = Account_Point;
 				Accounts_Read = Account_Point;
 			}
@@ -84,7 +93,7 @@ int Add_User() { //注册/添加用户
 			Account_Point = Account_Point->Accounts_Next;
 		if (!Account_Point) {    //没找到相同用户名，则以追加的方式写入Users.txt文本中，且档次的注册流程完成
 			FP_Accounts = fopen("Files\\Users.txt", "a");
-			fprintf(FP_Accounts, "%s %s %d %d\n", Temp_Accounts.Username, Temp_Accounts.Password, Temp_Accounts.Type, Temp_Accounts.HaveComputer);
+			fprintf(FP_Accounts, "%s\t%s\t%d\t%d\n", Temp_Accounts.Username, Temp_Accounts.Password, Temp_Accounts.Type, Temp_Accounts.HaveComputer);
 			fclose(FP_Accounts);
 			return MessageBox(NULL, TEXT("添加成功！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
 		}
@@ -138,7 +147,7 @@ int Login_User(){        	    //登录
 
 			while (!feof(FP_Accounts)) {      //以尾接法建立一个链表。  feof检测文件是否结束 // 遍历
 				Account_Point = (Accounts_List)malloc(sizeof(Accounts_Size));
-				fscanf(FP_Accounts, "%s %s %d %d\n", Account_Point->Accounts_Data.Username, Account_Point->Accounts_Data.Password, &Account_Point->Accounts_Data.Type, &Account_Point->Accounts_Data.HaveComputer);//读出文件当前记录
+				fscanf(FP_Accounts, "%s\t%s\t%d\t%d\n", Account_Point->Accounts_Data.Username, Account_Point->Accounts_Data.Password, &Account_Point->Accounts_Data.Type, &Account_Point->Accounts_Data.HaveComputer);//读出文件当前记录
 				//对比
 				if (strcmp(Temp_Accounts.Username, Account_Point->Accounts_Data.Username) == 0) {	//对比账户名： == 0 说明找到
 					isFindAccount = 1;

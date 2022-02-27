@@ -13,6 +13,7 @@ const int PageNum = 7;
 const int BUTTONS_X_Len = WindowsSize.x / 6, BUTTONS_Y_Len = (WindowsSize.y - 45) / 6;
 const int HALF_BUTTON_Y_Len = BUTTONS_Y_Len / 2;
 
+//Defaut_Font_Size =        BUTTONS_Y_Len * 2 / 3         * 4 / 5;
 RectButton ButtonLocation_0 = {
 	1 , 
 	0 , 0,
@@ -21,7 +22,7 @@ RectButton ButtonLocation_0 = {
 
 RectButton ShowOnline_Login_User = {
 	1 ,
-	ButtonLocation_0.Height * 1 / 5 / 2 + ButtonLocation_0.Height * 4 / 5 * 4,
+	ButtonLocation_0.Height * 1 / 5 / 2 + ButtonLocation_0.Height * 4 / 5 * 4 + ((WindowsSize.y - 45) / 6 * 2 / 3 * 4 / 5) / 2 ,
 	ButtonLocation_0.Height * 1 / 5 / 2 ,
 	ButtonLocation_0.Height * 4 / 5 * 40,
 	ButtonLocation_0.Height * 4 / 5 
