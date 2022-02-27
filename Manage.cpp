@@ -22,8 +22,7 @@ int ComputerRoom_Num() {
 		ComputerRoom_Read = ComputerRoom_Head;
 		while (!feof(FP_ComputerRoom)) {      //以尾接法建立一个链表。  feof检测文件是否结束
 			ComputerRoom_Point = (ComputerRoom_List)malloc(sizeof(ComputerRoom_Size));
-			fscanf(FP_ComputerRoom, "%s\n", ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name);//读出文件当前记录
-			num++;
+			if(fscanf(FP_ComputerRoom, "%s\n", ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name))num++;//读出文件当前记录 //读到才num++
 			ComputerRoom_Read->ComputerRoom_Next = ComputerRoom_Point;
 			ComputerRoom_Read = ComputerRoom_Point;
 		}

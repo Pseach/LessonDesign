@@ -7,6 +7,7 @@
 #include "Book.h"
 #include "AccountControl.h"
 #include <string>
+#include "Manage.h"//ComputerRoom_Num
 
 //摘自https://www.cnblogs.com/curo0119/p/7792627.html
 enum error { correct, incorrect, overflow, null };
@@ -57,7 +58,7 @@ int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什
 	///Computer_Type Computer_Book_Data;			//预定机位数据		 
 	/// </summary>
 	if (Temp_User.Logined) { //已登录 
-		do {	
+		do {
 			Book_Type Temp_Book = {};
 
 			time_t timep;
@@ -69,7 +70,7 @@ int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什
 			User_Type User_Book_Data = {};
 			ComputerRoom_Type ComputerRoom_Book_Data = {};
 			Computer_Type Computer_Book_Data = {};*/
-	
+
 			Books_List Books_Head, Books_Read, Book_Point;
 
 			Temp_Book.Book_Time.Year = Time_Point->tm_year + 1900;
@@ -78,6 +79,13 @@ int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什
 			Temp_Book.Book_Time.Hour = Time_Point->tm_hour + 8;
 			Temp_Book.Book_Time.Minute = Time_Point->tm_min;
 			Temp_Book.Book_Time.Second = Time_Point->tm_sec;
+
+			//if (ComputerRoom_Num() == 0) {
+			if (!ComputerRoom_Num()) {
+				if (MessageBox(NULL, TEXT("还没有任何机房！是否添加机房？"), TEXT("提醒"), MB_YESNO | MB_SETFOREGROUND | MB_SETFOREGROUND) == 6)Add_Computer_Room();	//检查是否有机房
+				else return 1;//不添加机房哪来的机位，退出预定机位功能！
+			}
+
 			do{
 			char ch_time[10];//?
 			inputbox_getline("请输入预定小时数", "请输入预定小时数", ch_time , 5);
@@ -98,17 +106,13 @@ int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什
 				}
 				Temp_Book.Book_Time_Long.Hour = MyAtoi(ch_time);
 			} while (error != correct);
+			strcpy(Temp_Book.User_Book_Data.Username, Temp_User.Username);
 
-			strcpy(Temp_Book.User_Book_Data.Username , Temp_User.Username);
-			//if (Temp_Book.ComputerRoom_Book_Data.ComputerRoom_State) 
-			
 			inputbox_getline("请输入机房名称", "请输入机房名称", Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name, 40);
-			//if(存在)
 
+			//根据输入机房，查找是否有对应机位
 			inputbox_getline("请输入机位名称", "请输入机位名称", Temp_Book.ComputerRoom_Book_Data.Computer_Data.Computer_Name, 40);
 			//if(存在)
-
-
 
 			Temp_Book.Computer_Book_Data.Computer_Book_State = 0;//初始化预定状态
 			FP_BookData = fopen("Files\\BookLog.txt", "r");//先用只读的方式把文件打开，把数据读出来，放在一个序列中
