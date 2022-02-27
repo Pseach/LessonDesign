@@ -7,6 +7,7 @@
 int Manage() {
 	return 1;
 }
+
 //返回（CptRom总数）(局部函数
 int ComputerRoom_Num() {
 	int num = 0;
@@ -28,6 +29,79 @@ int ComputerRoom_Num() {
 		}
 		fclose(FP_ComputerRoom);
 	return num;
+}
+
+//根据输入机房，查找是否有对应机位
+bool HaveComputerRoom(char Static_ComputerRoomName[]) {//只传数组的话，传过来只是“首地址”
+	FILE* FP_ComputerRoom = NULL;
+	FP_ComputerRoom = fopen("Files\\ComputerRooms.txt", "a"); //如果文件不存在，则会创建一个新文件
+	fclose(FP_ComputerRoom);
+
+	bool IsHave = 0;
+	ComputerRoom_List ComputerRoom_Head, ComputerRoom_Read, ComputerRoom_Point;
+
+	FP_ComputerRoom = fopen("Files\\ComputerRooms.txt", "r");//先用只读的方式把文件打开，把数据读出来，放在一个序列中
+	ComputerRoom_Head = (ComputerRoom_List)malloc(sizeof(ComputerRoom_Size));
+	ComputerRoom_Head->ComputerRoom_Next = NULL;
+	ComputerRoom_Read = ComputerRoom_Head;
+	while (!feof(FP_ComputerRoom)) {      //以尾接法建立一个链表。  feof检测文件是否结束
+		ComputerRoom_Point = (ComputerRoom_List)malloc(sizeof(ComputerRoom_Size));
+		fscanf(FP_ComputerRoom, "%s\n", ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name);//读出文件当前记录
+		ComputerRoom_Read->ComputerRoom_Next = ComputerRoom_Point;
+		ComputerRoom_Read = ComputerRoom_Point;
+	}
+	ComputerRoom_Read->ComputerRoom_Next = NULL;
+	fclose(FP_ComputerRoom);
+
+	ComputerRoom_Point = ComputerRoom_Head->ComputerRoom_Next;
+	while ((ComputerRoom_Point) && (strcmp(Static_ComputerRoomName, ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name) != 0) && (1)) {//比对数据
+		ComputerRoom_Point = ComputerRoom_Point->ComputerRoom_Next;
+	}
+	if (!ComputerRoom_Point) {    //没找到机房名
+		MessageBox(NULL, TEXT("没找到！"), TEXT("没找到！"), MB_OK | MB_ICONWARNING | MB_SETFOREGROUND);
+		IsHave=0;
+	}
+	else {  //找到了
+		MessageBox(NULL, TEXT("找到了！"), TEXT("找到了！"), MB_OK | MB_ICONWARNING | MB_SETFOREGROUND);
+		IsHave = 1;
+
+	}
+	return IsHave;
+}
+bool HaveComputer(char Static_ComputerName[]) {
+	FILE* FP_Computers = NULL;
+	FP_Computers = fopen("Files\\Computers.txt", "a"); //如果文件不存在，则会创建一个新文件
+	fclose(FP_Computers);
+
+	bool IsHave = 0;
+	Computers_List Computers_Head, Computers_Read, Computers_Point;
+
+	FP_Computers = fopen("Files\\Computers.txt", "r");//先用只读的方式把文件打开，把数据读出来，放在一个序列中
+	Computers_Head = (Computers_List)malloc(sizeof(Computers_Size));
+	Computers_Head->Computers_Next = NULL;
+	Computers_Read = Computers_Head;
+	while (!feof(FP_Computers)) {      //以尾接法建立一个链表。  feof检测文件是否结束
+		Computers_Point = (Computers_List)malloc(sizeof(Computers_Size));
+		fscanf(FP_Computers, "%s\n", Computers_Point->Computers_Data.Computer_Name);//读出文件当前记录
+		Computers_Read->Computers_Next = Computers_Point;
+		Computers_Read = Computers_Point;
+	}
+	Computers_Read->Computers_Next = NULL;
+	fclose(FP_Computers);
+
+	Computers_Point = Computers_Head->Computers_Next;
+	while ((Computers_Point) && (strcmp(Static_ComputerName, Computers_Point->Computers_Data.Computer_Name) != 0) && (1)) {//比对数据
+		Computers_Point = Computers_Point->Computers_Next;
+	}
+	if (!Computers_Point) {    //没找到机房名
+		//MessageBox(NULL, TEXT("没找到！"), TEXT("没找到！"), MB_OK | MB_ICONWARNING | MB_SETFOREGROUND);
+		IsHave = 0;
+	}
+	else {  //找到了
+		//MessageBox(NULL, TEXT("找到了！"), TEXT("找到了！"), MB_OK | MB_ICONWARNING | MB_SETFOREGROUND);
+		IsHave = 1;
+	}
+	return IsHave;
 }
 
 //用户管理系统
@@ -102,7 +176,7 @@ int Transform_Computer(){	//开放|关闭机位
 	return 1;
 }
 int Add_Computer() { //添加机位（管理员才能管理？）
-	if (ComputerRoom_Num()) {//有机位就执行
+	if (ComputerRoom_Num()) {//有机房就执行
 		FILE* FP_Computers = NULL;
 		FP_Computers = fopen("Files\\Computers.txt", "a"); //如果文件不存在，则会创建一个新文件
 		fclose(FP_Computers);

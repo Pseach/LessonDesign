@@ -12,7 +12,7 @@
 //摘自https://www.cnblogs.com/curo0119/p/7792627.html
 enum error { correct, incorrect, overflow, null };
 int error = correct;//默认是正确的
-int MyAtoi(const char* str) {
+int MyAtoi(const char* str) {	
 	int flag = 1;
 	if (str == NULL) {
 		error = null;
@@ -20,8 +20,8 @@ int MyAtoi(const char* str) {
 	}
 	while (*str == ' ' || *str == '\t' || *str == '\f' || *str == '\r' || *str == '\n')
 		str++;
-	if (*str == '-') {//负数的处理返回incorrect
-		error = incorrect;//非法
+	if (*str == '-') {											//负数的处理返回incorrect
+		error = incorrect;//非法								//按需求改轮子
 		flag = -1;
 		str++;
 	}
@@ -83,7 +83,7 @@ int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什
 			//if (ComputerRoom_Num() == 0) {
 			if (!ComputerRoom_Num()) {
 				if (MessageBox(NULL, TEXT("还没有任何机房！是否添加机房？"), TEXT("提醒"), MB_YESNO | MB_SETFOREGROUND | MB_SETFOREGROUND) == 6)Add_Computer_Room();	//检查是否有机房
-				else return 1;//不添加机房哪来的机位，退出预定机位功能！
+				else return 0;//不添加机房哪来的机位，退出预定机位功能！
 			}
 
 			do{
@@ -93,9 +93,9 @@ int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什
 					case correct:
 						break;
 					case null:
-						MessageBox(NULL, TEXT("输入非法！请重新输入！"), TEXT("警告"), MB_OK | MB_SETFOREGROUND);
-						error = correct;
-						break;
+						//MessageBox(NULL, TEXT("输入非法！请重新输入！"), TEXT("警告"), MB_OK | MB_SETFOREGROUND);
+						//error = correct;
+						//break;
 					case incorrect:
 						MessageBox(NULL, TEXT("输入非法！请重新输入！"), TEXT("警告"), MB_OK | MB_SETFOREGROUND);
 						error = correct;
@@ -106,13 +106,34 @@ int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什
 				}
 				Temp_Book.Book_Time_Long.Hour = MyAtoi(ch_time);
 			} while (error != correct);
-			strcpy(Temp_Book.User_Book_Data.Username, Temp_User.Username);
+			strcpy(Temp_Book.User_Book_Data.Username, Temp_User.Username);		//把输入的临时信息放到临时预定的数据结构体里
 
-			inputbox_getline("请输入机房名称", "请输入机房名称", Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name, 40);
 
-			//根据输入机房，查找是否有对应机位
-			inputbox_getline("请输入机位名称", "请输入机位名称", Temp_Book.ComputerRoom_Book_Data.Computer_Data.Computer_Name, 40);
-			//if(存在)
+			//do {//根据输入机房，查找是否有对应机位---------------------------优化！！！！(没对应机位的时候，问是否添加的时候，直接添加所输入的机位而不是再输)
+			//inputbox_getline("请输入机房名称", "请输入机房名称", Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name, 40);
+			//if (HaveComputerRoom(Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name)) {			//输入机房名称查询有无
+			//	inputbox_getline("请输入机位名称", "请输入机位名称", Temp_Book.ComputerRoom_Book_Data.Computer_Data.Computer_Name, 40) ; break;			//有的话输入对应机位
+			//}else if (MessageBox(NULL, TEXT("您输入的机房中无对应机位！是否添加对应机位?"), TEXT("提醒"), MB_YESNO | MB_SETFOREGROUND | MB_SETFOREGROUND) == 6)Add_Computer();	//无就添加机位
+			//	else return 0;//不添加机位怎么预定，退出预定机位功能！	//不添加就退出
+			//} while (HaveComputerRoom(Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name));	
+			
+			
+			do {
+				inputbox_getline("请输入添加机位所在机房名称", "请输入添加机位所在机房名称", Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name, 40);	//先输入机房
+				if (HaveComputerRoom(Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name)) {			//输入机房名称查询有无
+					inputbox_getline("请输入机位名称", "请输入机位名称", Temp_Book.ComputerRoom_Book_Data.Computer_Data.Computer_Name, 40);	//有的话输入机位
+					if (HaveComputer(Temp_Book.ComputerRoom_Book_Data.Computer_Data.Computer_Name)) {
+						break;//有就退出审核
+					}else //无就问
+						if (MessageBox(NULL, TEXT("该机房无此机位，是否添加机位"), TEXT("提醒"), MB_YESNO | MB_SETFOREGROUND | MB_SETFOREGROUND) == 6) { Add_Computer(); continue; }	//continue会跳到“}”
+							else return 0;	//不添加机位就退出
+				}
+				else {//无的话问添加否
+					if (MessageBox(NULL, TEXT("还没有该机房！是否添加机房？"), TEXT("提醒"), MB_YESNO | MB_SETFOREGROUND | MB_SETFOREGROUND) == 6) { Add_Computer_Room(); continue; }	//是的话就添加机房，//continue:填加完机房，重新输入要添加机位的机房
+					else return 0;	//不添加机房就退出
+				}
+			} while (HaveComputerRoom(Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name));
+
 
 			Temp_Book.Computer_Book_Data.Computer_Book_State = 0;//初始化预定状态
 			FP_BookData = fopen("Files\\BookLog.txt", "r");//先用只读的方式把文件打开，把数据读出来，放在一个序列中
