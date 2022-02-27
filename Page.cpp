@@ -5,6 +5,7 @@ Pages Page_Exit = {};
 Pages Temp_FunName = {};
 
 //须由内层向外初始化
+
 Pages Book_Page = {
 	"预定系统",1,
 	{	&Menu_Page,				//[0]

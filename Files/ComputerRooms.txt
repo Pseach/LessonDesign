@@ -1,5 +1,0 @@
-ComputerRoomName£º1	State£º1
-ComputerRoomName£º123	State£º1
-ComputerRoomName£ºcac	State£º1
-ComputerRoomName£ºD	State£º1
-ComputerRoomName£º12	State£º1

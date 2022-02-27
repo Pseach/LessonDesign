@@ -52,8 +52,7 @@ int MainStart() {
 			int ButtonId = -1;
 			if (msg.is_left() && msg.is_down()) { //初始化
 				// 检查是否有按钮被按下
-				ButtonId = searchButton(msg.x, msg.y, ButtonLocation, Defaut_Font_Size);
-
+				ButtonId = searchButton(msg.x, msg.y, ButtonLocation, 10);
 				// 将被按下的按钮设置为按下状态
 				//if (ButtonId != -1) {
 				//	PressButtonId = ButtonId;
@@ -61,7 +60,6 @@ int MainStart() {
 				//	RefreshPage = true;
 				//}
 				if (ButtonId != -1)	//点住123456按钮
-
 					Initialize_Button_State(ButtonId, PressButtonId, ButtonLocation[PressButtonId].Pressed, RefreshPage);
 				else {						//没点住123456按钮
 					RefreshPage = false; // 不用刷新?
@@ -110,7 +108,8 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 				case 2: {Login_User(); break; }
 				case 3: {Logout_User(); break; }
 				case 4: {Page = 1;  break; }
-				case 5: {Page = 2;  break;	}
+				case 5: if (Temp_User.Type == -1) { MessageBox(NULL, TEXT("您还没有登录！请登录！"), TEXT("权限管理"), MB_OK | MB_SETFOREGROUND); break; }//如果是普通用户，无法点开，并提醒
+						{Page = 2;  break;	}
 				case 6: if (Temp_User.Type == 0) { MessageBox(NULL, TEXT("您不是管理员！无权做此操作！"), TEXT("权限管理"), MB_OK | MB_SETFOREGROUND); break; }//如果是普通用户，无法点开，并提醒
 						{Page = 3;  break;}
 			}

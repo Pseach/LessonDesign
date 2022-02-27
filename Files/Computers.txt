@@ -1,3 +1,5 @@
 FromComputerRoom£ºD	Computer£ºD1	Computer_State£º1
 FromComputerRoom£º1	Computer£º1	Computer_State£º1
 FromComputerRoom£ºD	Computer£º121	Computer_State£º1
+FromComputerRoom£º1314	Computer£º13134	Computer_State£º1
+FromComputerRoom£º1314	Computer£º1314	Computer_State£º1

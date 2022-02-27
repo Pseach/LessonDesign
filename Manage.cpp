@@ -107,10 +107,6 @@ bool HaveComputer(char Static_ComputerName[]) {
 	return IsHave;
 }
 
-//bool HaveComputerFromRoom(char Static_ComputerName[]) {
-//
-//	return 1;
-//}
 //用户管理系统
 int User_Manage(){				//管理用户
 	return 1;

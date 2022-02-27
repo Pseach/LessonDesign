@@ -21,7 +21,7 @@ typedef struct time{  //时间的数据结构
 	int Hour;
 	int Minute;
 	int Second;
-	int Time_Mod;	// 按手动调节 | 按系统时间 （可能用？）
+	//int Time_Mod;	// 按手动调节 | 按系统时间 （可能用？）
 	time& operator=(time& value){
 		Year = value.Year;
 		Month = value.Month;

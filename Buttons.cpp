@@ -30,7 +30,7 @@ RectButton ShowOnline_Login_User = {
 RectButton ButtonLocation[10];
 
 int InitializeButton() { //按钮初始化
-	ButtonLocation[0] = { 0,WindowsSize.x - Defaut_Font_Size ,ButtonLocation_0.Height ,Defaut_Font_Size ,Defaut_Font_Size };
+	ButtonLocation[0] = { 0,WindowsSize.x - Defaut_Font_Size ,ButtonLocation_0.Height ,Defaut_Font_Size ,Defaut_Font_Size };//返回的（×）
 	int t = 0, k = 1;
 	for (int i = 1; i <= 6; i++) {
 		ButtonLocation[i].IsTitle = 0;
