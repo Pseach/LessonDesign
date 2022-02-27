@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 #include "Buttons.h"
-extern User_Type Temp_User;
+//extern User_Type Temp_User;
 
 int Show_Online_Login_User() {	//显示当前账户
 
@@ -179,10 +179,11 @@ int Logout_User() {          //退出账户
 	}
 	else {
 		//User_Type Temp_User = { "NONE","NONE",-1,0,0 };//?
-		Temp_User.Type = -1;
-		Temp_User.Logined = 0;
 		strcpy(Temp_User.Username, "NONE");
 		strcpy(Temp_User.Password, "NONE");
+		Temp_User.Type = -1;
+		Temp_User.Logined = 0;
+
 		MessageBox(NULL, TEXT("您已退出当前账户！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
 	}
 	return 1;

@@ -8,8 +8,37 @@
 #include "AccountControl.h"
 #include <string>
 
-
-
+//摘自https://www.cnblogs.com/curo0119/p/7792627.html
+enum error { correct, incorrect, overflow, null };
+int error = correct;//默认是正确的
+int MyAtoi(const char* str) {
+	int flag = 1;
+	if (str == NULL) {
+		error = null;
+		return 0;
+	}
+	while (*str == ' ' || *str == '\t' || *str == '\f' || *str == '\r' || *str == '\n')
+		str++;
+	if (*str == '-') {//负数的处理返回incorrect
+		error = incorrect;//非法
+		flag = -1;
+		str++;
+	}
+	else if (*str == '+')//注意对正负号我用的不是循环，正负号只有作为第一个字符出现才是合法的
+		str++;
+	int num = 0;
+	while (*str != '\0') {//*str=='\0'也是结束条件之一
+		if (*str >= '0' && (*str <= '9')) {
+			num = num * 10 + *str - '0';//注意是‘0‘   　　　　　//溢出处理稍后贴上
+			str++;
+		}
+		else {
+			error = incorrect;//非法
+			break;
+		}
+	}
+	return num * flag;
+}
 
 int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什么的（已被预定））
 	FILE* FP_BookData = NULL;
@@ -49,9 +78,26 @@ int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什
 			Temp_Book.Book_Time.Hour = Time_Point->tm_hour + 8;
 			Temp_Book.Book_Time.Minute = Time_Point->tm_min;
 			Temp_Book.Book_Time.Second = Time_Point->tm_sec;
-			char chtime[1];
-			inputbox_getline("请输入预定小时数0~9", "请输入预定小时数0~9", chtime , 1);
-			Temp_Book.Book_Time_Long.Hour = chtime[0] - '0';
+			do{
+			char ch_time[10];//?
+			inputbox_getline("请输入预定小时数", "请输入预定小时数", ch_time , 5);
+				switch (error) {
+					case correct:
+						break;
+					case null:
+						MessageBox(NULL, TEXT("输入非法！请重新输入！"), TEXT("警告"), MB_OK | MB_SETFOREGROUND);
+						error = correct;
+						break;
+					case incorrect:
+						MessageBox(NULL, TEXT("输入非法！请重新输入！"), TEXT("警告"), MB_OK | MB_SETFOREGROUND);
+						error = correct;
+						break;
+					case overflow:
+						MessageBox(NULL, TEXT("输入的数太大！请重新输入！"), TEXT("警告"), MB_OK | MB_SETFOREGROUND);
+						error = correct;
+				}
+				Temp_Book.Book_Time_Long.Hour = MyAtoi(ch_time);
+			} while (error != correct);
 
 			strcpy(Temp_Book.User_Book_Data.Username , Temp_User.Username);
 			//if (Temp_Book.ComputerRoom_Book_Data.ComputerRoom_State) 
@@ -61,6 +107,7 @@ int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什
 
 			inputbox_getline("请输入机位名称", "请输入机位名称", Temp_Book.ComputerRoom_Book_Data.Computer_Data.Computer_Name, 40);
 			//if(存在)
+
 
 
 			Temp_Book.Computer_Book_Data.Computer_Book_State = 0;//初始化预定状态

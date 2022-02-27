@@ -9,6 +9,7 @@ const int ButtonNumber = 6;
 const int PageNum = 7;
 //(WindowsSize.y - 45) / 6 * 2 / 3
 //LandscapeWindows.x = 990 .y=540+45;
+
 const int BUTTONS_X_Len = WindowsSize.x / 6, BUTTONS_Y_Len = (WindowsSize.y - 45) / 6;
 const int HALF_BUTTON_Y_Len = BUTTONS_Y_Len / 2;
 

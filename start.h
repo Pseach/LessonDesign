@@ -67,7 +67,7 @@ typedef struct usertpye{  //系统操作用户的数据结构
 	char Password[40];
 	int Type;					//未知|用户|管理员 -1|0|1
 	int HaveComputer;			//是否拥有机位
-	//int Login_User_Type;		//未知|用户|管理员 -1|0|1
+	//int Login_User_Type;		//未知|用户|管理员 -1|0|1		//?????????
 	int Logined;				//登录状态
 	//usertpye& operator=(usertpye& value) {
 	//	strcpy(Username, value.Username);

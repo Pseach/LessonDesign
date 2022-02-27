@@ -7,7 +7,7 @@
 int Manage() {
 	return 1;
 }
-//返回（总数）(局部函数
+//返回（CptRom总数）(局部函数
 int ComputerRoom_Num() {
 	int num = 0;
 	FILE* FP_ComputerRoom = NULL;
@@ -30,6 +30,7 @@ int ComputerRoom_Num() {
 		fclose(FP_ComputerRoom);
 	return num;
 }
+
 //用户管理系统
 int User_Manage(){				//管理用户
 	return 1;

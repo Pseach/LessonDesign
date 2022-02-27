@@ -61,6 +61,7 @@ int MainStart() {
 				//	RefreshPage = true;
 				//}
 				if (ButtonId != -1)	//点住123456按钮
+
 					Initialize_Button_State(ButtonId, PressButtonId, ButtonLocation[PressButtonId].Pressed, RefreshPage);
 				else {						//没点住123456按钮
 					RefreshPage = false; // 不用刷新?
