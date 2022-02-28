@@ -41,7 +41,7 @@ int MyAtoi(const char* str) {
 	return num * flag;
 }
 
-int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什么的（已被预定））
+int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什么的（已被预定））////////////////////////////?要预定的时间-》预定时长
 	//////////////////////////////////////////////////////还缺少功能：检测同一时间段是否预定多台电脑（book state）以及某台电脑是否被预约了（不能两人一台电脑？）
 	FILE* FP_BookData = NULL;
 	FP_BookData = fopen("Files\\BookLog.txt", "a"); //文件用于存储 ，，，，机位是否被占用，各种数据
@@ -77,7 +77,8 @@ int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什
 			Temp_Book.Book_Time.Year = Time_Point->tm_year + 1900;
 			Temp_Book.Book_Time.Month = Time_Point->tm_mon + 1;//0~11
 			Temp_Book.Book_Time.Day = ((Time_Point->tm_hour + 8) >= 24) ? (Time_Point->tm_mday + 1) : (Time_Point->tm_mday);	//补回来
-			Temp_Book.Book_Time.Hour = ((Time_Point->tm_hour + 8) >= 24) ? (Time_Point->tm_hour + 8 - 24) : (Time_Point->tm_hour + 8);//可能出现“26”小时等意外数据
+			//Temp_Book.Book_Time.Hour = ((Time_Point->tm_hour + 8) >= 24) ? (Time_Point->tm_hour + 8 - 24) : (Time_Point->tm_hour + 8);//可能出现“26”小时等意外数据
+			Temp_Book.Book_Time.Hour = (Time_Point->tm_hour + 8) % 24;//可能出现“26”小时等意外数据
 			Temp_Book.Book_Time.Minute = Time_Point->tm_min;
 			Temp_Book.Book_Time.Second = Time_Point->tm_sec;
 
@@ -178,7 +179,7 @@ int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什
 	else {
 		MessageBox(NULL, TEXT("您未登录！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
 	}
-	return 1;
+	return 0;
 }
 int Cancel_Pre_Book() {	//取消预定
 

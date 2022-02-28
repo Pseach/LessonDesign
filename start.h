@@ -62,7 +62,7 @@ typedef struct {  //机房的数据结构
 	//Time_Type ComputerRoom_CanBook_Time;		//机房的允许预定时间（直接全局管理）
 }ComputerRoom_Type;
 
-typedef struct usertpye{  //系统操作用户的数据结构
+typedef struct usertpye{  //用户的数据结构
 	char Username[40];
 	char Password[40];
 	int Type;					//未知|用户|管理员 -1|0|1

@@ -1,0 +1,7 @@
+ComputerRoomName£º1	State£º1
+ComputerRoomName£º123	State£º1
+ComputerRoomName£º123a	State£º1
+ComputerRoomName£º2	State£º1
+ComputerRoomName£º1a	State£º1
+ComputerRoomName£ºfff	State£º1
+ComputerRoomName£ºz	State£º1
