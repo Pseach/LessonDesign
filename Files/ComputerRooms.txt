@@ -8,4 +8,4 @@ ComputerRoomName£ºz	State£º1
 ComputerRoomName£ºD	State£º1
 ComputerRoomName£ºtext	State£º1
 ComputerRoomName£º1314	State£º1
-ComputerRoomName£º1234	State£º1
+ComputerRoomName£º1234	State£º0

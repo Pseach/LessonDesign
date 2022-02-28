@@ -68,7 +68,7 @@ typedef struct usertpye{  //用户的数据结构
 	char Username[40];
 	char Password[40];
 	int Type;					//未知|用户|管理员 -1|0|1
-	int CanBook;			//是否拥有机位(CAnBook)
+	int CanBook;			//是否拥有机位(CanBook)
 	//int Login_User_Type;		//未知|用户|管理员 -1|0|1		//?????????
 	int Logined;				//登录状态
 	//int CanBook;				//预定功能
