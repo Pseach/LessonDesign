@@ -210,10 +210,6 @@ int Transform_User_BookPower() {		//开启|关闭用户预定功能
 	//int Temp_Type = MessageBox(NULL, TEXT("授予账户管理员权限？"), TEXT("添加用户"), MB_YESNO | MB_ICONQUESTION | MB_SETFOREGROUND);//MB_ICONQUESTION：问号https://blog.csdn.net/yuyan987/article/details/78558648
 	inputbox_getline("请输入要更改权限的账号", "请输入要更改权限的账号", Temp_Accounts.Username, 40);      
 
-	//inputbox_getline("请输入密码", "请输入密码", Temp_Accounts.Password, 40);      //输入密码//////////管理员还需要知道你密码？
-	//Temp_Accounts.Type = (Temp_Type == 6) ? 1 : 0;	 //是(Y) 值为6 否(N)值为7;	//标记用户权限
-	//Temp_Accounts.CanBook = 1;
-
 	Accounts_Read = Accounts_Head;
 	while (!feof(FP_Accounts)) {      //以尾接法建立一个链表。  feof检测文件是否结束
 		if (Accounts_Point = (Accounts_List)malloc(sizeof(Accounts_Size))) {
@@ -351,9 +347,7 @@ int Change_Computer_Room(){	//更改机房
 int Computer_Manage(){			//机位管理
 	return 1;
 }
-int Transform_Computer(){	//开放|关闭机位
-	return 1;
-}
+
 int Add_Computer() { //添加机位（管理员才能管理？）
 	do{
 		//if (ComputerRoom_Num()) {//有机房就执行
@@ -433,6 +427,65 @@ int Add_Computer() { //添加机位（管理员才能管理？）
 int Delete_Computer(){	//删除机位
 	return 1;
 }
+int Transform_Computer() {	//开放|关闭机位
+	FILE* FP_Computers = NULL;
+	FP_Computers = fopen("Files\\Computers.txt", "a"); //如果文件不存在，则会创建一个新文件
+	fclose(FP_Computers);
+
+	enum { isnotDelete, isDelete , FindRoom};
+	int state = isnotDelete;
+	ComputerRoom_Type Temp_ComputerRoom = {};
+	ComputerRoom_List ComputerRoom_Head, ComputerRoom_Read, ComputerRoom_Point;
+
+	FP_Computers = fopen("Files\\Computers.txt", "r");//先用只读的方式把文件打开，把数据读出来，放在一个序列中
+	if (ComputerRoom_Head = (ComputerRoom_List)malloc(sizeof(ComputerRoom_Size))) {
+		ComputerRoom_Head->ComputerRoom_Next = NULL;
+	}
+	inputbox_getline("请输入要更改状态的机房", "请输入要更改状态的机房", Temp_ComputerRoom.ComputerRoom_Name, 40);
+	inputbox_getline("请输入要更改状态的机位", "请输入要更改状态的机位", Temp_ComputerRoom.Computer_Data.Computer_Name, 40);
+
+	ComputerRoom_Read = ComputerRoom_Head;
+	while (!feof(FP_Computers)) {      //以尾接法建立一个链表。  feof检测文件是否结束
+		if (ComputerRoom_Point = (ComputerRoom_List)malloc(sizeof(ComputerRoom_Size))) {
+			fscanf(FP_Computers, "FromComputerRoom：%s\tComputer：%s\tComputer_State：%d\n",
+				ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name,
+				ComputerRoom_Point->ComputerRoom_Data.Computer_Data.Computer_Name,
+				&ComputerRoom_Point->ComputerRoom_Data.Computer_Data.Computer_State
+			);
+			if (strcmp(Temp_ComputerRoom.ComputerRoom_Name, ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name) == 0) {
+				state = FindRoom;
+				if (strcmp(Temp_ComputerRoom.Computer_Data.Computer_Name, ComputerRoom_Point->ComputerRoom_Data.Computer_Data.Computer_Name) == 0) {
+					state = isDelete;
+					ComputerRoom_Point->ComputerRoom_Data.Computer_Data.Computer_State = (ComputerRoom_Point->ComputerRoom_Data.Computer_Data.Computer_State == 1) ? 0 : 1;
+				}
+			}
+			ComputerRoom_Read->ComputerRoom_Next = ComputerRoom_Point;
+			ComputerRoom_Read = ComputerRoom_Point;
+		}
+	}
+	ComputerRoom_Read->ComputerRoom_Next = NULL;
+	fclose(FP_Computers); 
+	//新链表已建立
+	// 下面重新输入到文档（从头写）
+	FP_Computers = fopen("Files\\Computers.txt", "w");
+	ComputerRoom_Point = ComputerRoom_Head->ComputerRoom_Next;//初始化（让Point指向Head的下一个（所存链表的头））
+	while (ComputerRoom_Point) {
+		//从头重新输入
+		fprintf(FP_Computers, "FromComputerRoom：%s\tComputer：%s\tComputer_State：%d\n",
+			ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name,
+			ComputerRoom_Point->ComputerRoom_Data.Computer_Data.Computer_Name,
+			ComputerRoom_Point->ComputerRoom_Data.Computer_Data.Computer_State
+		);
+		ComputerRoom_Point = ComputerRoom_Point->ComputerRoom_Next;
+	}
+
+	if (state== isDelete)MessageBox(NULL, TEXT("更改成功！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
+	else if(state== isnotDelete)MessageBox(NULL, TEXT("无此机房"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
+	else if (state == FindRoom)MessageBox(NULL, TEXT("查无此机！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
+	fclose(FP_Computers);
+	return 1;
+}
+
 int Change_Computer(){	//更改机位
 	return 1;
 }
