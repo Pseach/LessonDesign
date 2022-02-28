@@ -151,7 +151,6 @@ int Delete_User() {		//删除用户
 		}
 		AccountsRead = AccountsHead;
 
-
 		if ((Account_Point))
 		//比对数据，没找到相同用户名，且没找完，继续找
 		do{
@@ -172,10 +171,10 @@ int Delete_User() {		//删除用户
 			AccountsRead->Accounts_Next = AccountPoint;
 			AccountsRead = AccountPoint;
 
-			Account_Point = Account_Point->Accounts_Next;
+			if(Account_Point!=NULL)Account_Point = Account_Point->Accounts_Next;
 
 		}while (Account_Point);
-		AccountsRead->Accounts_Next = NULL;
+		if(AccountsRead!=NULL)AccountsRead->Accounts_Next = NULL;
 
 		AccountPoint = AccountsHead->Accounts_Next;//新链表
 	
@@ -193,38 +192,6 @@ int Delete_User() {		//删除用户
 
 		if(state)MessageBox(NULL, TEXT("已删除"), TEXT("提醒！"), MB_OK | MB_ICONWARNING | MB_SETFOREGROUND);
 		else MessageBox(NULL, TEXT("查无此人"), TEXT("提醒！"), MB_OK | MB_ICONWARNING | MB_SETFOREGROUND);
-
-
-		//if (!Account_Point) {    
-		//	//没找到相同用户名，则以追加的方式写入Users.txt文本中，且档次的注册流程完成
-		//	FP_Accounts = fopen("Files\\Users.txt", "a");
-		//	fprintf(FP_Accounts, "%s\t%s\t%d\t%d\n", Temp_Accounts.Username, Temp_Accounts.Password, Temp_Accounts.Type, Temp_Accounts.CanBook);
-		//	fclose(FP_Accounts);
-		//	return MessageBox(NULL, TEXT("添加成功！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
-		//}
-		//else {  //找到了，则需要重新输入用户名和密码，再循环刚刚的过程。
-		//	if (MessageBox(NULL, TEXT("重新添加？"), TEXT("用户名已存在！"), MB_YESNO | MB_ICONWARNING | MB_SETFOREGROUND) == 7)return 1;
-		//}
-
-			//Books_List Books_Head1;
-			//if (Books_Head1 = (Books_List)malloc(sizeof(Books_Size))) {
-			//	Books_Head1->Books_Next = NULL;
-			//}//新建头节点
-			//Book_Point = Books_Head->Books_Next;//初始化（让Point指向Head的下一个（所存链表的头））不是////，是建一个链表，把链表的头替换掉Point
-			//while (Book_Point) {//链表头
-			//	if (	(strcmp(Temp_Book.User_Book_Data.Username, Book_Point->Book_Data.User_Book_Data.Username) == 0)
-			//			&& (strcmp(Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name, Book_Point->Book_Data.ComputerRoom_Book_Data.ComputerRoom_Name) == 0)
-			//			&& (strcmp(Temp_Book.ComputerRoom_Book_Data.Computer_Data.Computer_Name, Book_Point->Book_Data.ComputerRoom_Book_Data.Computer_Data.Computer_Name) == 0)
-			//			&& (1 == Book_Point->Book_Data.Computer_Book_Data.Computer_Book_State)//删除功能（中间节点跳过）（终点则指向NULL（if（！NULL）->Next））//用户名相同，预约机房相同，预约的机位相同，把这个节点进行处理（左边注释）
-			//		)
-			//		if (Book_Point->Books_Next) {
-			//			Book_Point = Book_Point->Books_Next;////非末尾节点//跳过去
-			//		}
-			//		else { Book_Point = NULL; break;//尾节点 指向NULL
-			//		}	
-			//	//对比发现无结果，不用删，
-			//	Book_Point = Book_Point->Books_Next;//从头往Next遍历
-			//}
 	return 1;
 }
 int Change_User(){		//更改用户
