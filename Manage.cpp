@@ -109,15 +109,128 @@ bool HaveComputer(char Static_ComputerName[]) {
 
 //用户管理系统
 int User_Manage(){				//管理用户
+
 	return 1;
 }
-int Transform_User_Book(){	//开启|关闭用户预定功能
-	return 1;
-}
+
 int Delete_User() {		//删除用户
+	FILE* FP_Accounts = NULL;
+	FP_Accounts = fopen("Files\\Users.txt", "a"); //如果文件不存在，则会创建一个新文件
+	fclose(FP_Accounts);
+		User_Type Temp_Accounts{};
+		Accounts_List Accounts_Head, Accounts_Read, Account_Point;
+		enum{isnotDelete,isDelete};
+		int state = isnotDelete;
+		//int Temp_Type = MessageBox(NULL, TEXT("授予账户管理员权限？"), TEXT("添加用户"), MB_YESNO | MB_ICONQUESTION | MB_SETFOREGROUND);//MB_ICONQUESTION：问号https://blog.csdn.net/yuyan987/article/details/78558648
+		inputbox_getline("请输入所删除账号", "请输入所删除账号", Temp_Accounts.Username, 40);      //输入账号//https://xege.org/manual/api/other/inputboxgetline.htm buffer area
+		inputbox_getline("请输入删除账户的密码", "请输入删除账户的密码", Temp_Accounts.Password, 40);      //输入密码
+		//Temp_Accounts.Type = (Temp_Type == 6) ? 1 : 0;	 //是(Y) 值为6 否(N)值为7;	//标记用户权限
+		//Temp_Accounts.CanBook = 1;
+
+		FP_Accounts = fopen("Files\\Users.txt", "r");//先用只读的方式把文件打开，把数据读出来，放在一个序列中
+		if (Accounts_Head = (Accounts_List)malloc(sizeof(Accounts_Size))) {
+			Accounts_Head->Accounts_Next = NULL;
+		}
+		Accounts_Read = Accounts_Head;
+		while (!feof(FP_Accounts)) {      //以尾接法建立一个链表。  feof检测文件是否结束
+			if (Account_Point = (Accounts_List)malloc(sizeof(Accounts_Size))) {
+				fscanf(FP_Accounts, "%s\t%s\t%d\t%d\n", Account_Point->Accounts_Data.Username, Account_Point->Accounts_Data.Password, &Account_Point->Accounts_Data.Type, &Account_Point->Accounts_Data.CanBook);//读出文件当前记录
+
+				Accounts_Read->Accounts_Next = Account_Point;
+				Accounts_Read = Account_Point;
+			}
+		}
+		Accounts_Read->Accounts_Next = NULL;
+		fclose(FP_Accounts);
+		Account_Point = Accounts_Head->Accounts_Next;
+		/////////////////////////链表已建立//////////////////////
+		
+		Accounts_List AccountsHead, AccountsRead, AccountPoint;
+		if (AccountsHead = (Accounts_List)malloc(sizeof(Accounts_Size))) {
+			AccountsHead->Accounts_Next = NULL;
+		}
+		AccountsRead = AccountsHead;
+
+
+		if ((Account_Point))
+		//比对数据，没找到相同用户名，且没找完，继续找
+		do{
+
+			AccountPoint = (Accounts_List)malloc(sizeof(Accounts_Size));
+			if ((strcmp(Temp_Accounts.Username, Account_Point->Accounts_Data.Username) == 0)) {
+
+				if ((strcmp(Temp_Accounts.Password, Account_Point->Accounts_Data.Password) == 0)) {
+					Account_Point = Account_Point->Accounts_Next;//直接下一个，不读入这条
+					state = isDelete;
+				}
+				else {
+					MessageBox(NULL, TEXT("密码不符！"), TEXT("提醒！"), MB_OK | MB_ICONWARNING | MB_SETFOREGROUND);
+					return 0;
+				}
+			}
+			AccountPoint = Account_Point;
+			AccountsRead->Accounts_Next = AccountPoint;
+			AccountsRead = AccountPoint;
+
+			Account_Point = Account_Point->Accounts_Next;
+
+		}while (Account_Point);
+		AccountsRead->Accounts_Next = NULL;
+
+		AccountPoint = AccountsHead->Accounts_Next;//新链表
+	
+
+		FP_Accounts = fopen("Files\\Users.txt", "w");
+
+		if (AccountPoint)
+		do{
+			fprintf(FP_Accounts, "%s\t%s\t%d\t%d\n", AccountPoint->Accounts_Data.Username, AccountPoint->Accounts_Data.Password, AccountPoint->Accounts_Data.Type, AccountPoint->Accounts_Data.CanBook);
+
+			AccountPoint = AccountPoint->Accounts_Next;
+			
+		} while (AccountPoint);
+		fclose(FP_Accounts);
+
+		if(state)MessageBox(NULL, TEXT("已删除"), TEXT("提醒！"), MB_OK | MB_ICONWARNING | MB_SETFOREGROUND);
+		else MessageBox(NULL, TEXT("查无此人"), TEXT("提醒！"), MB_OK | MB_ICONWARNING | MB_SETFOREGROUND);
+
+
+		//if (!Account_Point) {    
+		//	//没找到相同用户名，则以追加的方式写入Users.txt文本中，且档次的注册流程完成
+		//	FP_Accounts = fopen("Files\\Users.txt", "a");
+		//	fprintf(FP_Accounts, "%s\t%s\t%d\t%d\n", Temp_Accounts.Username, Temp_Accounts.Password, Temp_Accounts.Type, Temp_Accounts.CanBook);
+		//	fclose(FP_Accounts);
+		//	return MessageBox(NULL, TEXT("添加成功！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
+		//}
+		//else {  //找到了，则需要重新输入用户名和密码，再循环刚刚的过程。
+		//	if (MessageBox(NULL, TEXT("重新添加？"), TEXT("用户名已存在！"), MB_YESNO | MB_ICONWARNING | MB_SETFOREGROUND) == 7)return 1;
+		//}
+
+			//Books_List Books_Head1;
+			//if (Books_Head1 = (Books_List)malloc(sizeof(Books_Size))) {
+			//	Books_Head1->Books_Next = NULL;
+			//}//新建头节点
+			//Book_Point = Books_Head->Books_Next;//初始化（让Point指向Head的下一个（所存链表的头））不是////，是建一个链表，把链表的头替换掉Point
+			//while (Book_Point) {//链表头
+			//	if (	(strcmp(Temp_Book.User_Book_Data.Username, Book_Point->Book_Data.User_Book_Data.Username) == 0)
+			//			&& (strcmp(Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name, Book_Point->Book_Data.ComputerRoom_Book_Data.ComputerRoom_Name) == 0)
+			//			&& (strcmp(Temp_Book.ComputerRoom_Book_Data.Computer_Data.Computer_Name, Book_Point->Book_Data.ComputerRoom_Book_Data.Computer_Data.Computer_Name) == 0)
+			//			&& (1 == Book_Point->Book_Data.Computer_Book_Data.Computer_Book_State)//删除功能（中间节点跳过）（终点则指向NULL（if（！NULL）->Next））//用户名相同，预约机房相同，预约的机位相同，把这个节点进行处理（左边注释）
+			//		)
+			//		if (Book_Point->Books_Next) {
+			//			Book_Point = Book_Point->Books_Next;////非末尾节点//跳过去
+			//		}
+			//		else { Book_Point = NULL; break;//尾节点 指向NULL
+			//		}	
+			//	//对比发现无结果，不用删，
+			//	Book_Point = Book_Point->Books_Next;//从头往Next遍历
+			//}
 	return 1;
 }
 int Change_User(){		//更改用户
+	return 1;
+}
+int Transform_User_Book() {	//开启|关闭用户预定功能
 	return 1;
 }
 //机房管理系统

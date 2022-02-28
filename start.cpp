@@ -151,12 +151,12 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 			}
 			break;	//Exit Page 3
 		}
-		case 4: {
+		case 4: {//User_Manage
 			switch (PressButtonId) {
 			case 0: {Page = 3; break; }
-			case 1: { break; }
-			case 2: { break; }
-			case 3: { break; }
+			case 1: { Delete_User(); break; }
+			case 2: { Change_User(); break; }
+			case 3: { Transform_User_Book(); break; }
 			case 4: { break; }
 			case 5: {
 				break;
@@ -168,7 +168,7 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 			}
 			break;	//Exit Page 3
 		}
-		case 5: {
+		case 5: {//Computer_Room_Manage
 			switch (PressButtonId) {
 			case 0: {Page = 3; break; }
 			case 1: { Add_Computer_Room(); break; }
@@ -185,7 +185,7 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 			}
 			break;	//Exit Page 3
 		}
-		case 6: {
+		case 6: {//Computer_Manage
 			switch (PressButtonId) {
 			case 0: {Page = 3; break; }
 			case 1: {Add_Computer(); break; }
@@ -202,7 +202,7 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 			}
 			break;	//Exit Page 3
 		}
-		case 7: {
+		case 7: {//Book_Manage
 			switch (PressButtonId) {
 			case 0: {Page = 3; break; }
 			case 1: { break; }
