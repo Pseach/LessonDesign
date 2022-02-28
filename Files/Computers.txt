@@ -9,3 +9,11 @@ FromComputerRoom£º1	Computer£º1a	Computer_State£º1
 FromComputerRoom£º1a	Computer£º1aa	Computer_State£º1
 FromComputerRoom£ºfff	Computer£ºfff	Computer_State£º1
 FromComputerRoom£ºz	Computer£ºz	Computer_State£º1
+FromComputerRoom£º123	Computer£º123	Computer_State£º1
+FromComputerRoom£ºtext	Computer£ºtext	Computer_State£º1
+FromComputerRoom£ºD	Computer£ºD	Computer_State£º1
+FromComputerRoom£º1231	Computer£º123	Computer_State£º1
+FromComputerRoom£º1	Computer£º2	Computer_State£º1
+FromComputerRoom£º1	Computer£º3	Computer_State£º1
+FromComputerRoom£º1	Computer£º4	Computer_State£º1
+FromComputerRoom£º1	Computer£º5	Computer_State£º1
