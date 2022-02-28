@@ -22,31 +22,33 @@ typedef struct time{  //时间的数据结构
 	int Minute;
 	int Second;
 	//int Time_Mod;	// 按手动调节 | 按系统时间 （可能用？）
-	time& operator=(time& value){
-		Year = value.Year;
-		Month = value.Month;
-		Day = value.Day;
-		Second = value.Second;
-		return *this;
-	}
-	bool operator< (time const& value) const {
-		if (Year != value.Year) return Year < value.Year;
-		else if (Month != value.Month) return Month < value.Month;
-		else if (Day != value.Day) return Day < value.Day;
-		else if (Second != value.Second) return Second < value.Second;
-	}
-	bool operator> (time const& value) const {
-		if (Year != value.Year) return Year > value.Year;
-		else if (Month != value.Month) return Month > value.Month;
-		else if (Day != value.Day) return Day > value.Day;
-		else if (Second != value.Second) return Second > value.Second;
-	}
-	bool operator= (time const& value) const {
-		return ((Year == value.Year) && (Month == value.Month) && (Day == value.Day) && (Second == value.Second));
-	}
-	bool operator!= (time const& value) const {
-		return ((Year != value.Year) || (Month != value.Month) || (Day != value.Day) || (Second != value.Second));
-	}
+	//time& operator=(time& value){
+	//	Year = value.Year;
+	//	Month = value.Month;
+	//	Day = value.Day;
+	//	Second = value.Second;
+	//	return *this;
+	//}
+	//bool operator< (time const& value) const {
+	//	if (Year != value.Year) return Year < value.Year;
+	//	else if (Month != value.Month) return Month < value.Month;
+	//	else if (Day != value.Day) return Day < value.Day;
+	//	else if (Hour != value.Hour) return Hour < value.Hour;
+	//	else if (Minute != value.Minute) return Minute < value.Minute;
+	//	else if (Second != value.Second) return Second < value.Second;
+	//}
+	//bool operator> (time const& value) const {
+	//	if (Year != value.Year) return Year > value.Year;
+	//	else if (Month != value.Month) return Month > value.Month;
+	//	else if (Day != value.Day) return Day > value.Day;
+	//	else if (Second != value.Second) return Second > value.Second;
+	//}
+	//bool operator= (time const& value) const {
+	//	return ((Year == value.Year) && (Month == value.Month) && (Day == value.Day) && (Second == value.Second));
+	//}
+	//bool operator!= (time const& value) const {
+	//	return ((Year != value.Year) || (Month != value.Month) || (Day != value.Day) || (Second != value.Second));
+	//}
 }Time_Type;
 typedef struct {  //机位的数据结构
 	char Computer_Name[40];				//机位名字 

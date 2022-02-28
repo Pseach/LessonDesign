@@ -107,7 +107,8 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 				case 1: {Add_User(); break; }
 				case 2: {Login_User(); break; }
 				case 3: {Logout_User(); break; }
-				case 4: {Page = 1;  break; }
+				case 4:  if (Temp_User.Type == -1) { MessageBox(NULL, TEXT("您还没有登录！请登录！"), TEXT("权限管理"), MB_OK | MB_SETFOREGROUND); break; }
+						{Page = 1;  break; }
 				case 5: if (Temp_User.Type == -1) { MessageBox(NULL, TEXT("您还没有登录！请登录！"), TEXT("权限管理"), MB_OK | MB_SETFOREGROUND); break; }//如果是普通用户，无法点开，并提醒
 						{Page = 2;  break;	}
 				case 6: if (Temp_User.Type == 0) { MessageBox(NULL, TEXT("您不是管理员！无权做此操作！"), TEXT("权限管理"), MB_OK | MB_SETFOREGROUND); break; }//如果是普通用户，无法点开，并提醒
@@ -120,7 +121,7 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 				case 0: {Page = 0; break; }
 				case 1: { Pre_Book(); break; }
 				case 2: { Cancel_Pre_Book(); break; }
-				case 3: { Query_IsBooK(); break; }
+				case 3: { Query_BooK(); break; }
 			}
 			break;	//Exit Page 1
 		}

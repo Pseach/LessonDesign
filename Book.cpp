@@ -41,24 +41,42 @@ int MyAtoi(const char* str) {
 	return num * flag;
 }
 
-int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什么的（已被预定））////////////////////////////?要预定的时间-》预定时长
-		////////////////////////////////////////////////////添加机房机位可不可用的判断
-	//////////////////////////////////////////////////////还缺少功能：检测同一时间段是否预定多台电脑（book state）以及某台电脑是否被预约了（不能两人一台电脑？）
+long long timecmp(Time_Type a, Time_Type b) {//a>b
+	if (b.Hour >= 24)b.Day += b.Hour / 24;
+	if (b.Day >= 30)b.Month += b.Month / 30;
+
+	if(a.Month != b.Month)return a.Month > b.Month;
+	if (a.Day != b.Day)return a.Day > b.Day;
+	if (a.Hour != b.Hour)return a.Hour > b.Hour;
+	if (a.Minute != b.Minute)return a.Minute > b.Minute;
+	if (a.Second != b.Second)return a.Second > b.Second;
+	return 0;
+}
+int canuse(char name[],int mod) {
+	char s1[40], s2[40], s3[40];
+	int state = 0;
+	if (mod == 1) {
+		FILE* FP_ComputerRoom = NULL;
+		FP_ComputerRoom = fopen("Files\\ComputerRooms.txt", "r");//先用只读的方式把文件打开，把数据读出来，放在一个序列中
+		while (!feof(FP_ComputerRoom)) {
+			fscanf(FP_ComputerRoom, "ComputerRoomName：%s\tState：%d\n",s1, &state);//读出文件当前记录
+			if (strcmp(s1, name) == 0)return state;
+		}
+	}if (mod == 2) {
+		FILE* FP_Computer = NULL;
+		FP_Computer = fopen("Files\\ComputerRooms.txt", "r");//先用只读的方式把文件打开，把数据读出来，放在一个序列中
+		while (!feof(FP_Computer)) {
+			fscanf(FP_Computer, "ComputerName：%s\tState：%d\n", s1, &state);//读出文件当前记录
+			if (strcmp(s1, name) == 0)return state;
+		}
+	}
+	//fclose(FP_Computer);
+}
+int Pre_Book(){			//初步预定									
+	//////////////////////////////////////////////////////还缺少功能：以及某台电脑是否被预约了（不能两人一台电脑？）
 	FILE* FP_BookData = NULL;
 	FP_BookData = fopen("Files\\BookLog.txt", "a"); //文件用于存储 ，，，，机位是否被占用，各种数据
 	fclose(FP_BookData);
-	/// <summary>
-	/// 如果已经登录：创建txt，读取所 预定的时间，机房,机位数据，（不存在问）
-	/// 时间在允许之外，提示，，，允许之内：输入要预定的时长
-	/// （如果现在时间+时长已经在机房允许时间之外：提醒开放时间）（不用）
-	/// 
-	///Book_Type：
-	///Time_Type Book_Time;							//预定的时间           
-	///Time_Type Book_Time_Long;					//机位的预定时长	    
-	///User_Type User_Book_Data;					//预定用户数据（名字）		 
-	///ComputerRoom_Type ComputerRoom_Book_Data;    //预定机房数据		 
-	///Computer_Type Computer_Book_Data;			//预定机位数据		 
-	/// </summary>
 	if (Temp_User.CanBook) {
 		if (Temp_User.Logined) { //已登录 
 			do {
@@ -83,6 +101,35 @@ int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什
 				Temp_Book.Book_Time.Hour = (Time_Point->tm_hour + 8) % 24;//可能出现“26”小时等意外数据
 				Temp_Book.Book_Time.Minute = Time_Point->tm_min;
 				Temp_Book.Book_Time.Second = Time_Point->tm_sec;
+
+
+				if (1) {///////////////////////////////////检查是否 刚刚已经预约过还没结束
+					Book_Type localbookdata = {};
+					FP_BookData = fopen("Files\\BookLog.txt", "r");//先用只读的方式把文件打开，把数据读出来，放在一个序列中
+					while (!feof(FP_BookData)) {      //以尾接法建立一个链表。  feof检测文件是否结束	%02d-%02d-%02d
+						Time_Type localtime = {};
+						fscanf(FP_BookData, "%04d/%02d/%02d %02d:%02d:%02d Long：%d UserName：%s BookRoom：%s BookComputer：%s BookState：%d\n",
+							&localtime.Year, &localtime.Month, &localtime.Day,
+							&localtime.Hour, &localtime.Minute, &localtime.Second,
+							&localbookdata.Book_Time_Long.Hour, localbookdata.User_Book_Data.Username,
+							localbookdata.ComputerRoom_Book_Data.ComputerRoom_Name,
+							localbookdata.ComputerRoom_Book_Data.Computer_Data.Computer_Name,
+							&localbookdata.Computer_Book_Data.Computer_Book_State
+						);//读出文件当前记录
+						if (localbookdata.Computer_Book_Data.Computer_Book_State == 1|| localbookdata.Computer_Book_Data.Computer_Book_State == 2) {					//预约了|同意请求（2）
+							if (strcmp(Temp_User.Username, localbookdata.User_Book_Data.Username) == 0) {//同名
+								localtime.Hour += localbookdata.Book_Time_Long.Hour;
+								if (!timecmp(Temp_Book.Book_Time, localtime)) {	//现在的时间如果大于之前时间+约时 那就能预定
+									fclose(FP_BookData);
+									return MessageBox(NULL, TEXT("您已经有一台计算机了！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
+								}
+							}
+						}
+					}
+					//遍历完后，
+					fclose(FP_BookData);
+				}
+
 
 				//if (ComputerRoom_Num() == 0) {
 				if (!ComputerRoom_Num()) {
@@ -114,8 +161,10 @@ int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什
 
 				do {//---------------------------优化！！！！(没对应机位的时候，问是否添加的时候，直接添加所输入的机位而不是再输)
 					inputbox_getline("请输入添加机位所在机房名称", "请输入添加机位所在机房名称", Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name, 40);	//先输入机房
+					if (!canuse(Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name, 1)) { MessageBox(NULL, TEXT("您输入的机房已被关闭！！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND); return 0; }
 					if (HaveComputerRoom(Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name)) {			//输入机房名称查询有无
 						inputbox_getline("请输入机位名称", "请输入机位名称", Temp_Book.ComputerRoom_Book_Data.Computer_Data.Computer_Name, 40);	//有的话输入机位
+						if (!canuse(Temp_Book.ComputerRoom_Book_Data.Computer_Data.Computer_Name,2)) { MessageBox(NULL, TEXT("您输入的机位已被暂停使用！！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND); return 0; }
 						if (HaveComputer(Temp_Book.ComputerRoom_Book_Data.Computer_Data.Computer_Name)) {
 							break;//有就退出审核
 						}
@@ -128,6 +177,8 @@ int Pre_Book(){			//初步预定										//------------------没有初始化数据（状态什
 						else return 0;	//不添加机房就退出
 					}
 				} while (HaveComputerRoom(Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name));
+
+
 
 				Temp_Book.Computer_Book_Data.Computer_Book_State = 0;//初始化预定状态
 
@@ -323,7 +374,8 @@ int Cancel_Pre_Book() {	//取消预定//预定状态变成0
 	}
 	return 1;
 }
-int Query_IsBooK(){		//
+int Query_BooK(){		//
+	system("Files\\BookLog.txt");
 	return 1;
 }
 int Book() {			//预定页面
