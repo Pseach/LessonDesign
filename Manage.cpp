@@ -194,10 +194,58 @@ int Delete_User() {		//删除用户
 		else MessageBox(NULL, TEXT("查无此人"), TEXT("提醒！"), MB_OK | MB_ICONWARNING | MB_SETFOREGROUND);
 	return 1;
 }
-int Change_User(){		//更改用户
+
+int Transform_User_BookPower() {		//开启|关闭用户预定功能
+	FILE* FP_Accounts = NULL;
+	FP_Accounts = fopen("Files\\Users.txt", "a"); //如果文件不存在，则会创建一个新文件
+	fclose(FP_Accounts);
+	enum { isnotDelete, isDelete };
+	int state = isnotDelete;
+	User_Type Temp_Accounts{};
+	Accounts_List Accounts_Head, Accounts_Read, Accounts_Point;
+	FP_Accounts = fopen("Files\\Users.txt", "r");//先用只读的方式把文件打开，把数据读出来，放在一个序列中
+	if (Accounts_Head = (Accounts_List)malloc(sizeof(Accounts_Size))) {
+		Accounts_Head->Accounts_Next = NULL;
+	}
+	//int Temp_Type = MessageBox(NULL, TEXT("授予账户管理员权限？"), TEXT("添加用户"), MB_YESNO | MB_ICONQUESTION | MB_SETFOREGROUND);//MB_ICONQUESTION：问号https://blog.csdn.net/yuyan987/article/details/78558648
+	inputbox_getline("请输入要更改权限的账号", "请输入要更改权限的账号", Temp_Accounts.Username, 40);      
+
+	//inputbox_getline("请输入密码", "请输入密码", Temp_Accounts.Password, 40);      //输入密码//////////管理员还需要知道你密码？
+	//Temp_Accounts.Type = (Temp_Type == 6) ? 1 : 0;	 //是(Y) 值为6 否(N)值为7;	//标记用户权限
+	//Temp_Accounts.CanBook = 1;
+
+	Accounts_Read = Accounts_Head;
+	while (!feof(FP_Accounts)) {      //以尾接法建立一个链表。  feof检测文件是否结束
+		if (Accounts_Point = (Accounts_List)malloc(sizeof(Accounts_Size))) {
+			fscanf(FP_Accounts, "%s\t%s\t%d\t%d\n", Accounts_Point->Accounts_Data.Username, Accounts_Point->Accounts_Data.Password, &Accounts_Point->Accounts_Data.Type, &Accounts_Point->Accounts_Data.CanBook);//读出文件当前记录
+			if (strcmp(Temp_Accounts.Username, Accounts_Point->Accounts_Data.Username) == 0) {
+				Accounts_Point->Accounts_Data.CanBook = (Accounts_Point->Accounts_Data.CanBook == 1) ? 0 : 1;
+				state = isDelete;
+			}
+			Accounts_Read->Accounts_Next = Accounts_Point;
+			Accounts_Read = Accounts_Point;
+		}
+	}
+	Accounts_Read->Accounts_Next = NULL;
+	fclose(FP_Accounts);
+	//新链表已建立
+	// 下面重新输入到文档（从头写）
+	FP_Accounts = fopen("Files\\Users.txt", "w");
+	Accounts_Point = Accounts_Head->Accounts_Next;//初始化（让Point指向Head的下一个（所存链表的头））
+	while (Accounts_Point) {
+		//从头重新输入
+		fprintf(FP_Accounts, "%s\t%s\t%d\t%d\n", Accounts_Point->Accounts_Data.Username, Accounts_Point->Accounts_Data.Password, Accounts_Point->Accounts_Data.Type, Accounts_Point->Accounts_Data.CanBook);
+
+		Accounts_Point = Accounts_Point->Accounts_Next;
+	}
+
+	if(state)MessageBox(NULL, TEXT("更改成功！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
+	else MessageBox(NULL, TEXT("查无此人"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
+	fclose(FP_Accounts);
+
 	return 1;
 }
-int Transform_User_Book() {	//开启|关闭用户预定功能
+int Change_User() {	//更改用户
 	return 1;
 }
 //机房管理系统

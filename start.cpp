@@ -155,8 +155,8 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 			switch (PressButtonId) {
 			case 0: {Page = 3; break; }
 			case 1: { Delete_User(); break; }
-			case 2: { Change_User(); break; }
-			case 3: { Transform_User_Book(); break; }
+			case 2: { Transform_User_BookPower(); break; }
+			case 3: { break; }
 			case 4: { break; }
 			case 5: {
 				break;

@@ -52,8 +52,8 @@ long long timecmp(Time_Type a, Time_Type b) {//a>b
 	if (a.Second != b.Second)return a.Second > b.Second;
 	return 0;
 }
-int canuse(char name[],int mod) {
-	char s1[40], s2[40], s3[40];
+int canuse(char name[], int mod) {
+	char s1[40] = {}, s2[40] = {}, s3[40] = {};
 	int state = 0;
 	if (mod == 1) {
 		FILE* FP_ComputerRoom = NULL;

@@ -9,7 +9,7 @@ bool HaveComputerRoom(char Static_ComputerRoomName[]);
 bool HaveComputer(char Static_ComputerName[]);
 //用户管理系统
 int User_Manage();				//管理用户
-int Transform_User_Book();	//开启|关闭用户预定功能
+int Transform_User_BookPower();	//开启|关闭用户预定功能
 int Delete_User();		//删除用户
 int Change_User();		//更改用户
 //机房管理系统
