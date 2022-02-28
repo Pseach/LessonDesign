@@ -24,3 +24,6 @@ int Transform_Computer();	//开放|关闭机位
 int Add_Computer();		//增加机位
 int Delete_Computer();	//删除机位
 int Change_Computer();	//更改机位
+//预定管理
+int Search_All_Book();
+int Agree_ALL_Book();

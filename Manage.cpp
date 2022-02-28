@@ -391,3 +391,64 @@ int Delete_Computer(){	//删除机位
 int Change_Computer(){	//更改机位
 	return 1;
 }
+
+int Search_All_Book(){
+	FILE* FP_ComputerRoom = NULL;
+	FP_ComputerRoom = fopen("Files\\BookLog.txt", "a"); //如果文件不存在，则会创建一个新文件
+	fclose(FP_ComputerRoom);
+	system("Files\\BookLog.txt");
+	return 1;
+}
+int Agree_ALL_Book() {
+	FILE* FP_BookData = NULL;
+	FP_BookData = fopen("Files\\BookLog.txt", "a");
+	fclose(FP_BookData);
+	Books_List Books_Head, Books_Read, Book_Point;
+
+	FP_BookData = fopen("Files\\BookLog.txt", "r");//先用只读的方式把文件打开，把数据读出来，放在一个序列中
+	if (Books_Head = (Books_List)malloc(sizeof(Books_Size))) {
+		Books_Head->Books_Next = NULL;
+	}//初始化头节点
+	Books_Read = Books_Head;//让Read指向链表头
+	while (!feof(FP_BookData)) {      //以尾接法建立一个链表。  feof检测文件是否结束	%02d-%02d-%02d
+		Book_Point = (Books_List)malloc(sizeof(Books_Size));
+		fscanf(FP_BookData, "%04d/%02d/%02d %02d:%02d:%02d Long：%d UserName：%s BookRoom：%s BookComputer：%s BookState：%d\n",
+			&Book_Point->Book_Data.Book_Time.Year, &Book_Point->Book_Data.Book_Time.Month, &Book_Point->Book_Data.Book_Time.Day,
+			&Book_Point->Book_Data.Book_Time.Hour, &Book_Point->Book_Data.Book_Time.Minute, &Book_Point->Book_Data.Book_Time.Second,
+			&Book_Point->Book_Data.Book_Time_Long.Hour, Book_Point->Book_Data.User_Book_Data.Username,
+			Book_Point->Book_Data.ComputerRoom_Book_Data.ComputerRoom_Name,
+			Book_Point->Book_Data.ComputerRoom_Book_Data.Computer_Data.Computer_Name,
+			&Book_Point->Book_Data.Computer_Book_Data.Computer_Book_State//应该是这个
+		);//读出文件当前记录
+
+		if ( Book_Point->Book_Data.Computer_Book_Data.Computer_Book_State == 1)
+			Book_Point->Book_Data.Computer_Book_Data.Computer_Book_State = 2;
+
+		Books_Read->Books_Next = Book_Point;//让用来读的Read的下一个节点指向读到的Point的位置（即让用来临时存数据的Point的数据存到Read里）////Books_Read->Books_Next即Read所指的对象（Head或者新的Head）
+		Books_Read = Book_Point;//重置（循环上去会重新malloc）用来读的Read
+	}
+	//遍历完后，
+	Books_Read->Books_Next = NULL;//初始化
+	fclose(FP_BookData);
+
+	//新链表已建立
+	// 下面重新输入到文档（从头写）
+	//（w）删完重写
+	FP_BookData = fopen("Files\\BookLog.txt", "w");
+	Book_Point = Books_Head->Books_Next;//初始化（让Point指向Head的下一个（所存链表的头））
+	while (Book_Point) {
+		//从头重新输入
+		fprintf(FP_BookData, "%04d/%02d/%02d %02d:%02d:%02d Long：%d UserName：%s BookRoom：%s BookComputer：%s BookState：%d\n",
+			Book_Point->Book_Data.Book_Time.Year, Book_Point->Book_Data.Book_Time.Month, Book_Point->Book_Data.Book_Time.Day,
+			Book_Point->Book_Data.Book_Time.Hour, Book_Point->Book_Data.Book_Time.Minute, Book_Point->Book_Data.Book_Time.Second,
+			Book_Point->Book_Data.Book_Time_Long.Hour, Book_Point->Book_Data.User_Book_Data.Username,
+			Book_Point->Book_Data.ComputerRoom_Book_Data.ComputerRoom_Name,
+			Book_Point->Book_Data.ComputerRoom_Book_Data.Computer_Data.Computer_Name,
+			Book_Point->Book_Data.Computer_Book_Data.Computer_Book_State//应该是这个
+		);//记录(接到最后)
+		Book_Point = Book_Point->Books_Next;
+	}
+	MessageBox(NULL, TEXT("同意预定成功！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
+	fclose(FP_BookData);
+	return 1;
+}

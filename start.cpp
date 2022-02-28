@@ -205,8 +205,8 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 		case 7: {//Book_Manage
 			switch (PressButtonId) {
 			case 0: {Page = 3; break; }
-			case 1: { break; }
-			case 2: { break; }
+			case 1: { Search_All_Book(); break; }
+			case 2: { Agree_ALL_Book(); break; }
 			case 3: { break; }
 			case 4: { break; }
 			case 5: {
