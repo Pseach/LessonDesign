@@ -71,7 +71,7 @@ int Add_User() { //注册/添加用户
 		inputbox_getline("请输入账号", "请输入账号", Temp_Accounts.Username, 40);      //输入账号//https://xege.org/manual/api/other/inputboxgetline.htm buffer area
 		inputbox_getline("请输入密码", "请输入密码", Temp_Accounts.Password, 40);      //输入密码
 		Temp_Accounts.Type = (Temp_Type == 6) ? 1 : 0;	 //是(Y) 值为6 否(N)值为7;	//标记用户权限
-		Temp_Accounts.HaveComputer = 0;
+		Temp_Accounts.CanBook = 1;
 
 		FP_Accounts = fopen("Files\\Users.txt", "r");//先用只读的方式把文件打开，把数据读出来，放在一个序列中
 		if (Accounts_Head = (Accounts_List)malloc(sizeof(Accounts_Size))) {
@@ -80,7 +80,7 @@ int Add_User() { //注册/添加用户
 		Accounts_Read = Accounts_Head;
 		while (!feof(FP_Accounts)) {      //以尾接法建立一个链表。  feof检测文件是否结束
 			if (Account_Point = (Accounts_List)malloc(sizeof(Accounts_Size))) {
-				fscanf(FP_Accounts, "%s\t%s\t%d\t%d\n", Account_Point->Accounts_Data.Username, Account_Point->Accounts_Data.Password, &Account_Point->Accounts_Data.Type, &Account_Point->Accounts_Data.HaveComputer);//读出文件当前记录
+				fscanf(FP_Accounts, "%s\t%s\t%d\t%d\n", Account_Point->Accounts_Data.Username, Account_Point->Accounts_Data.Password, &Account_Point->Accounts_Data.Type, &Account_Point->Accounts_Data.CanBook);//读出文件当前记录
 				Accounts_Read->Accounts_Next = Account_Point;
 				Accounts_Read = Account_Point;
 			}
@@ -93,7 +93,7 @@ int Add_User() { //注册/添加用户
 			Account_Point = Account_Point->Accounts_Next;
 		if (!Account_Point) {    //没找到相同用户名，则以追加的方式写入Users.txt文本中，且档次的注册流程完成
 			FP_Accounts = fopen("Files\\Users.txt", "a");
-			fprintf(FP_Accounts, "%s\t%s\t%d\t%d\n", Temp_Accounts.Username, Temp_Accounts.Password, Temp_Accounts.Type, Temp_Accounts.HaveComputer);
+			fprintf(FP_Accounts, "%s\t%s\t%d\t%d\n", Temp_Accounts.Username, Temp_Accounts.Password, Temp_Accounts.Type, Temp_Accounts.CanBook);
 			fclose(FP_Accounts);
 			return MessageBox(NULL, TEXT("添加成功！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
 		}
@@ -147,18 +147,21 @@ int Login_User(){        	    //登录
 
 			while (!feof(FP_Accounts)) {      //以尾接法建立一个链表。  feof检测文件是否结束 // 遍历
 				Account_Point = (Accounts_List)malloc(sizeof(Accounts_Size));
-				fscanf(FP_Accounts, "%s\t%s\t%d\t%d\n", Account_Point->Accounts_Data.Username, Account_Point->Accounts_Data.Password, &Account_Point->Accounts_Data.Type, &Account_Point->Accounts_Data.HaveComputer);//读出文件当前记录
+				fscanf(FP_Accounts, "%s\t%s\t%d\t%d\n", Account_Point->Accounts_Data.Username, Account_Point->Accounts_Data.Password, &Account_Point->Accounts_Data.Type, &Account_Point->Accounts_Data.CanBook);//读出文件当前记录
 				//对比
 				if (strcmp(Temp_Accounts.Username, Account_Point->Accounts_Data.Username) == 0) {	//对比账户名： == 0 说明找到
 					isFindAccount = 1;
 					if(strcmp(Temp_Accounts.Password, Account_Point->Accounts_Data.Password) == 0){	//对比密码  == 0 密码吻合
 						//登录
 						Temp_Accounts.Type = Account_Point->Accounts_Data.Type;//改变登录账户的权限
+						Temp_Accounts.CanBook = Account_Point->Accounts_Data.CanBook;
+
 						fclose(FP_Accounts);
 						strcpy(Temp_User.Username, Temp_Accounts.Username);
-						Temp_User.Type = Temp_Accounts.Type;	//更换当前登录状态
+						Temp_User.Type = Temp_Accounts.Type;	//更换用户种类
 						Temp_User.Logined = 1;			//变更登录状态已登录
-						//Temp_User.Login_User_Type = 1;	//变更登录种类
+						Temp_User.CanBook = Temp_Accounts.CanBook;
+
 						return MessageBox(NULL, TEXT("登录成功！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
 					}else { //密码错误
 						if ((MessageBox(NULL, TEXT("密码错误！\n是否重新输入账号密码?"), TEXT("账号已找到找到！"), MB_YESNO | MB_ICONWARNING | MB_SETFOREGROUND) == 6) ? 1 : 0) {//是 1
@@ -190,10 +193,10 @@ int Logout_User() {          //退出账户
 		//User_Type Temp_User = { "NONE","NONE",-1,0,0 };//?
 		strcpy(Temp_User.Username, "NONE");
 		strcpy(Temp_User.Password, "NONE");
-		Temp_User.HaveComputer = 0;
+		Temp_User.CanBook = 1;
 		Temp_User.Type = -1;
 		Temp_User.Logined = 0;
-
+		//Temp_User.CanBook = 1;
 		MessageBox(NULL, TEXT("您已退出当前账户！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
 	}
 	return 1;

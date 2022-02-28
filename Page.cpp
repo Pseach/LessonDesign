@@ -47,7 +47,7 @@ Pages Query_Page = {
 			&Temp_FunName,		//[6]
 		},
 		{
-		"","删除账户","更改账户","更改用户预定权限","","","",
+		"","删除账户","更改账户","更改预定权限","","","",
 		}
 	};
 	Pages Computer_Room_Manage_Page = {
