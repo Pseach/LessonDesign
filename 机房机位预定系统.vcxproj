@@ -164,6 +164,9 @@
     <ClInclude Include="Query.h" />
     <ClInclude Include="start.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="990X585.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

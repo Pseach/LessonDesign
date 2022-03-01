@@ -26,7 +26,6 @@ Windows WindowsSize = { 990,540 + 45 };
 
 //字体全局变量
 const int Defaut_Font_Size = (WindowsSize.y - 45) / 6 * 2 / 3 * 4 / 5;
-
 int MainStart() {
 
 	CreateFolder("Files");	//创建空文件夹放置文件
@@ -34,16 +33,32 @@ int MainStart() {
 	setinitmode(0); //设置初始化图形的选项和模式
 	//initgraph(VerticalWindows.x, VerticalWindows.y, INIT_NOFORCEEXIT); //如果设置width = -1 , height = -1, 那么窗口将会全屏显示(懒得修复全屏bug)  INIT_NOFORCEEXIT , 使关闭窗口的时候不强制退出程序，但窗口会消失，需要配合is_run函数
 	initgraph(WindowsSize.x, WindowsSize.y, INIT_NOFORCEEXIT); //如果设置width = -1 , height = -1, 那么窗口将会全屏显示(懒得修复全屏bug) INIT_NOFORCEEXIT , 使关闭窗口的时候不强制退出程序，但窗口会消失，需要配合is_run函数
+
+	//setbkcolor(EGERGB(0xEA, 0x51, 0x7F)); 	//设置背景颜色 
+	setbkcolor(WHITE);
+	PIMAGE pimg = newimage();
+	getimage(pimg, "990X585.png");
+	putimage(0, 0, pimg);
+	delimage(pimg);
+	DrawPage(Page);
+
 	setcaption("机房机位预定系统");		//设置窗口标题
 	//setinitmode(mode, x, y) x, y 是窗口左上角出现在屏幕的坐标
-	setbkcolor(EGERGB(0xEA, 0x51, 0x7F)); 	//设置背景颜色 
 	ege_enable_aa(true);//抗锯齿
 	InitializeButton();	//初始化按钮（位置）
 
 	bool RefreshPage = true;
 
 	int PressButtonId = -1;
-	for (; is_run(); delay_fps(360)) {
+
+	for (; is_run(); delay_fps(720)) {
+		cleardevice();
+		PIMAGE pimg = newimage();
+		getimage(pimg, "990X585.png");
+		putimage(0, 0, pimg);
+		delimage(pimg);
+		DrawPage(Page);
+
 		Show_Online_Login_User();	// 每次刷新完页面显示当前账户	//！！！！！！！！！！！！有时候不用刷新！！！！！！！！！！！
 		while (mousemsg()) {
 			mouse_msg msg = getmouse();
@@ -83,7 +98,6 @@ int MainStart() {
 		// 判断是否需要重绘，减少不必要的绘制操作
 		if (RefreshPage) {
 			cleardevice();
-			DrawPage(Page);
 			RefreshPage = false;
 		}
 	}

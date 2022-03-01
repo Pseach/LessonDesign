@@ -65,30 +65,31 @@ bool insideRectButton(const RectButton* button, int x, int y) {
 
 void drawRectButton(const RectButton* button) {
 
-	if (button->IsTitle){
-		setfillcolor(EGERGB(0x00, 0xFF, 0xFF));//setfillcolor(EGERGB(0x1E, 0x90, 0xFF));
-	}
-	else {
-		//setfillcolor(EGERGB(0xEA, 0x51, 0x7F));
-		//setfillcolor(EGERGB(0x00, 0xFF, 0x7F)); //TextColour
-		setfillcolor(BLUE);
-	}
-	bar(button->X, button->Y, button->X + button->Width, button->Y + button->Height);
+	//if (button->IsTitle){
+	//	setfillcolor(EGERGB(0x00, 0xFF, 0xFF));//setfillcolor(EGERGB(0x1E, 0x90, 0xFF));
+	//}
+	//else {
+	//	//setfillcolor(EGERGB(0xEA, 0x51, 0x7F));
+	//	//setfillcolor(EGERGB(0x00, 0xFF, 0x7F)); //TextColour
+	//	setfillcolor(BLUE);
+	//}
+	//bar(button->X, button->Y, button->X + button->Width, button->Y + button->Height);
+
 }
 
 
-void DrawRectButton(const RectButton* button, color_t Colour) {
-
-	if (button->IsTitle) {
-		setfillcolor(EGERGB(0x00, 0xFF, 0xFF));//setfillcolor(EGERGB(0x1E, 0x90, 0xFF));
-	}
-	else {
-		//setfillcolor(EGERGB(0xEA, 0x51, 0x7F));
-		//setfillcolor(EGERGB(0x00, 0xFF, 0x7F)); //TextColour
-		setfillcolor(BLUE);
-	}
-	bar(button->X, button->Y, button->X + button->Width, button->Y + button->Height);
-}
+//void DrawRectButton(const RectButton* button, color_t Colour) {
+//
+//	if (button->IsTitle) {
+//		setfillcolor(EGERGB(0x00, 0xFF, 0xFF));//setfillcolor(EGERGB(0x1E, 0x90, 0xFF));
+//	}
+//	else {
+//		//setfillcolor(EGERGB(0xEA, 0x51, 0x7F));
+//		//setfillcolor(EGERGB(0x00, 0xFF, 0x7F)); //TextColour
+//		setfillcolor(BLUE);
+//	}
+//	bar(button->X, button->Y, button->X + button->Width, button->Y + button->Height);
+//}
 
 int searchButton(int x, int y, const RectButton buttonArray[], int length) {	//返回按钮index
 	int buttonId = -1;
@@ -114,6 +115,9 @@ int DrawPage(int& page) {
 	setbkmode(TRANSPARENT);
 	setcolor(EGERGB(0x00, 0x00, 0x00)); // 文字颜色
 	setfont(Defaut_Font_Size, 0, "方正喵呜体");					//字体大小  宽度比例自适应  字体文件
+
+
+
 
 	//color_t lastFillColor = WHITE;//EGEARGB(WHITE);//= getfillcolor();//这个函数用于获取当前绘图填充色 
 	for (int i = 0; i <= PageNum; i++) {

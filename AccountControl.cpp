@@ -14,6 +14,10 @@ int Show_Online_Login_User() {	//显示当前账户
 	setcolor(EGERGB(0x00, 0x00, 0x00)); // 文字颜色
 	setfont(Defaut_Font_Size, 0, "方正喵呜体");					//字体大小  宽度比例自适应  字体文件
 	//显示当前账户栏
+
+	ege_line(0, 1, ButtonLocation_0.Width, 1);
+	ege_line(0, ButtonLocation_0.Height, ButtonLocation_0.Width, ButtonLocation_0.Height);
+
 	drawRectButton(&ButtonLocation_0);	//“当前账户："
 	xyprintf(ButtonLocation_0.Height * 1 / 5 / 2, ButtonLocation_0.Height * 1 / 5 / 2, "当前账户:");
 
