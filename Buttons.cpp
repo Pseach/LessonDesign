@@ -77,20 +77,6 @@ void drawRectButton(const RectButton* button) {
 
 }
 
-
-//void DrawRectButton(const RectButton* button, color_t Colour) {
-//
-//	if (button->IsTitle) {
-//		setfillcolor(EGERGB(0x00, 0xFF, 0xFF));//setfillcolor(EGERGB(0x1E, 0x90, 0xFF));
-//	}
-//	else {
-//		//setfillcolor(EGERGB(0xEA, 0x51, 0x7F));
-//		//setfillcolor(EGERGB(0x00, 0xFF, 0x7F)); //TextColour
-//		setfillcolor(BLUE);
-//	}
-//	bar(button->X, button->Y, button->X + button->Width, button->Y + button->Height);
-//}
-
 int searchButton(int x, int y, const RectButton buttonArray[], int length) {	//·µ»Ø°´Å¥index
 	int buttonId = -1;
 	for (int i = 0; i < length; i++) {

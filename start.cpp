@@ -51,7 +51,8 @@ int MainStart() {
 
 	int PressButtonId = -1;
 
-	for (; is_run(); delay_fps(720)) {
+	for (; is_run(); delay_fps(90)) {
+
 		cleardevice();
 		PIMAGE pimg = newimage();
 		getimage(pimg, "990X585.png");
@@ -97,7 +98,7 @@ int MainStart() {
 		}
 		// 判断是否需要重绘，减少不必要的绘制操作
 		if (RefreshPage) {
-			cleardevice();
+			//cleardevice();
 			RefreshPage = false;
 		}
 	}
