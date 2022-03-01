@@ -117,7 +117,7 @@ int Delete_User() {		//删除用户
 	FILE* FP_Accounts = NULL;
 	FP_Accounts = fopen("Files\\Users.txt", "a"); //如果文件不存在，则会创建一个新文件
 	fclose(FP_Accounts);
-		User_Type Temp_Accounts{};
+		User_Type Temp_Accounts={};
 		Accounts_List Accounts_Head, Accounts_Read, Account_Point;
 		enum{isnotDelete,isDelete};
 		int state = isnotDelete;
@@ -290,7 +290,72 @@ int Add_Computer_Room() { //添加机房（管理员才能管理？）
 	} while (1);
 }
 int Delete_Computer_Room(){	//删除机房
+	FILE* FP_ComputerRoom = NULL;
+	FP_ComputerRoom = fopen("Files\\ComputerRooms.txt", "a"); //如果文件不存在，则会创建一个新文件
+	fclose(FP_ComputerRoom);
 
+	ComputerRoom_Type Temp_ComputerRoom = {};
+	ComputerRoom_List ComputerRoom_Head, ComputerRoom_Read, ComputerRoom_Point;
+	
+	enum { isnotDelete, isDelete };
+	int state = isnotDelete;
+	inputbox_getline("请输入所删除机房", "请输入所删除机房", Temp_ComputerRoom.ComputerRoom_Name, 40);
+
+	FP_ComputerRoom = fopen("Files\\ComputerRooms.txt", "r");//先用只读的方式把文件打开，把数据读出来，放在一个序列中
+	if (ComputerRoom_Head = (ComputerRoom_List)malloc(sizeof(ComputerRoom_Size))) {
+		ComputerRoom_Head->ComputerRoom_Next = NULL;
+	}
+	ComputerRoom_Read = ComputerRoom_Head;
+	while (!feof(FP_ComputerRoom)) {      //以尾接法建立一个链表。  feof检测文件是否结束
+		if (ComputerRoom_Point = (ComputerRoom_List)malloc(sizeof(ComputerRoom_Size))) {
+			fscanf(FP_ComputerRoom, "ComputerRoomName：%s\tState：%d\n", ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name, &ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_State);//读出文件当前记录
+			ComputerRoom_Read->ComputerRoom_Next = ComputerRoom_Point;
+			ComputerRoom_Read = ComputerRoom_Point;
+		}
+	}
+	ComputerRoom_Read->ComputerRoom_Next = NULL;
+	fclose(FP_ComputerRoom);
+	ComputerRoom_Point = ComputerRoom_Head->ComputerRoom_Next;
+	/////////////////////////链表已建立//////////////////////
+	ComputerRoom_List ComputerRoomHead, ComputerRoomRead, ComputerRoomPoint;
+
+	if (ComputerRoomHead = (ComputerRoom_List)malloc(sizeof(ComputerRoom_Size))) {
+		ComputerRoomHead->ComputerRoom_Next = NULL;
+	}
+	ComputerRoomRead = ComputerRoomHead;
+
+	if ((ComputerRoom_Point))
+		do {
+			
+			ComputerRoomPoint = (ComputerRoom_List)malloc(sizeof(ComputerRoom_Size));
+				if ((strcmp(Temp_ComputerRoom.ComputerRoom_Name, ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name) == 0)) {
+					ComputerRoom_Point = ComputerRoom_Point->ComputerRoom_Next;//直接下一个，不读入这条
+					state = isDelete;
+				}
+				ComputerRoomPoint = ComputerRoom_Point;
+				ComputerRoomRead->ComputerRoom_Next = ComputerRoomPoint;
+				ComputerRoomRead = ComputerRoomPoint;
+
+			if (ComputerRoom_Point != NULL)ComputerRoom_Point = ComputerRoom_Point->ComputerRoom_Next;
+
+		} while (ComputerRoom_Point);
+
+		if (ComputerRoomRead != NULL)ComputerRoomRead->ComputerRoom_Next = NULL;
+
+		ComputerRoomPoint = ComputerRoomHead->ComputerRoom_Next;//新链表
+
+		FP_ComputerRoom = fopen("Files\\ComputerRooms.txt", "w");
+
+		if (ComputerRoomPoint)
+			do {
+				fprintf(FP_ComputerRoom, "ComputerRoomName：%s\tState：%d\n", ComputerRoomPoint->ComputerRoom_Data.ComputerRoom_Name, ComputerRoomPoint->ComputerRoom_Data.ComputerRoom_State);
+				ComputerRoomPoint = ComputerRoomPoint->ComputerRoom_Next;
+
+			} while (ComputerRoomPoint);
+		fclose(FP_ComputerRoom);
+
+			if (state)MessageBox(NULL, TEXT("已删除"), TEXT("提醒！"), MB_OK | MB_ICONWARNING | MB_SETFOREGROUND);
+			else MessageBox(NULL, TEXT("查无此房"), TEXT("提醒！"), MB_OK | MB_ICONWARNING | MB_SETFOREGROUND);
 	return 1;
 }
 int Transform_Computer_Room() {	//开放|关闭机房
@@ -425,6 +490,81 @@ int Add_Computer() { //添加机位（管理员才能管理？）
 	} while (1);
 }
 int Delete_Computer(){	//删除机位
+	FILE* FP_Computers = NULL;
+	FP_Computers = fopen("Files\\Computers.txt", "a"); //如果文件不存在，则会创建一个新文件
+	fclose(FP_Computers);
+
+	ComputerRoom_Type Temp_ComputerRoom = {};
+	ComputerRoom_List ComputerRoom_Head, ComputerRoom_Read, ComputerRoom_Point;
+	
+	enum { isnotDelete, isDelete , FindRoom};
+	int state = isnotDelete;
+	inputbox_getline("请输入所删除机位所在机房", "请输入所删除机位所在机房", Temp_ComputerRoom.ComputerRoom_Name, 40);      
+	inputbox_getline("请输入所删除的机位", "请输入所删除的机位", Temp_ComputerRoom.Computer_Data.Computer_Name, 40);      
+
+	FP_Computers = fopen("Files\\Computers.txt", "r");//先用只读的方式把文件打开，把数据读出来，放在一个序列中
+	if (ComputerRoom_Head = (ComputerRoom_List)malloc(sizeof(ComputerRoom_Size))) {
+		ComputerRoom_Head->ComputerRoom_Next = NULL;
+	}
+	ComputerRoom_Read = ComputerRoom_Head;
+	while (!feof(FP_Computers)) {      //以尾接法建立一个链表。  feof检测文件是否结束
+		if (ComputerRoom_Point = (ComputerRoom_List)malloc(sizeof(ComputerRoom_Size))) {
+			
+			fscanf(FP_Computers, "FromComputerRoom：%s\tComputer：%s\tComputer_State：%d\n", ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name, ComputerRoom_Point->ComputerRoom_Data.Computer_Data.Computer_Name, &ComputerRoom_Point->ComputerRoom_Data.Computer_Data.Computer_State);//读出文件当前记录
+			ComputerRoom_Read->ComputerRoom_Next = ComputerRoom_Point;
+			ComputerRoom_Read = ComputerRoom_Point;
+		}
+	}
+	ComputerRoom_Read->ComputerRoom_Next = NULL;
+	fclose(FP_Computers);
+	ComputerRoom_Point = ComputerRoom_Head->ComputerRoom_Next;
+	/////////////////////////链表已建立//////////////////////
+
+	ComputerRoom_List ComputerRoomHead, ComputerRoomRead, ComputerRoomPoint;
+
+	if (ComputerRoomHead = (ComputerRoom_List)malloc(sizeof(ComputerRoom_List))) {
+		ComputerRoomHead->ComputerRoom_Next = NULL;
+	}
+	ComputerRoomRead = ComputerRoomHead;
+	if ((ComputerRoom_Point))
+		//比对数据，没找到相同用户名，且没找完，继续找
+		do {
+			ComputerRoomPoint = (ComputerRoom_List)malloc(sizeof(ComputerRoom_Size));
+			if ((strcmp(Temp_ComputerRoom.ComputerRoom_Name, ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name) == 0)) {
+				if(state != isDelete)state = FindRoom;
+				if ((strcmp(Temp_ComputerRoom.Computer_Data.Computer_Name, ComputerRoom_Point->ComputerRoom_Data.Computer_Data.Computer_Name) == 0)) {
+					ComputerRoom_Point = ComputerRoom_Point->ComputerRoom_Next;//直接下一个，不读入这条
+					state = isDelete;
+				}
+			}
+			ComputerRoomPoint = ComputerRoom_Point;
+			ComputerRoomRead->ComputerRoom_Next = ComputerRoomPoint;
+			ComputerRoomRead = ComputerRoomPoint;
+
+			if (ComputerRoom_Point != NULL)ComputerRoom_Point = ComputerRoom_Point->ComputerRoom_Next;
+
+		} while (ComputerRoom_Point);
+		if (ComputerRoomRead != NULL)ComputerRoomRead->ComputerRoom_Next = NULL;
+
+		ComputerRoomPoint = ComputerRoomHead->ComputerRoom_Next;//新链表
+
+		FP_Computers = fopen("Files\\Computers.txt", "w");
+
+		if (ComputerRoomPoint)
+			do {
+				fprintf(FP_Computers, "FromComputerRoom：%s\tComputer：%s\tComputer_State：%d\n", 
+					ComputerRoomPoint->ComputerRoom_Data.ComputerRoom_Name,
+					ComputerRoomPoint->ComputerRoom_Data.Computer_Data.Computer_Name,
+					ComputerRoomPoint->ComputerRoom_Data.Computer_Data.Computer_State
+				);
+				ComputerRoomPoint = ComputerRoomPoint->ComputerRoom_Next;
+			} while (ComputerRoomPoint);
+			fclose(FP_Computers);
+
+		if (state == isDelete)MessageBox(NULL, TEXT("已删除！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
+		else if (state == isnotDelete)MessageBox(NULL, TEXT("无此机房"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
+		else if (state == FindRoom)MessageBox(NULL, TEXT("查无此机！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
+
 	return 1;
 }
 int Transform_Computer() {	//开放|关闭机位
