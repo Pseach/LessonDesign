@@ -14,6 +14,7 @@ const int BUTTONS_X_Len = WindowsSize.x / 6, BUTTONS_Y_Len = (WindowsSize.y - 45
 const int HALF_BUTTON_Y_Len = BUTTONS_Y_Len / 2;
 
 //Defaut_Font_Size =        BUTTONS_Y_Len * 2 / 3         * 4 / 5;
+
 RectButton ButtonLocation_0 = {
 	1 , 
 	0 , 0,
@@ -76,7 +77,6 @@ void drawRectButton(const RectButton* button) {
 	//bar(button->X, button->Y, button->X + button->Width, button->Y + button->Height);
 
 }
-
 int searchButton(int x, int y, const RectButton buttonArray[], int length) {	//·µ»Ø°´Å¥index
 	int buttonId = -1;
 	for (int i = 0; i < length; i++) {

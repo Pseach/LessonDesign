@@ -126,7 +126,8 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 						{Page = 1;  break; }
 				case 5: if (Temp_User.Type == -1) { MessageBox(NULL, TEXT("您还没有登录！请登录！"), TEXT("权限管理"), MB_OK | MB_SETFOREGROUND); break; }//如果是普通用户，无法点开，并提醒
 						{Page = 2;  break;	}
-				case 6: if (Temp_User.Type == 0) { MessageBox(NULL, TEXT("您不是管理员！无权做此操作！"), TEXT("权限管理"), MB_OK | MB_SETFOREGROUND); break; }//如果是普通用户，无法点开，并提醒
+				case 6: if (Temp_User.Type == -1) { MessageBox(NULL, TEXT("您还没有登录！请登录！"), TEXT("权限管理"), MB_OK | MB_SETFOREGROUND); break; }//如果是普通用户，无法点开，并提醒
+						if (Temp_User.Type != 1) { MessageBox(NULL, TEXT("您不是管理员！无权做此操作！"), TEXT("权限管理"), MB_OK | MB_SETFOREGROUND); break; }//如果是普通用户，无法点开，并提醒
 						{Page = 3;  break;}
 			}
 			break;	//Exit Page 0
