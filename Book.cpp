@@ -70,7 +70,7 @@ int canuse(char name[], int mod) {
 			if (strcmp(s1, name) == 0) { fclose(FP_Computers); return state; }
 		}
 	}
-	
+	return 0;
 }
 int Pre_Book(){			//初步预定									
 	//////////////////////////////////////////////////////还缺少功能：以及某台电脑是否被预约了（不能两人一台电脑？）

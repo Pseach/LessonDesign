@@ -15,7 +15,7 @@ const int HALF_BUTTON_Y_Len = BUTTONS_Y_Len / 2;
 
 //Defaut_Font_Size =        BUTTONS_Y_Len * 2 / 3         * 4 / 5;
 
-RectButton ButtonLocation_0 = {
+RectButton HeadlineButton = {
 	1 , 
 	0 , 0,
 	WindowsSize.x , BUTTONS_Y_Len * 2 / 3,
@@ -23,16 +23,16 @@ RectButton ButtonLocation_0 = {
 
 RectButton ShowOnline_Login_User = {
 	1 ,
-	ButtonLocation_0.Height * 1 / 5 / 2 + ButtonLocation_0.Height * 4 / 5 * 4 + ((WindowsSize.y - 45) / 6 * 2 / 3 * 4 / 5) / 2 ,
-	ButtonLocation_0.Height * 1 / 5 / 2 ,
-	ButtonLocation_0.Height * 4 / 5 * 40,
-	ButtonLocation_0.Height * 4 / 5 
+	HeadlineButton.Height * 1 / 5 / 2 + HeadlineButton.Height * 4 / 5 * 4 + ((WindowsSize.y - 45) / 6 * 2 / 3 * 4 / 5) / 2 ,
+	HeadlineButton.Height * 1 / 5 / 2 ,
+	HeadlineButton.Height * 4 / 5 * 40,
+	HeadlineButton.Height * 4 / 5
 };
 
 RectButton ButtonLocation[10];
 
 int InitializeButton() { //按钮初始化
-	ButtonLocation[0] = { 0,WindowsSize.x - Defaut_Font_Size ,ButtonLocation_0.Height ,Defaut_Font_Size ,Defaut_Font_Size };//返回的（×）
+	ButtonLocation[0] = { 0,WindowsSize.x - Defaut_Font_Size ,HeadlineButton.Height ,Defaut_Font_Size ,Defaut_Font_Size };//返回的（×）
 	int t = 0, k = 1;
 	for (int i = 1; i <= 6; i++) {
 		ButtonLocation[i].IsTitle = 0;

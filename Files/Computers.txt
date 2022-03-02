@@ -17,3 +17,4 @@ FromComputerRoom£º1	Computer£º2	Computer_State£º1
 FromComputerRoom£º1	Computer£º3	Computer_State£º1
 FromComputerRoom£º1	Computer£º4	Computer_State£º1
 FromComputerRoom£º1	Computer£º5	Computer_State£º1
+FromComputerRoom£º1	Computer£º666	Computer_State£º1

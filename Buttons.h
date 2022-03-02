@@ -12,7 +12,7 @@ struct RectButton {// ¾ØÐÎ°´Å¥
 
 extern RectButton ShowOnline_Login_User;
 
-extern RectButton ButtonLocation_0;
+extern RectButton HeadlineButton;
 
 extern RectButton ButtonLocation[10];
 
