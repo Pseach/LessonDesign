@@ -1,14 +1,14 @@
 #include <graphics.h>
-#include <string>
-#include <io.h>
-#include <direct.h>
+#include <string>		
+#include <io.h>			//创建文件夹所用
+#include <direct.h>		//创建文件夹所用
 #include "start.h"		//窗口设置
 #include "Buttons.h"	//自定义按钮
 #include "AccountControl.h"	//账户控制系统
 #include "Book.h"			//预订系统
 #include "Query.h"			//查询系统
 #include "Manage.h"			//管理系统
-#include "DataInput.h"		//自定义输入框
+#include "DataInput.h"		//自定义输入框（暂无）
 #include "Page.h"
 
 int Page = 0;//切换页面 换按钮
@@ -53,16 +53,16 @@ int MainStart() {
 	int PressButtonId = -1;
 
 	for (; is_run(); delay_fps(90)) {
-
+		/////////////////////////////每次刷新都要重新绘制
 		cleardevice();
 		PIMAGE pimg = newimage();
 		getimage(pimg, "990X585.png");
 		putimage(0, 0, pimg);
 		delimage(pimg);
-		DrawPage(Page);
+		DrawPage(Page);				// 每次刷新完页面按钮字体	
+		Show_Online_Login_User();	// 每次刷新完页面显示当前账户	
 
-		Show_Online_Login_User();	// 每次刷新完页面显示当前账户	//！！！！！！！！！！！！有时候不用刷新！！！！！！！！！！！
-		while (mousemsg()) {
+		while (mousemsg()) {			////////////copy from Intrnet
 			mouse_msg msg = getmouse();
 			// 判断鼠标左键按下（左键按下确定位置，同时判断是否为按钮区域
 			// 抬起则解除按下状态
@@ -77,7 +77,7 @@ int MainStart() {
 				//	RefreshPage = true;
 				//}
 				if (ButtonId != -1)	//点住123456按钮
-					Initialize_Button_State(ButtonId, PressButtonId, ButtonLocation[PressButtonId].Pressed, RefreshPage);
+					Initialize_Button_State(ButtonId, PressButtonId, ButtonLocation[PressButtonId].Pressed, RefreshPage);//只是将上面注释封装了一下
 				else {						//没点住123456按钮
 					RefreshPage = false; // 不用刷新?
 				}
@@ -91,7 +91,7 @@ int MainStart() {
 				//	RefreshPage = true;
 				//}
 				if (PressButtonId != -1)	//点住123456按钮
-					Recovery_Button_State(PressButtonId, ButtonLocation[PressButtonId].Pressed, RefreshPage);
+					Recovery_Button_State(PressButtonId, ButtonLocation[PressButtonId].Pressed, RefreshPage);		//只是将上面注释封装了一下，实现左键点击后释放的时候实现某些功能
 				else {						//没点住123456按钮
 					//RefreshPage = false; // 不用刷新?
 				}
@@ -238,6 +238,7 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 			break;	//Exit Page 3
 		}
 
+		 ////////////////////////////////////////////////////////////以下页面为空白页，用于查询功能的的清屏功能
 		case Book_Quarry_Page: {
 			switch (PressButtonId) {
 			case 0: {Page = Book_Page; break; }
@@ -262,7 +263,7 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 			}
 			break;
 		}
-	
+		////////////////////////////////////////////////////////////以下页面为空白页，用于查询功能的的清屏功能
 	}
 	ButtonLocation[PressButtonId].Pressed = false;	//恢复按钮
 	PressButtonId = -1;								//初始化按钮（不用？）
@@ -271,7 +272,7 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 }
 
 void CreateFolder(std::string str){// 创建文件夹（需要 #include <io.h> 以及 #include <direct.h>）
-	const char* p = str.c_str();
+	const char* p = str.c_str();	//string转换为char[]，不然下面函数用不了
 	if (_access(p, 0) == -1) {    // 文件夹不存在则创建文件夹
 		(void)_mkdir(p);
 	}

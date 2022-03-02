@@ -24,4 +24,4 @@ void drawRectButton(const RectButton* button);// 绘制按钮
 
 int searchButton(int x, int y, const RectButton buttonArray[], int length);// 查找 (x, y) 所在的按钮，返回按钮ID, 没有返回 -1
 
-int DrawPage(int& page);
+int DrawPage(int& page);	//（显示点击特效（暂无此）），显示页面文字

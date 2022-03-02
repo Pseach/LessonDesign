@@ -21,6 +21,7 @@ typedef struct time{  //时间的数据结构
 	int Hour;
 	int Minute;
 	int Second;
+	///////////////////////////////////////////////////////////////////////////////////////////////以下为函数重载，可以自定义结构体的某些运算，
 	//int Time_Mod;	// 按手动调节 | 按系统时间 （可能用？）
 	//time& operator=(time& value){
 	//	Year = value.Year;
@@ -54,14 +55,14 @@ typedef struct {  //机位的数据结构
 	char Computer_Name[40];				//机位名字 
 	char Computer_Room[40];				//哪个机房 
 	int Computer_State;					//可用|不可用	1|0
-	int Computer_Book_State;			//机位预定状态（没有被预定or初步预定or终极预定）(用于在预定文件中查询历史记录时用（文件中如果数据是0就不看了，不对此条做操作）)
+	int Computer_Book_State;			//机位预定状态（没有被预定or初步预定or终极预定）(用于在预定文件中查询历史记录时用）
 }Computer_Type;
 
 typedef struct {  //机房的数据结构
 	char ComputerRoom_Name[40];				//机房名字
 	int ComputerRoom_State;				//可用|不可用	1|0
 	Computer_Type Computer_Data;		//用于按机房查询所有机位功能(?)
-	//Time_Type ComputerRoom_CanBook_Time;		//机房的允许预定时间（直接全局管理）
+	//Time_Type ComputerRoom_CanBook_Time;		//机房的允许预定时间（直接全局管理）（已弃用）
 }ComputerRoom_Type;
 
 typedef struct usertpye{  //用户的数据结构
@@ -80,7 +81,7 @@ typedef struct usertpye{  //用户的数据结构
 	//	Login_User_Type = value.Login_User_Type;
 	//	Logined = value.Logined;
 	//	return *this;
-	//}//无效果???（）
+	//}//无效果???（）//？
 }User_Type;
 
 typedef struct {  //预定信息的数据结构
@@ -90,15 +91,6 @@ typedef struct {  //预定信息的数据结构
 	ComputerRoom_Type ComputerRoom_Book_Data;   //预定机房数据
 	Computer_Type Computer_Book_Data;			//预定机位数据
 }Book_Type;
-
-//book数据
-//取消初步预定
-//最终预定
-// 添加计算机之前先添加机房（）用到机房查询所有机位（system（txt））
-//可用时间段 （点击时间更改时间|系统时间）
-//用文件存储预定信息，集中管理（查看所有预定用户？）
-//初步预定就存到集中管理，还包括是否满足终极预定，预定时间
-//时间对比（函数？）（重载<>？）
 
 typedef struct Accounts_Node {  //链表用来存储从文件中读出来的数据
 	User_Type Accounts_Data;
@@ -134,8 +126,8 @@ extern const int Defaut_Font_Size;
 
 
 //函数
-int MainStart();
+int MainStart();	//可以理解为就是函数
 int Initialize_Button_State(int& ButtonId, int& PressButtonId, bool& ButtonLocationI_Press, bool& RefreshPage);
-int Recovery_Button_State(int& PressButtonId, bool& ButtonLocationI_Press, bool& RefreshPage);
-int Exit();
+int Recovery_Button_State(int& PressButtonId, bool& ButtonLocationI_Press, bool& RefreshPage);	
+int Exit();//没用
 

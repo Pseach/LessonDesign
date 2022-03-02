@@ -6,8 +6,8 @@
 typedef struct pages {//所在层次 ,*各个开关[]，功能[],该页名称
 	std::string PageName;	//翻不机密层次，
 	int PageLayer;			
-	struct pages* Link[7];
-	std::string FunName[7];
+	struct pages* Link[7];	
+	std::string FunName[7];	
 }Pages;
 
 extern Pages Page_Exit;

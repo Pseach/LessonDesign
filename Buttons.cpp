@@ -61,13 +61,13 @@ int InitializeButton() { //°´Å¥³õÊ¼»¯
 	return 1;
 }
 
-bool insideRectButton(const RectButton* button, int x, int y) {
+bool insideRectButton(const RectButton* button, int x, int y) {//ÅĞ¶ÏÊÇ·ñµã»÷µ½ÁËÄ³¸ö°´Å¥
 	return (x >= button->X) && (y >= button->Y)
 		&& (x < button->X + button->Width)
 		&& (y < button->Y + button->Height);
 }
 
-void drawRectButton(const RectButton* button) {
+void drawRectButton(const RectButton* button) {//////µã»÷ÌØĞ§
 
 	//if (button->IsTitle){
 	//	setfillcolor(EGERGB(0x00, 0xFF, 0xFF));//setfillcolor(EGERGB(0x1E, 0x90, 0xFF));
@@ -91,7 +91,7 @@ int searchButton(int x, int y, const RectButton buttonArray[], int length) {	//·
 	return buttonId;
 }
 //			MessageBox(NULL, TEXT("TEXT"), TEXT("TEXT£¡"), MB_YESNO | MB_ICONWARNING | MB_SETFOREGROUND);
-int DrawButtons(Pages pages_name) {
+int DrawButtons(Pages pages_name) {//°ÑPage.cppÀï¶¨ÒåµÄÒ³Ãæ½á¹¹ÌåµÄÒ³ÃæÃû³ÆÏÔÊ¾ÔÚÆÁÄ»
 	for (int i = 1; i <= 6; i++) {
 		std::string str = pages_name.FunName[i];
 		const char* p = str.c_str();
@@ -106,7 +106,7 @@ int DrawPage(int& page) {
 	setfont(Defaut_Font_Size, 0, "·½Õıß÷ÎØÌå");					//×ÖÌå´óĞ¡  ¿í¶È±ÈÀı×ÔÊÊÓ¦  ×ÖÌåÎÄ¼ş
 
 	//color_t lastFillColor = WHITE;//EGEARGB(WHITE);//= getfillcolor();//Õâ¸öº¯ÊıÓÃÓÚ»ñÈ¡µ±Ç°»æÍ¼Ìî³äÉ« 
-	for (int i = 0; i <= PageNum; i++) {
+	for (int i = 0; i <= PageNum; i++) {	///////µã»÷ÌØĞ§
 		//¸ù¾İ×´Ì¬½øĞĞ²»Í¬µÄ»æÖÆ£¬ÕâÀï°´×´Ì¬¸Ä±äÑÕÉ«
 		//color_t ButtonsColour;
 		if (ButtonLocation[i].Pressed) {
@@ -124,8 +124,8 @@ int DrawPage(int& page) {
 		//}
 	}
 
-	if(page)xyprintf(ButtonLocation[0].X, ButtonLocation[0].Y , "¡Á");
-	switch (page) {
+	if(page)xyprintf(ButtonLocation[0].X, ButtonLocation[0].Y , "¡Á");		//¼ÓÉÏÍË³öµÄ°´Å¥±êÊ¶
+	switch (page) {				///°ÑPage.cppÀï¶¨ÒåµÄÒ³Ãæ½á¹¹ÌåµÄÒ³ÃæÃû³ÆÏÔÊ¾ÔÚÆÁÄ»
 		enum { Book_Quarry_Page = 100, ComputerRoom_Quarry_Page = 110, Computer_Quarry_Page = 120, Manage_Book_Page = 130 };
 		case 0: {DrawButtons(Menu_Page); break; }
 		case 1: {DrawButtons(Book_Page); break; }
@@ -141,14 +141,6 @@ int DrawPage(int& page) {
 		case Computer_Quarry_Page: { break; }
 		case Manage_Book_Page: { break; }
 	}
-	//if (page == 0)	DrawButtons(Menu_Page);
-	//if (page == 1)	DrawButtons(Book_Page); 
-	//if (page == 2)	DrawButtons(Query_Page);
-	//if (page == 3)	DrawButtons(Manage_Page);
-	//if (page == 4)	DrawButtons(User_Manage_Page);
-	//if (page == 5)	DrawButtons(Computer_Room_Manage_Page);
-	//if (page == 6)	DrawButtons(Computer_Manage_Page);
-	//if (page == 7)	DrawButtons(Book_Manage_Page);
 	return 1;
 	
 }

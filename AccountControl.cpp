@@ -9,24 +9,25 @@
 //extern User_Type Temp_User;
 
 int Show_Online_Login_User() {	//显示当前账户
-	//LPCSTR Font1="\u65b9\u6b63\u55b5\u545c\u4f53";
+
+	//LPCSTR Font1="\u65b9\u6b63\u55b5\u545c\u4f53";		
 	setbkmode(TRANSPARENT);
 	setcolor(EGERGB(0x00, 0x00, 0x00)); // 文字颜色
 	setfont(Defaut_Font_Size, 0, "方正喵呜体");					//字体大小  宽度比例自适应  字体文件
 
-	//settextjustify(CENTER_TEXT, CENTER_TEXT);
+	//settextjustify(CENTER_TEXT, CENTER_TEXT);//文字居中，以后可能重构代码用到
 
 	//显示当前账户栏
-
 	ege_line(0, 1, HeadlineButton.Width, 1);
-	ege_line(0, HeadlineButton.Height, HeadlineButton.Width, HeadlineButton.Height);
+	ege_line(0, HeadlineButton.Height, HeadlineButton.Width, HeadlineButton.Height);	//顶栏的边框
 
-	drawRectButton(&HeadlineButton);	//“当前账户："
-	xyprintf(HeadlineButton.Height * 1 / 5 / 2, HeadlineButton.Height * 1 / 5 / 2, "当前账户:");
+	drawRectButton(&HeadlineButton);	//此行暂时无作用
+	xyprintf(HeadlineButton.Height * 1 / 5 / 2, HeadlineButton.Height * 1 / 5 / 2, "当前账户:");//“当前账户："
 
-	drawRectButton(&ShowOnline_Login_User); //登陆账户为" "
-	xyprintf(ShowOnline_Login_User.X, ShowOnline_Login_User.Y, "%s", Temp_User.Username);
+	drawRectButton(&ShowOnline_Login_User);	//此行暂时无作用
+	xyprintf(ShowOnline_Login_User.X, ShowOnline_Login_User.Y, "%s", Temp_User.Username); //登陆账户为" "
 
+	/////////////////////////////////////////////////////////////////////时间显示-----因为每次页面刷新都调用这个函数，所以就变成静态的了
 	time_t timep;
 	struct tm* Time_Point;
 	time(&timep);
@@ -35,6 +36,7 @@ int Show_Online_Login_User() {	//显示当前账户
 	//Temp_Book.Book_Time.Month = Time_Point->tm_mon + 1;
 	//Temp_Book.Book_Time.Day = Time_Point->tm_mday;
 	xyprintf(WindowsSize.x - 4 * Defaut_Font_Size, HeadlineButton.Height * 1 / 5 / 2, "%02d:%02d:%02d", ((Time_Point->tm_hour + 8) >= 24) ? (Time_Point->tm_hour + 8 - 24) : (Time_Point->tm_hour + 8), Time_Point->tm_min, Time_Point->tm_sec);
+	/////////////////////////////////////////////////////////////////////时间显示
 
 	{ 
 		int RemindFont_Size = Defaut_Font_Size / 2;
@@ -42,7 +44,7 @@ int Show_Online_Login_User() {	//显示当前账户
 		setcolor(BLACK);
 		//setcolor(WHITE);
 
-		switch(Temp_User.Type){
+		switch(Temp_User.Type){			//根据用户的全局变量结构体显示当前的用户类型
 			case -1: {	//未知
 				xyprintf(0, HeadlineButton.Height + RemindFont_Size / 2, "请登录！");//4个字	//左上角
 				//xyprintf(HeadlineButton.Height / 5, HeadlineButton.Height + RemindFont_Size / 2, "请登录！");//4个字	//左上角
@@ -74,7 +76,7 @@ int Add_User() { //注册/添加用户
 	FP_Accounts = fopen("Files\\Users.txt", "a"); //如果文件不存在，则会创建一个新文件
 	fclose(FP_Accounts);
 	do {	//读取并存储账号密码 
-		User_Type Temp_Accounts{};
+		User_Type Temp_Accounts{};	//将读取数据暂存于此
 		Accounts_List Accounts_Head, Accounts_Read, Account_Point;
 
 		int Temp_Type = MessageBox(NULL, TEXT("授予账户管理员权限？"), TEXT("添加用户"), MB_YESNO | MB_ICONQUESTION | MB_SETFOREGROUND);//MB_ICONQUESTION：问号https://blog.csdn.net/yuyan987/article/details/78558648
@@ -82,7 +84,7 @@ int Add_User() { //注册/添加用户
 		inputbox_getline("请输入密码", "请输入密码", Temp_Accounts.Password, 40);      //输入密码
 		Temp_Accounts.Type = (Temp_Type == 6) ? 1 : 0;	 //是(Y) 值为6 否(N)值为7;	//标记用户权限
 		Temp_Accounts.CanBook = 1;
-
+		/////////////////////////////////////////////////////////////////////////////建立链表
 		FP_Accounts = fopen("Files\\Users.txt", "r");//先用只读的方式把文件打开，把数据读出来，放在一个序列中
 		if (Accounts_Head = (Accounts_List)malloc(sizeof(Accounts_Size))) {
 			Accounts_Head->Accounts_Next = NULL;
@@ -97,8 +99,10 @@ int Add_User() { //注册/添加用户
 		}
 		Accounts_Read->Accounts_Next = NULL;
 		fclose(FP_Accounts);
-
 		Account_Point = Accounts_Head->Accounts_Next;
+		///////////////////////////////////////////////////////////////////////////建立链表到Point
+
+
 		while ((Account_Point) && (strcmp(Temp_Accounts.Username, Account_Point->Accounts_Data.Username) != 0) && (1))//比对数据，没找到相同用户名，且没找完，继续找
 			Account_Point = Account_Point->Accounts_Next;
 		if (!Account_Point) {    //没找到相同用户名，则以追加的方式写入Users.txt文本中，且档次的注册流程完成
@@ -114,23 +118,6 @@ int Add_User() { //注册/添加用户
 }
 
 int Login_User(){        	    //登录
-	/// <summary>
-	/// 		//已登录
-	///		//提示：您已登录
-	///	//未登录
-	///		//输入账户密码
-	///			//搜数据
-	///				//搜到：	
-	///					// flag1
-	///					//密码正确：	提示：登陆成功
-	///					//密码错误：	问：是否重新输入
-	///						//是：输 返回到flag1 
-	///						//否：退出
-	///				//没搜到：	提示：没有当前账户
-	///					//问：注册吗 
-	///						//注册： 	Add_User();
-	///						//退出： 
-	/// </summary>
 	if (Temp_User.Logined) { //已登录
 		MessageBox(NULL, TEXT("您已登录！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
 	}
