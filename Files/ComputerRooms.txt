@@ -6,3 +6,5 @@ ComputerRoomName£º1a	State£º1
 ComputerRoomName£ºfff	State£º1
 ComputerRoomName£ºz	State£º1
 ComputerRoomName£º1314	State£º1
+ComputerRoomName£º	State£º1
+ComputerRoomName£ºqwe	State£º1
