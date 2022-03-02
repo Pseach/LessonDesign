@@ -32,6 +32,7 @@ RectButton ShowOnline_Login_User = {
 RectButton ButtonLocation[10];
 
 int InitializeButton() { //按钮初始化
+
 	ButtonLocation[0] = { 0,WindowsSize.x - Defaut_Font_Size ,HeadlineButton.Height ,Defaut_Font_Size ,Defaut_Font_Size };//返回的（×）
 	int t = 0, k = 1;
 	for (int i = 1; i <= 6; i++) {
@@ -41,7 +42,9 @@ int InitializeButton() { //按钮初始化
 		ButtonLocation[i].Y = (i - t) * (BUTTONS_Y_Len + HALF_BUTTON_Y_Len);
 		ButtonLocation[i].Width = BUTTONS_X_Len;
 		ButtonLocation[i].Height = BUTTONS_Y_Len;
-	}//调个皮~嘻嘻
+	}
+
+	//调个皮~嘻嘻
 	//for (int i = 1; i <= 3; i++) {
 	//	ButtonLocation[i].X =  BUTTONS_X_Len;
 	//	ButtonLocation[i].Y = i *(BUTTONS_Y_Len + HALF_BUTTON_Y_Len);
@@ -102,9 +105,6 @@ int DrawPage(int& page) {
 	setcolor(EGERGB(0x00, 0x00, 0x00)); // 文字颜色
 	setfont(Defaut_Font_Size, 0, "方正喵呜体");					//字体大小  宽度比例自适应  字体文件
 
-
-
-
 	//color_t lastFillColor = WHITE;//EGEARGB(WHITE);//= getfillcolor();//这个函数用于获取当前绘图填充色 
 	for (int i = 0; i <= PageNum; i++) {
 		//根据状态进行不同的绘制，这里按状态改变颜色
@@ -126,6 +126,7 @@ int DrawPage(int& page) {
 
 	if(page)xyprintf(ButtonLocation[0].X, ButtonLocation[0].Y , "×");
 	switch (page) {
+		enum { Book_Quarry_Page = 100, ComputerRoom_Quarry_Page = 110, Computer_Quarry_Page = 120, Manage_Book_Page = 130 };
 		case 0: {DrawButtons(Menu_Page); break; }
 		case 1: {DrawButtons(Book_Page); break; }
 		case 2: {DrawButtons(Query_Page); break; }
@@ -134,6 +135,11 @@ int DrawPage(int& page) {
 		case 5: {DrawButtons(Computer_Room_Manage_Page); break; }
 		case 6: {DrawButtons(Computer_Manage_Page); break; }
 		case 7: {DrawButtons(Book_Manage_Page); break; }
+
+		case Book_Quarry_Page: { break; }
+		case ComputerRoom_Quarry_Page: { break; }
+		case Computer_Quarry_Page: { break; }
+		case Manage_Book_Page: { break; }
 	}
 	//if (page == 0)	DrawButtons(Menu_Page);
 	//if (page == 1)	DrawButtons(Book_Page); 

@@ -114,49 +114,50 @@ int Initialize_Button_State(int& ButtonId, int& PressButtonId, bool& ButtonLocat
 	return 1;
 }
 int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool& RefreshPage) {//封装 //恢复按钮并且执行操作
-
 	switch (Page) {			//！！！！！！！！可优化！按所用方法标记页码不易进行管理   优化思路：每一页都有自己的分页！！！！！！！！(优化个屁！弃用（不会重载）)
-		case 0: {
+		enum { Menu_Page = 0 , Book_Page, Query_Page, Manage_Page, User_Manage_Page, Computer_Room_Manage_Page, Computer_Manage_Page, Book_Manage_Page };
+		enum { Book_Quarry_Page = 100, ComputerRoom_Quarry_Page = 110, Computer_Quarry_Page = 120 ,Manage_Book_Page = 130};
+		case Menu_Page: {
 			switch (PressButtonId) {
-				case 0: {Page = 0; break; }
+				case 0: {Page = Menu_Page; break; }
 				case 1: {Add_User(); break; }
 				case 2: {Login_User(); break; }
 				case 3: {Logout_User(); break; }
 				case 4:  if (Temp_User.Type == -1) { MessageBox(NULL, TEXT("您还没有登录！请登录！"), TEXT("权限管理"), MB_OK | MB_SETFOREGROUND); break; }
-						{Page = 1;  break; }
+						{Page = Book_Page;  break; }
 				case 5: if (Temp_User.Type == -1) { MessageBox(NULL, TEXT("您还没有登录！请登录！"), TEXT("权限管理"), MB_OK | MB_SETFOREGROUND); break; }//如果是普通用户，无法点开，并提醒
-						{Page = 2;  break;	}
+						{Page = Query_Page;  break;	}
 				case 6: if (Temp_User.Type == -1) { MessageBox(NULL, TEXT("您还没有登录！请登录！"), TEXT("权限管理"), MB_OK | MB_SETFOREGROUND); break; }//如果是普通用户，无法点开，并提醒
 						if (Temp_User.Type != 1) { MessageBox(NULL, TEXT("您不是管理员！无权做此操作！"), TEXT("权限管理"), MB_OK | MB_SETFOREGROUND); break; }//如果是普通用户，无法点开，并提醒
-						{Page = 3;  break;}
+						{Page = Manage_Page;  break;}
 			}
 			break;	//Exit Page 0
 		}
-		case 1:	{
+		case Book_Page:	{
 			switch (PressButtonId) {
-				case 0: {Page = 0; break; }
+				case 0: {Page = Menu_Page; break; }
 				case 1: { Pre_Book(); break; }
 				case 2: { Cancel_Pre_Book(); break; }
 				case 3: { Query_BooK(); break; }
 			}
-			break;	//Exit Page 1
+			break;	
 		}
-		case 2:	{
+		case Query_Page:	{
 			switch (PressButtonId) {
-				case 0: {Page = 0; break; }
+				case 0: {Page = Menu_Page; break; }
 				case 1: { Computer_Query(); break; }
-				case 2: { Computer_Room_Query(); break; }
+				case 2: { Page = ComputerRoom_Quarry_Page; Computer_Room_Query(); break; }
 				case 3: { Computer_Room_Browse(); break; }
 			}
-			break;	//Exit Page 2
+			break;	
 		}
-		case 3: {
+		case Manage_Page: {
 			switch (PressButtonId) {
-				case 0: {Page = 0; break; }
-				case 1: {Page = 4; break; }
-				case 2: {Page = 5; break; }
-				case 3: {Page = 6; break; }
-				case 4: {Page = 7; break; }
+				case 0: {Page = Menu_Page; break; }
+				case 1: {Page = User_Manage_Page; break; }
+				case 2: {Page = Computer_Room_Manage_Page; break; }
+				case 3: {Page = Computer_Manage_Page; break; }
+				case 4: {Page = Book_Manage_Page; break; }
 				case 5: {
 					break;
 				}
@@ -167,9 +168,9 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 			}
 			break;	//Exit Page 3
 		}
-		case 4: {//User_Manage
+		case User_Manage_Page: {
 			switch (PressButtonId) {
-			case 0: {Page = 3; break; }
+			case 0: {Page = Manage_Page; break; }
 			case 1: { Delete_User(); break; }
 			case 2: { Transform_User_BookPower(); break; }
 			case 3: { break; }
@@ -182,11 +183,11 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 				break;
 			}
 			}
-			break;	//Exit Page 3
+			break;	
 		}
-		case 5: {//Computer_Room_Manage
+		case Computer_Room_Manage_Page: {
 			switch (PressButtonId) {
-			case 0: {Page = 3; break; }
+			case 0: {Page = Manage_Page; break; }
 			case 1: { Add_Computer_Room(); break; }
 			case 2: { Delete_Computer_Room(); break; }
 			case 3: { Transform_Computer_Room(); break; }
@@ -201,9 +202,9 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 			}
 			break;	//Exit Page 3
 		}
-		case 6: {//Computer_Manage
+		case Computer_Manage_Page: {
 			switch (PressButtonId) {
-			case 0: {Page = 3; break; }
+			case 0: {Page = Manage_Page; break; }
 			case 1: { Add_Computer(); break; }
 			case 2: { Delete_Computer(); break; }
 			case 3: { Transform_Computer(); break; }
@@ -218,9 +219,9 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 			}
 			break;	//Exit Page 3
 		}
-		case 7: {//Book_Manage
+		case Book_Manage_Page: {
 			switch (PressButtonId) {
-			case 0: {Page = 3; break; }
+			case 0: {Page = Manage_Page; break; }
 			case 1: { Search_All_Book(); break; }
 			case 2: { Agree_ALL_Book(); break; }
 			case 3: { break; }
@@ -235,6 +236,32 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 			}
 			break;	//Exit Page 3
 		}
+
+		case Book_Quarry_Page: {
+			switch (PressButtonId) {
+			case 0: {Page = Book_Page; break; }
+			}
+			break;
+		}
+		case ComputerRoom_Quarry_Page: {
+			switch (PressButtonId) {
+			case 0: {Page = Query_Page; break; }
+			}
+			break;
+		}
+		case Computer_Quarry_Page: {
+			switch (PressButtonId) {
+			case 0: {Page = Query_Page; break; }
+			}
+			break;
+		}
+		case Manage_Book_Page: {
+			switch (PressButtonId) {
+			case 0: {Page = Book_Manage_Page; break; }
+			}
+			break;
+		}
+	
 	}
 	ButtonLocation[PressButtonId].Pressed = false;	//恢复按钮
 	PressButtonId = -1;								//初始化按钮（不用？）
