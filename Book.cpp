@@ -65,7 +65,6 @@ int canuse(char name[], int mod) {
 		FILE* FP_Computers = NULL;
 		FP_Computers = fopen("Files\\Computers.txt", "r");//先用只读的方式把文件打开，把数据读出来，放在一个序列中
 		while (!feof(FP_Computers)) {
-			
 			fscanf(FP_Computers, "FromComputerRoom：%s\tComputer：%s\tComputer_State：%d\n", s1, s2, &state);//读出文件当前记录
 			if (strcmp(s1, name) == 0) { fclose(FP_Computers); return state; }
 		}

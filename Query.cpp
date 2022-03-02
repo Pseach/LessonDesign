@@ -65,6 +65,7 @@ int Computer_Query() {		//查询机位
 		xyprintf(Data1x, Data1y, "机房");
 		xyprintf(Data2x, Data2y, "名称");
 		xyprintf(Data3x, Data3y, "状态");
+		int cnt = 0;
 		while (ComputerRoom_Point) {
 			Data1y += QuarryFont_Size;
 			Data2y += QuarryFont_Size;
@@ -74,7 +75,12 @@ int Computer_Query() {		//查询机位
 			if (ComputerRoom_Point->ComputerRoom_Data.Computer_Data.Computer_State)xyprintf(Data3x, Data3y, "开放");
 			else xyprintf(Data3x, Data3y, "关闭");
 			ComputerRoom_Point = ComputerRoom_Point->ComputerRoom_Next;
-
+			cnt++;
+			if (cnt == 19) {
+				Data1x += WindowsSize.x / 2; Data1y = HeadlineButton.Height + Defaut_Font_Size;
+				Data2x += WindowsSize.x / 2; Data2y = HeadlineButton.Height + Defaut_Font_Size;
+				Data3x += WindowsSize.x / 2; Data3y = HeadlineButton.Height + Defaut_Font_Size;
+			}
 		}
 	}
 	return 1;
@@ -117,9 +123,10 @@ int Computer_Room_Query() {	//查询机房
 		DrawPage(Page);
 		Show_Online_Login_User();
 		int Data1x = 0, Data1y = HeadlineButton.Height + Defaut_Font_Size ;
-		int Data2x = WindowsSize.x / 2, Data2y = HeadlineButton.Height + Defaut_Font_Size;
+		int Data2x = WindowsSize.x / 2 - 2 * QuarryFont_Size, Data2y = HeadlineButton.Height + Defaut_Font_Size;
 		xyprintf(Data1x, Data1y, "机房名字");
 		xyprintf(Data2x, Data2y, "状态");
+		int cnt = 0;
 		while (ComputerRoom_Point) {
 			Data1y += QuarryFont_Size;
 			Data2y += QuarryFont_Size;
@@ -127,6 +134,11 @@ int Computer_Room_Query() {	//查询机房
 			if(ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_State)xyprintf(Data2x, Data2y, "开放" );
 			else xyprintf(Data2x, Data2y, "关闭" );
 			ComputerRoom_Point = ComputerRoom_Point->ComputerRoom_Next;
+			cnt++;
+			if (cnt == 19) {
+				Data1x += WindowsSize.x / 2; Data1y = HeadlineButton.Height + Defaut_Font_Size;
+				Data2x += WindowsSize.x / 2; Data2y = HeadlineButton.Height + Defaut_Font_Size;
+			}
 		}
 	}
 	return 1;

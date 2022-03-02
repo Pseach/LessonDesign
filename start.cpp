@@ -145,8 +145,8 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 		case Query_Page:	{
 			switch (PressButtonId) {
 				case 0: {Page = Menu_Page; break; }
-				case 1: { Computer_Query(); break; }
-				case 2: { Page = ComputerRoom_Quarry_Page; Computer_Room_Query(); break; }
+				case 1: { Page = Computer_Quarry_Page; Computer_Query();Page = Query_Page; break; }
+				case 2: { Page = Query_Page; Computer_Room_Query(); Page = Query_Page; break; }
 				case 3: { Computer_Room_Browse(); break; }
 			}
 			break;	
@@ -243,13 +243,13 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 			}
 			break;
 		}
-		case ComputerRoom_Quarry_Page: {
+		case Computer_Quarry_Page: {
 			switch (PressButtonId) {
 			case 0: {Page = Query_Page; break; }
 			}
 			break;
 		}
-		case Computer_Quarry_Page: {
+		case ComputerRoom_Quarry_Page: {
 			switch (PressButtonId) {
 			case 0: {Page = Query_Page; break; }
 			}
