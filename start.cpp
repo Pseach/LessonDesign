@@ -26,6 +26,7 @@ Windows WindowsSize = { 990,540 + 45 };
 
 //字体全局变量
 const int Defaut_Font_Size = (WindowsSize.y - 45) / 6 * 2 / 3 * 4 / 5;
+
 int MainStart() {
 
 	CreateFolder("Files");	//创建空文件夹放置文件
@@ -138,7 +139,7 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 				case 0: {Page = Menu_Page; break; }
 				case 1: { Pre_Book(); break; }
 				case 2: { Cancel_Pre_Book(); break; }
-				case 3: { Query_BooK(); break; }
+				case 3: { Page = Book_Quarry_Page; Query_BooK(); Page = Book_Page; break; }
 			}
 			break;	
 		}
@@ -146,7 +147,7 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 			switch (PressButtonId) {
 				case 0: {Page = Menu_Page; break; }
 				case 1: { Page = Computer_Quarry_Page; Computer_Query();Page = Query_Page; break; }
-				case 2: { Page = Query_Page; Computer_Room_Query(); Page = Query_Page; break; }
+				case 2: { Page = ComputerRoom_Quarry_Page; Computer_Room_Query(); Page = Query_Page; break; }
 				case 3: { Computer_Room_Browse(); break; }
 			}
 			break;	
@@ -222,7 +223,7 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 		case Book_Manage_Page: {
 			switch (PressButtonId) {
 			case 0: {Page = Manage_Page; break; }
-			case 1: { Search_All_Book(); break; }
+			case 1: {Page = Manage_Book_Page; Query_BooK(); Page = Book_Manage_Page; break; }
 			case 2: { Agree_ALL_Book(); break; }
 			case 3: { break; }
 			case 4: { break; }

@@ -143,6 +143,89 @@ int Computer_Room_Query() {	//查询机房
 	}
 	return 1;
 }
+int Query_BooK() {
+	for (; is_run(); delay_fps(270)) {
+		FILE* FP_BookData = NULL;
+		FP_BookData = fopen("Files\\BookLog.txt", "a");
+		fclose(FP_BookData);
+		////////////////////////////////////////////////////////////////////////////////////////////////////////
+		Books_List Books_Head, Books_Read, Book_Point;
+		FP_BookData = fopen("Files\\BookLog.txt", "r");//先用只读的方式把文件打开，把数据读出来，放在一个序列中
+		if (Books_Head = (Books_List)malloc(sizeof(Books_Size))) {
+			Books_Head->Books_Next = NULL;
+		}//初始化头节点
+		Books_Read = Books_Head;//让Read指向链表头
+		while (!feof(FP_BookData)) {      //以尾接法建立一个链表。  feof检测文件是否结束	%02d-%02d-%02d
+			Book_Point = (Books_List)malloc(sizeof(Books_Size));
+			fscanf(FP_BookData, "%04d/%02d/%02d %02d:%02d:%02d Long：%d UserName：%s BookRoom：%s BookComputer：%s BookState：%d\n",
+				&Book_Point->Book_Data.Book_Time.Year, &Book_Point->Book_Data.Book_Time.Month, &Book_Point->Book_Data.Book_Time.Day,
+				&Book_Point->Book_Data.Book_Time.Hour, &Book_Point->Book_Data.Book_Time.Minute, &Book_Point->Book_Data.Book_Time.Second,
+				&Book_Point->Book_Data.Book_Time_Long.Hour, Book_Point->Book_Data.User_Book_Data.Username,
+				Book_Point->Book_Data.ComputerRoom_Book_Data.ComputerRoom_Name,
+				Book_Point->Book_Data.ComputerRoom_Book_Data.Computer_Data.Computer_Name,
+				&Book_Point->Book_Data.Computer_Book_Data.Computer_Book_State//应该是这个
+			);//读出文件当前记录
+			Books_Read->Books_Next = Book_Point;//让用来读的Read的下一个节点指向读到的Point的位置（即让用来临时存数据的Point的数据存到Read里）////Books_Read->Books_Next即Read所指的对象（Head或者新的Head）
+			Books_Read = Book_Point;//重置（循环上去会重新malloc）用来读的Read
+		}
+		//遍历完后，
+		Books_Read->Books_Next = NULL;
+		fclose(FP_BookData);
+		Book_Point = Books_Head->Books_Next;//初始化（让Point指向Head的下一个（所存链表的头））
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		int QuarryFont_Size = Defaut_Font_Size / 2;
+		setfont(QuarryFont_Size, 0, "方正喵呜体", 0, 0, 100, 0, 0, 0);
+		while (mousemsg()) {
+			mouse_msg msg = getmouse();
+			int ButtonId = -1;
+			if (msg.is_left() && msg.is_down()) { //初始化
+				ButtonId = searchButton(msg.x, msg.y, ButtonLocation, 10);
+				if (ButtonId == 0)	return 0;
+			}
+		}
+		PIMAGE pimg = newimage();
+		getimage(pimg, "990X585.png");
+		putimage(0, 0, pimg);
+		delimage(pimg);
+		DrawPage(Page);
+		Show_Online_Login_User();
+		int Data1x = 0, Data1y = HeadlineButton.Height + Defaut_Font_Size;		//Time
+		//int Data2x =  8 * QuarryFont_Size, Data2y = HeadlineButton.Height + Defaut_Font_Size;		//Long
+		//int Data3x = 12 * QuarryFont_Size, Data3y = HeadlineButton.Height + Defaut_Font_Size;		//User
+		//int Data4x = (12 * QuarryFont_Size + WindowsSize.x - 4 * QuarryFont_Size) / 2, Data4y = HeadlineButton.Height + Defaut_Font_Size; 	//BookRoom
+		//int Data5x = WindowsSize.x - 4 * QuarryFont_Size, Data5y = HeadlineButton.Height + Defaut_Font_Size;		//BookState
+		int Data2x = 8 * QuarryFont_Size, Data2y = HeadlineButton.Height + Defaut_Font_Size;		//Long
+		int Data3x = 12 * QuarryFont_Size, Data3y = HeadlineButton.Height + Defaut_Font_Size;		//User
+		int Data4x = 18 * QuarryFont_Size, Data4y = HeadlineButton.Height + Defaut_Font_Size; 	//BookRoom
+		int Data5x = 24 * QuarryFont_Size, Data5y = HeadlineButton.Height + Defaut_Font_Size;		//BookState
+		xyprintf(Data1x, Data1y, "时间");
+		xyprintf(Data2x, Data2y, "时长");
+		xyprintf(Data3x, Data3y, "预约人");
+		xyprintf(Data4x, Data4y, "预约房间");		
+		xyprintf(Data5x, Data5y, "预约状态");
+		while (Book_Point) {
+			Data1y += QuarryFont_Size;
+			Data2y += QuarryFont_Size;
+			Data3y += QuarryFont_Size;
+			Data4y += QuarryFont_Size;
+			Data5y += QuarryFont_Size;
+			xyprintf(Data1x, Data1y, "%04d/%02d/%02d %02d:%02d:%02d", 
+					Book_Point->Book_Data.Book_Time.Year, Book_Point->Book_Data.Book_Time.Month, Book_Point->Book_Data.Book_Time.Day,
+					Book_Point->Book_Data.Book_Time.Hour, Book_Point->Book_Data.Book_Time.Minute, Book_Point->Book_Data.Book_Time.Second);
+			xyprintf(Data2x, Data2y, "%d", Book_Point->Book_Data.Book_Time_Long.Hour);
+			xyprintf(Data3x, Data3y, "%s", Book_Point->Book_Data.User_Book_Data.Username);
+			xyprintf(Data4x, Data4y, "%s", Book_Point->Book_Data.ComputerRoom_Book_Data.ComputerRoom_Name);
+
+			if (Book_Point->Book_Data.Computer_Book_Data.Computer_Book_State==2)xyprintf(Data5x, Data5y, "已上机");
+			else if(Book_Point->Book_Data.Computer_Book_Data.Computer_Book_State == 1)	xyprintf(Data5x, Data5y, "已预约");
+			else xyprintf(Data5x, Data5y, "未预约");
+			Book_Point = Book_Point->Books_Next;
+		}
+
+	}
+	return 1;
+}
+
 int Computer_Room_Browse() {	//浏览机房 
 	return 1;
 }

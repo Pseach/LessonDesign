@@ -321,10 +321,7 @@ int Cancel_Pre_Book() {	//取消预定//预定状态变成0
 	}
 	return 1;
 }
-int Query_BooK(){		//
-	system("Files\\BookLog.txt");
-	return 1;
-}
+
 int Book() {			//预定页面
 	return 1;
 }
