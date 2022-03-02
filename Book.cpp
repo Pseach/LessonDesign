@@ -243,7 +243,7 @@ int Cancel_Pre_Book() {	//取消预定//预定状态变成0
 		Time_Point = gmtime(&timep);
 
 		Books_List Books_Head, Books_Read, Book_Point;
-
+		enum { isnotDelete, isDelete, isInuse };
 
 		if (!ComputerRoom_Num()) {
 			if (MessageBox(NULL, TEXT("还没有任何机房！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND | MB_SETFOREGROUND) == 6)return 0;	//检查是否有机房
@@ -285,10 +285,11 @@ int Cancel_Pre_Book() {	//取消预定//预定状态变成0
 			if ((strcmp(Temp_Book.User_Book_Data.Username, Book_Point->Book_Data.User_Book_Data.Username) == 0)
 				&& (strcmp(Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name, Book_Point->Book_Data.ComputerRoom_Book_Data.ComputerRoom_Name) == 0)
 				&& (strcmp(Temp_Book.ComputerRoom_Book_Data.Computer_Data.Computer_Name, Book_Point->Book_Data.ComputerRoom_Book_Data.Computer_Data.Computer_Name) == 0)
-				&& (1 == Book_Point->Book_Data.Computer_Book_Data.Computer_Book_State)//删除功能（中间节点跳过）（终点则指向NULL（if（！NULL）->Next））//用户名相同，预约机房相同，预约的机位相同，把这个节点进行处理（左边注释）
-				)
-				Book_Point->Book_Data.Computer_Book_Data.Computer_Book_State = 0;
-
+				){ 
+				if ( Book_Point->Book_Data.Computer_Book_Data.Computer_Book_State == 1)//是1表示已预定变为0则未预定					删除功能（中间节点跳过）
+					Book_Point->Book_Data.Computer_Book_Data.Computer_Book_State = 0;
+				else if (Book_Point->Book_Data.Computer_Book_Data.Computer_Book_State == 2) { MessageBox(NULL, TEXT("您已经在使用计算机了"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND); return 0; }
+				}
 			Books_Read->Books_Next = Book_Point;//让用来读的Read的下一个节点指向读到的Point的位置（即让用来临时存数据的Point的数据存到Read里）////Books_Read->Books_Next即Read所指的对象（Head或者新的Head）
 			Books_Read = Book_Point;//重置（循环上去会重新malloc）用来读的Read
 		}
@@ -314,6 +315,7 @@ int Cancel_Pre_Book() {	//取消预定//预定状态变成0
 			Book_Point = Book_Point->Books_Next;
 		}
 		MessageBox(NULL, TEXT("删除预定成功！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND);
+
 		fclose(FP_BookData);
 	}
 	else {

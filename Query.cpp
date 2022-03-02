@@ -195,37 +195,41 @@ int Query_BooK() {
 		//int Data4x = (12 * QuarryFont_Size + WindowsSize.x - 4 * QuarryFont_Size) / 2, Data4y = HeadlineButton.Height + Defaut_Font_Size; 	//BookRoom
 		//int Data5x = WindowsSize.x - 4 * QuarryFont_Size, Data5y = HeadlineButton.Height + Defaut_Font_Size;		//BookState
 		int Data2x = 8 * QuarryFont_Size, Data2y = HeadlineButton.Height + Defaut_Font_Size;		//Long
-		int Data3x = 12 * QuarryFont_Size, Data3y = HeadlineButton.Height + Defaut_Font_Size;		//User
-		int Data4x = 18 * QuarryFont_Size, Data4y = HeadlineButton.Height + Defaut_Font_Size; 	//BookRoom
-		int Data5x = 24 * QuarryFont_Size, Data5y = HeadlineButton.Height + Defaut_Font_Size;		//BookState
+		int Data3x = 14 * QuarryFont_Size, Data3y = HeadlineButton.Height + Defaut_Font_Size;		//User
+		int Data4x = 20 * QuarryFont_Size, Data4y = HeadlineButton.Height + Defaut_Font_Size; 	//BookCPTfromRoom
+		int Data5x = 26 * QuarryFont_Size, Data5y = HeadlineButton.Height + Defaut_Font_Size;		//BookComputer
+		int Data6x = 32 * QuarryFont_Size, Data6y = HeadlineButton.Height + Defaut_Font_Size;		//BookState
 		xyprintf(Data1x, Data1y, "时间");
 		xyprintf(Data2x, Data2y, "时长");
 		xyprintf(Data3x, Data3y, "预约人");
 		xyprintf(Data4x, Data4y, "预约房间");		
-		xyprintf(Data5x, Data5y, "预约状态");
+		xyprintf(Data5x, Data5y, "预约机位");
+		xyprintf(Data6x, Data6y, "预约状态");
 		while (Book_Point) {
 			Data1y += QuarryFont_Size;
 			Data2y += QuarryFont_Size;
 			Data3y += QuarryFont_Size;
 			Data4y += QuarryFont_Size;
 			Data5y += QuarryFont_Size;
+			Data6y += QuarryFont_Size;
 			xyprintf(Data1x, Data1y, "%04d/%02d/%02d %02d:%02d:%02d", 
 					Book_Point->Book_Data.Book_Time.Year, Book_Point->Book_Data.Book_Time.Month, Book_Point->Book_Data.Book_Time.Day,
 					Book_Point->Book_Data.Book_Time.Hour, Book_Point->Book_Data.Book_Time.Minute, Book_Point->Book_Data.Book_Time.Second);
 			xyprintf(Data2x, Data2y, "%d", Book_Point->Book_Data.Book_Time_Long.Hour);
 			xyprintf(Data3x, Data3y, "%s", Book_Point->Book_Data.User_Book_Data.Username);
 			xyprintf(Data4x, Data4y, "%s", Book_Point->Book_Data.ComputerRoom_Book_Data.ComputerRoom_Name);
+			xyprintf(Data5x, Data5y, "%s", Book_Point->Book_Data.ComputerRoom_Book_Data.Computer_Data.Computer_Name);
 
-			if (Book_Point->Book_Data.Computer_Book_Data.Computer_Book_State==2)xyprintf(Data5x, Data5y, "已上机");
-			else if(Book_Point->Book_Data.Computer_Book_Data.Computer_Book_State == 1)	xyprintf(Data5x, Data5y, "已预约");
-			else xyprintf(Data5x, Data5y, "未预约");
+			if (Book_Point->Book_Data.Computer_Book_Data.Computer_Book_State==2)xyprintf(Data6x, Data6y, "已上机");
+			else if(Book_Point->Book_Data.Computer_Book_Data.Computer_Book_State == 1)	xyprintf(Data6x, Data6y, "已预约");
+			else xyprintf(Data6x, Data6y, "未预约");
 			Book_Point = Book_Point->Books_Next;
 		}
 
 	}
 	return 1;
 }
-
+//
 int Computer_Room_Browse() {	//浏览机房 
 	return 1;
 }
