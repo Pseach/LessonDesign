@@ -186,7 +186,7 @@ int Query_BooK() {
 		PIMAGE pimg = newimage();
 		getimage(pimg, "990X585.png");
 		putimage(0, 0, pimg);
-		delimage(pimg);
+		delimage(pimg); 
 		DrawPage(Page);
 		Show_Online_Login_User();
 		int Data1x = 0, Data1y = HeadlineButton.Height + Defaut_Font_Size;		//Time
