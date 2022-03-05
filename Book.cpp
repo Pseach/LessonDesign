@@ -52,7 +52,7 @@ int timecmp(Time_Type a, Time_Type b) {//a>b
 	return 0;
 }
 int canuse(char name[], int mod) {
-	char s1[40] = {}, s2[40] = {};
+	char s1[10] = {}, s2[10] = {};
 	int state = 0;
 	if (mod == 1) {
 		FILE* FP_ComputerRoom = NULL;
@@ -155,11 +155,11 @@ int Pre_Book(){			//初步预定
 				strcpy(Temp_Book.User_Book_Data.Username, Temp_User.Username);		//把输入的临时信息放到临时预定的数据结构体里
 
 				do {//---------------------------优化！！！！(没对应机位的时候，问是否添加的时候，直接添加所输入的机位而不是再输)
-					inputbox_getline("请输入添加机位所在机房名称", "请输入添加机位所在机房名称", Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name, 40);	//先输入机房
-					if (!canuse(Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name, 1)) { MessageBox(NULL, TEXT("您输入的机房已被关闭！！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND); return 0; }
+					inputbox_getline("请输入添加机位所在机房名称", "请输入添加机位所在机房名称", Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name, Max_Input_Num);	//先输入机房
+					//if (!canuse(Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name, 1)) { MessageBox(NULL, TEXT("您输入的机房已被关闭！！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND); return 0; }
 					if (HaveComputerRoom(Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name)) {			//输入机房名称查询有无
-						inputbox_getline("请输入机位名称", "请输入机位名称", Temp_Book.ComputerRoom_Book_Data.Computer_Data.Computer_Name, 40);	//有的话输入机位
-						if (!canuse(Temp_Book.ComputerRoom_Book_Data.Computer_Data.Computer_Name,2)) { MessageBox(NULL, TEXT("您输入的机位已被暂停使用！！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND); return 0; }
+						inputbox_getline("请输入机位名称", "请输入机位名称", Temp_Book.ComputerRoom_Book_Data.Computer_Data.Computer_Name, Max_Input_Num);	//有的话输入机位
+						//if (!canuse(Temp_Book.ComputerRoom_Book_Data.Computer_Data.Computer_Name,2)) { MessageBox(NULL, TEXT("您输入的机位已被暂停使用！！"), TEXT("提醒"), MB_OK | MB_SETFOREGROUND); return 0; }
 						if (HaveComputer(Temp_Book.ComputerRoom_Book_Data.Computer_Data.Computer_Name)) {
 							break;//有就退出审核
 						}
@@ -251,9 +251,9 @@ int Cancel_Pre_Book() {	//取消预定//预定状态变成0
 
 		strcpy(Temp_Book.User_Book_Data.Username, Temp_User.Username);		//用户姓名 存到Book里User 
 
-		inputbox_getline("请输入所取消机位所在机房名称", "请输入所取消机位所在机房名称", Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name, 40);	//先输入机房
+		inputbox_getline("请输入所取消机位所在机房名称", "请输入所取消机位所在机房名称", Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name, Max_Input_Num);	//先输入机房
 		if (HaveComputerRoom(Temp_Book.ComputerRoom_Book_Data.ComputerRoom_Name)) {			//输入机房名称查询有无
-			inputbox_getline("请输入机位名称", "请输入机位名称", Temp_Book.ComputerRoom_Book_Data.Computer_Data.Computer_Name, 40);	//有的话输入机位
+			inputbox_getline("请输入机位名称", "请输入机位名称", Temp_Book.ComputerRoom_Book_Data.Computer_Data.Computer_Name, Max_Input_Num);	//有的话输入机位
 			if (HaveComputer(Temp_Book.ComputerRoom_Book_Data.Computer_Data.Computer_Name)) {//有这个机位的话 
 			}
 			else {//无

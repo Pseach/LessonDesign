@@ -3,6 +3,10 @@
 
 extern int Page;//切换页面 换按钮
 
+//字体
+extern const int Defaut_Font_Size;
+extern const int Max_Input_Num;
+
 //数据结构
 struct Windows { // 窗口数据
 	int x;
@@ -52,22 +56,22 @@ typedef struct time{  //时间的数据结构
 	//}
 }Time_Type;
 typedef struct {  //机位的数据结构
-	char Computer_Name[40];				//机位名字 
-	char Computer_Room[40];				//哪个机房 
+	char Computer_Name[10];				//机位名字 
+	char Computer_Room[10];				//哪个机房 
 	int Computer_State;					//可用|不可用	1|0
 	int Computer_Book_State;			//机位预定状态（没有被预定or初步预定or终极预定）(用于在预定文件中查询历史记录时用）
 }Computer_Type;
 
 typedef struct {  //机房的数据结构
-	char ComputerRoom_Name[40];				//机房名字
+	char ComputerRoom_Name[10];				//机房名字
 	int ComputerRoom_State;				//可用|不可用	1|0
 	Computer_Type Computer_Data;		//用于按机房查询所有机位功能(?)
 	//Time_Type ComputerRoom_CanBook_Time;		//机房的允许预定时间（直接全局管理）（已弃用）
 }ComputerRoom_Type;
 
 typedef struct usertpye{  //用户的数据结构
-	char Username[40];
-	char Password[40];
+	char Username[10];
+	char Password[10];
 	int Type;					//未知|用户|管理员 -1|0|1
 	int CanBook;			//是否拥有机位(CanBook)
 	//int Login_User_Type;		//未知|用户|管理员 -1|0|1		//?????????
@@ -121,8 +125,6 @@ extern Windows WindowsSize;
 //用户当前配置
 extern User_Type Temp_User;
 
-//字体
-extern const int Defaut_Font_Size;
 
 
 //函数

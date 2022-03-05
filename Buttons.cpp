@@ -25,7 +25,7 @@ RectButton ShowOnline_Login_User = {
 	1 ,
 	HeadlineButton.Height * 1 / 5 / 2 + HeadlineButton.Height * 4 / 5 * 4 + ((WindowsSize.y - 45) / 6 * 2 / 3 * 4 / 5) / 2 ,
 	HeadlineButton.Height * 1 / 5 / 2 ,
-	HeadlineButton.Height * 4 / 5 * 40,
+	HeadlineButton.Height * 4 / 5 * Max_Input_Num,
 	HeadlineButton.Height * 4 / 5
 };
 

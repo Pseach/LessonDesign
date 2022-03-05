@@ -122,8 +122,8 @@ int Delete_User() {		//删除用户
 		enum{isnotDelete,isDelete};
 		int state = isnotDelete;
 		//int Temp_Type = MessageBox(NULL, TEXT("授予账户管理员权限？"), TEXT("添加用户"), MB_YESNO | MB_ICONQUESTION | MB_SETFOREGROUND);//MB_ICONQUESTION：问号https://blog.csdn.net/yuyan987/article/details/78558648
-		inputbox_getline("请输入所删除账号", "请输入所删除账号", Temp_Accounts.Username, 40);      //输入账号//https://xege.org/manual/api/other/inputboxgetline.htm buffer area
-		inputbox_getline("请输入删除账户的密码", "请输入删除账户的密码", Temp_Accounts.Password, 40);      //输入密码
+		inputbox_getline("请输入所删除账号", "请输入所删除账号", Temp_Accounts.Username, Max_Input_Num);      //输入账号//https://xege.org/manual/api/other/inputboxgetline.htm buffer area
+		inputbox_getline("请输入删除账户的密码", "请输入删除账户的密码", Temp_Accounts.Password, Max_Input_Num);      //输入密码
 		//Temp_Accounts.Type = (Temp_Type == 6) ? 1 : 0;	 //是(Y) 值为6 否(N)值为7;	//标记用户权限
 		//Temp_Accounts.CanBook = 1;
 
@@ -208,7 +208,7 @@ int Transform_User_BookPower() {		//开启|关闭用户预定功能
 		Accounts_Head->Accounts_Next = NULL;
 	}
 	//int Temp_Type = MessageBox(NULL, TEXT("授予账户管理员权限？"), TEXT("添加用户"), MB_YESNO | MB_ICONQUESTION | MB_SETFOREGROUND);//MB_ICONQUESTION：问号https://blog.csdn.net/yuyan987/article/details/78558648
-	inputbox_getline("请输入要更改权限的账号", "请输入要更改权限的账号", Temp_Accounts.Username, 40);      
+	inputbox_getline("请输入要更改权限的账号", "请输入要更改权限的账号", Temp_Accounts.Username, Max_Input_Num);      
 
 	Accounts_Read = Accounts_Head;
 	while (!feof(FP_Accounts)) {      //以尾接法建立一个链表。  feof检测文件是否结束
@@ -256,7 +256,7 @@ int Add_Computer_Room() { //添加机房（管理员才能管理？）
 		ComputerRoom_Type Temp_ComputerRoom = {};
 		ComputerRoom_List ComputerRoom_Head, ComputerRoom_Read, ComputerRoom_Point;
 
-		inputbox_getline("请输入要添加机房的名称", "请输入要添加机房的名称", Temp_ComputerRoom.ComputerRoom_Name, 40);      //输入机房名
+		inputbox_getline("请输入要添加机房的名称", "请输入要添加机房的名称", Temp_ComputerRoom.ComputerRoom_Name, Max_Input_Num);      //输入机房名
 		Temp_ComputerRoom.ComputerRoom_State = 1;	//创建时标记可用
 
 		FP_ComputerRoom = fopen("Files\\ComputerRooms.txt", "r");//先用只读的方式把文件打开，把数据读出来，放在一个序列中
@@ -299,8 +299,7 @@ int Delete_Computer_Room(){	//删除机房
 	
 	enum { isnotDelete, isDelete };
 	int state = isnotDelete;
-	inputbox_getline("请输入所删除机房", "请输入所删除机房", Temp_ComputerRoom.ComputerRoom_Name, 40);
-
+	inputbox_getline("请输入所删除机房", "请输入所删除机房", Temp_ComputerRoom.ComputerRoom_Name, Max_Input_Num);
 	FP_ComputerRoom = fopen("Files\\ComputerRooms.txt", "r");//先用只读的方式把文件打开，把数据读出来，放在一个序列中
 	if (ComputerRoom_Head = (ComputerRoom_List)malloc(sizeof(ComputerRoom_Size))) {
 		ComputerRoom_Head->ComputerRoom_Next = NULL;
@@ -313,6 +312,7 @@ int Delete_Computer_Room(){	//删除机房
 			ComputerRoom_Read = ComputerRoom_Point;
 		}
 	}
+
 	ComputerRoom_Read->ComputerRoom_Next = NULL;
 	fclose(FP_ComputerRoom);
 	ComputerRoom_Point = ComputerRoom_Head->ComputerRoom_Next;
@@ -323,10 +323,8 @@ int Delete_Computer_Room(){	//删除机房
 		ComputerRoomHead->ComputerRoom_Next = NULL;
 	}
 	ComputerRoomRead = ComputerRoomHead;
-
 	if ((ComputerRoom_Point))
 		do {
-			
 			ComputerRoomPoint = (ComputerRoom_List)malloc(sizeof(ComputerRoom_Size));
 				if ((strcmp(Temp_ComputerRoom.ComputerRoom_Name, ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name) == 0)) {
 					ComputerRoom_Point = ComputerRoom_Point->ComputerRoom_Next;//直接下一个，不读入这条
@@ -335,23 +333,20 @@ int Delete_Computer_Room(){	//删除机房
 				ComputerRoomPoint = ComputerRoom_Point;
 				ComputerRoomRead->ComputerRoom_Next = ComputerRoomPoint;
 				ComputerRoomRead = ComputerRoomPoint;
-
 			if (ComputerRoom_Point != NULL)ComputerRoom_Point = ComputerRoom_Point->ComputerRoom_Next;
-
 		} while (ComputerRoom_Point);
-
 		if (ComputerRoomRead != NULL)ComputerRoomRead->ComputerRoom_Next = NULL;
 
 		ComputerRoomPoint = ComputerRoomHead->ComputerRoom_Next;//新链表
 
 		FP_ComputerRoom = fopen("Files\\ComputerRooms.txt", "w");
 
-		if (ComputerRoomPoint)
+		if (ComputerRoom_Point)
 			do {
-				fprintf(FP_ComputerRoom, "ComputerRoomName：%s\tState：%d\n", ComputerRoomPoint->ComputerRoom_Data.ComputerRoom_Name, ComputerRoomPoint->ComputerRoom_Data.ComputerRoom_State);
-				ComputerRoomPoint = ComputerRoomPoint->ComputerRoom_Next;
+				fprintf(FP_ComputerRoom, "ComputerRoomName：%s\tState：%d\n", ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name, ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_State);
+				ComputerRoom_Point = ComputerRoom_Point->ComputerRoom_Next;
 
-			} while (ComputerRoomPoint);
+			} while (ComputerRoom_Point);
 		fclose(FP_ComputerRoom);
 
 			if (state)MessageBox(NULL, TEXT("已删除"), TEXT("提醒！"), MB_OK | MB_ICONWARNING | MB_SETFOREGROUND);
@@ -362,7 +357,6 @@ int Transform_Computer_Room() {	//开放|关闭机房
 	FILE* FP_ComputerRoom = NULL;
 	FP_ComputerRoom = fopen("Files\\ComputerRooms.txt", "a"); //如果文件不存在，则会创建一个新文件
 	fclose(FP_ComputerRoom);
-
 	enum { isnotDelete, isDelete };
 	int state = isnotDelete;
 	ComputerRoom_Type Temp_ComputerRoom{};
@@ -372,7 +366,7 @@ int Transform_Computer_Room() {	//开放|关闭机房
 	if (ComputerRoom_Head = (ComputerRoom_List)malloc(sizeof(ComputerRoom_Size))) {
 		ComputerRoom_Head->ComputerRoom_Next = NULL;
 	}
-	inputbox_getline("请输入要更改状态的机房", "请输入要更改状态的机房", Temp_ComputerRoom.ComputerRoom_Name, 40);
+	inputbox_getline("请输入要更改状态的机房", "请输入要更改状态的机房", Temp_ComputerRoom.ComputerRoom_Name, Max_Input_Num);
 
 	ComputerRoom_Read = ComputerRoom_Head;
 	while (!feof(FP_ComputerRoom)) {      //以尾接法建立一个链表。  feof检测文件是否结束
@@ -389,6 +383,7 @@ int Transform_Computer_Room() {	//开放|关闭机房
 	}
 	ComputerRoom_Read->ComputerRoom_Next = NULL;
 	fclose(FP_ComputerRoom);
+
 	//新链表已建立
 	// 下面重新输入到文档（从头写）
 	FP_ComputerRoom = fopen("Files\\ComputerRooms.txt", "w");
@@ -418,7 +413,7 @@ int Add_Computer() { //添加机位（管理员才能管理？）
 		//if (ComputerRoom_Num()) {//有机房就执行
 			ComputerRoom_Type Temp_ComputerRoom = {}; 
 			ComputerRoom_List ComputerRoom_Head, ComputerRoom_Read, ComputerRoom_Point;
-			inputbox_getline("请输入机位所在机房名称", "请输入机位所在机房名称", Temp_ComputerRoom.ComputerRoom_Name, 40);      //输入所在机房
+			inputbox_getline("请输入机位所在机房名称", "请输入机位所在机房名称", Temp_ComputerRoom.ComputerRoom_Name, Max_Input_Num);      //输入所在机房
 			if (HaveComputerRoom(Temp_ComputerRoom.ComputerRoom_Name)) {	//检查是否有此机房
 				FILE* FP_Computers = NULL;
 				FP_Computers = fopen("Files\\Computers.txt", "a"); //如果文件不存在，则会创建一个新文件
@@ -427,7 +422,7 @@ int Add_Computer() { //添加机位（管理员才能管理？）
 					//Computer_Type Temp_ComputerRoom.Computer_Data = {};
 					Computers_List Computers_Head, Computers_Read, Computer_Point;
 
-					inputbox_getline("请输入机位名 ", "请输入机位名 ", Temp_ComputerRoom.Computer_Data.Computer_Name, 40);      //输入机位名
+					inputbox_getline("请输入机位名 ", "请输入机位名 ", Temp_ComputerRoom.Computer_Data.Computer_Name, Max_Input_Num);      //输入机位名
 					//Temp_ComputerRoom.Computer_Data.Computer_State = (Temp_Type == 6) ? 1 : 0;	 //是(Y) 值为6 否(N)值为7;
 					Temp_ComputerRoom.Computer_Data.Computer_State = 1; // 创建时初始可用
 					//Temp_ComputerRoom.Computer_Data.IsPre_Book = 0;
@@ -447,7 +442,10 @@ int Add_Computer() { //添加机位（管理员才能管理？）
 					while (!feof(FP_Computers)) {      //以尾接法建立一个链表。  feof检测文件是否结束
 						ComputerRoom_Point = (ComputerRoom_List)malloc(sizeof(ComputerRoom_Size));
 						Computer_Point = (Computers_List)malloc(sizeof(Computers_Size)); 
-						fscanf(FP_Computers, "FromComputerRoom：%s\tComputer：%s\tComputer_State：%d\n", ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name, Computer_Point->Computers_Data.Computer_Name, &Computer_Point->Computers_Data.Computer_State);//读出文件当前记录
+						fscanf(FP_Computers, "FromComputerRoom：%s\tComputer：%s\tComputer_State：%d\n", 
+							ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name, 
+							Computer_Point->Computers_Data.Computer_Name, 
+							&Computer_Point->Computers_Data.Computer_State);//读出文件当前记录
 						
 						ComputerRoom_Read->ComputerRoom_Next = ComputerRoom_Point;
 						Computers_Read->Computers_Next = Computer_Point;
@@ -499,8 +497,8 @@ int Delete_Computer(){	//删除机位
 	
 	enum { isnotDelete, isDelete , FindRoom};
 	int state = isnotDelete;
-	inputbox_getline("请输入所删除机位所在机房", "请输入所删除机位所在机房", Temp_ComputerRoom.ComputerRoom_Name, 40);      
-	inputbox_getline("请输入所删除的机位", "请输入所删除的机位", Temp_ComputerRoom.Computer_Data.Computer_Name, 40);      
+	inputbox_getline("请输入所删除机位所在机房", "请输入所删除机位所在机房", Temp_ComputerRoom.ComputerRoom_Name, Max_Input_Num);      
+	inputbox_getline("请输入所删除的机位", "请输入所删除的机位", Temp_ComputerRoom.Computer_Data.Computer_Name, Max_Input_Num);      
 
 	FP_Computers = fopen("Files\\Computers.txt", "r");//先用只读的方式把文件打开，把数据读出来，放在一个序列中
 	if (ComputerRoom_Head = (ComputerRoom_List)malloc(sizeof(ComputerRoom_Size))) {
@@ -581,8 +579,8 @@ int Transform_Computer() {	//开放|关闭机位
 	if (ComputerRoom_Head = (ComputerRoom_List)malloc(sizeof(ComputerRoom_Size))) {
 		ComputerRoom_Head->ComputerRoom_Next = NULL;
 	}
-	inputbox_getline("请输入要更改状态的机房", "请输入要更改状态的机房", Temp_ComputerRoom.ComputerRoom_Name, 40);
-	inputbox_getline("请输入要更改状态的机位", "请输入要更改状态的机位", Temp_ComputerRoom.Computer_Data.Computer_Name, 40);
+	inputbox_getline("请输入要更改状态的机房", "请输入要更改状态的机房", Temp_ComputerRoom.ComputerRoom_Name, Max_Input_Num);
+	inputbox_getline("请输入要更改状态的机位", "请输入要更改状态的机位", Temp_ComputerRoom.Computer_Data.Computer_Name, Max_Input_Num);
 
 	ComputerRoom_Read = ComputerRoom_Head;
 	while (!feof(FP_Computers)) {      //以尾接法建立一个链表。  feof检测文件是否结束

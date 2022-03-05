@@ -143,7 +143,7 @@ int Computer_Room_Query() {	//²éÑ¯»ú·¿
 	}
 	return 1;
 }
-int Query_BooK() {
+int Query_BooK()		 {
 	for (; is_run(); delay_fps(270)) {
 		FILE* FP_BookData = NULL;
 		FP_BookData = fopen("Files\\BookLog.txt", "a");

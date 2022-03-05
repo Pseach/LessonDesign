@@ -6,6 +6,9 @@
 #include <time.h>
 
 #include "Buttons.h"
+#include "DataInput.h"
+#include <ege/sys_edit.h>
+
 //extern User_Type Temp_User;
 
 int Show_Online_Login_User() {	//显示当前账户
@@ -80,8 +83,12 @@ int Add_User() { //注册/添加用户
 		Accounts_List Accounts_Head, Accounts_Read, Account_Point;
 
 		int Temp_Type = MessageBox(NULL, TEXT("授予账户管理员权限？"), TEXT("添加用户"), MB_YESNO | MB_ICONQUESTION | MB_SETFOREGROUND);//MB_ICONQUESTION：问号https://blog.csdn.net/yuyan987/article/details/78558648
-		inputbox_getline("请输入账号", "请输入账号", Temp_Accounts.Username, 40);      //输入账号//https://xege.org/manual/api/other/inputboxgetline.htm buffer area
-		inputbox_getline("请输入密码", "请输入密码", Temp_Accounts.Password, 40);      //输入密码
+		sys_edit editBox;
+
+		inputbox_getline("请输入账号", "请输入账号", Temp_Accounts.Username, Max_Input_Num);      //输入账号//https://xege.org/manual/api/other/inputboxgetline.htm buffer area
+		//strcpy(Temp_Accounts.Username,My_InputBox_One_Line(&editBox));
+
+		inputbox_getline("请输入密码", "请输入密码", Temp_Accounts.Password, Max_Input_Num);      //输入密码
 		Temp_Accounts.Type = (Temp_Type == 6) ? 1 : 0;	 //是(Y) 值为6 否(N)值为7;	//标记用户权限
 		Temp_Accounts.CanBook = 1;
 		/////////////////////////////////////////////////////////////////////////////建立链表
@@ -101,7 +108,6 @@ int Add_User() { //注册/添加用户
 		fclose(FP_Accounts);
 		Account_Point = Accounts_Head->Accounts_Next;
 		///////////////////////////////////////////////////////////////////////////建立链表到Point
-
 
 		while ((Account_Point) && (strcmp(Temp_Accounts.Username, Account_Point->Accounts_Data.Username) != 0) && (1))//比对数据，没找到相同用户名，且没找完，继续找
 			Account_Point = Account_Point->Accounts_Next;
@@ -133,9 +139,9 @@ int Login_User(){        	    //登录
 		do {	//读取 并存储账号密码 
 
 			//输入数据寄存到Temp_Accounts
-			if(!isFindAccount)inputbox_getline("请输入账号", "请输入账号", Temp_Accounts.Username, 40);      //输入账号//https://xege.org/manual/api/other/inputboxgetline.htm buffer area
+			if(!isFindAccount)inputbox_getline("请输入账号", "请输入账号", Temp_Accounts.Username, Max_Input_Num);      //输入账号//https://xege.org/manual/api/other/inputboxgetline.htm buffer area
 
-			inputbox_getline("请输入密码", "请输入密码", Temp_Accounts.Password, 40);      //输入密码
+			inputbox_getline("请输入密码", "请输入密码", Temp_Accounts.Password, Max_Input_Num);      //输入密码
 
 			FP_Accounts = fopen("Files\\Users.txt", "r");//先用只读的方式把文件打开，把数据读出来，放在一个序列中
 			Accounts_Head = (Accounts_List)malloc(sizeof(Accounts_Size));

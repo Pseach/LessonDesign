@@ -26,6 +26,7 @@ Windows WindowsSize = { 990,540 + 45 };
 
 //字体全局变量
 const int Defaut_Font_Size = (WindowsSize.y - 45) / 6 * 2 / 3 * 4 / 5;
+const int Max_Input_Num = 10;
 
 int MainStart() {
 
