@@ -15,7 +15,7 @@ struct Windows { // 窗口数据
 		x = value.x;
 		y = value.y;
 		return *this;
-	}//无效果???（）
+	}
 };
 
 typedef struct time{  //时间的数据结构
@@ -25,35 +25,6 @@ typedef struct time{  //时间的数据结构
 	int Hour;
 	int Minute;
 	int Second;
-	///////////////////////////////////////////////////////////////////////////////////////////////以下为函数重载，可以自定义结构体的某些运算，
-	//int Time_Mod;	// 按手动调节 | 按系统时间 （可能用？）
-	//time& operator=(time& value){
-	//	Year = value.Year;
-	//	Month = value.Month;
-	//	Day = value.Day;
-	//	Second = value.Second;
-	//	return *this;
-	//}
-	//bool operator< (time const& value) const {
-	//	if (Year != value.Year) return Year < value.Year;
-	//	else if (Month != value.Month) return Month < value.Month;
-	//	else if (Day != value.Day) return Day < value.Day;
-	//	else if (Hour != value.Hour) return Hour < value.Hour;
-	//	else if (Minute != value.Minute) return Minute < value.Minute;
-	//	else if (Second != value.Second) return Second < value.Second;
-	//}
-	//bool operator> (time const& value) const {
-	//	if (Year != value.Year) return Year > value.Year;
-	//	else if (Month != value.Month) return Month > value.Month;
-	//	else if (Day != value.Day) return Day > value.Day;
-	//	else if (Second != value.Second) return Second > value.Second;
-	//}
-	//bool operator= (time const& value) const {
-	//	return ((Year == value.Year) && (Month == value.Month) && (Day == value.Day) && (Second == value.Second));
-	//}
-	//bool operator!= (time const& value) const {
-	//	return ((Year != value.Year) || (Month != value.Month) || (Day != value.Day) || (Second != value.Second));
-	//}
 }Time_Type;
 typedef struct {  //机位的数据结构
 	char Computer_Name[10];				//机位名字 
@@ -66,7 +37,8 @@ typedef struct {  //机房的数据结构
 	char ComputerRoom_Name[10];				//机房名字
 	int ComputerRoom_State;				//可用|不可用	1|0
 	Computer_Type Computer_Data;		//用于按机房查询所有机位功能(?)
-	//Time_Type ComputerRoom_CanBook_Time;		//机房的允许预定时间（直接全局管理）（已弃用）
+	Time_Type ComputerRoom_CanBook_Time;		//机房的允许预定时间
+	Time_Type ComputerRoom_CanBook_TimeTo;		//机房的允许预定时间
 }ComputerRoom_Type;
 
 typedef struct usertpye{  //用户的数据结构
@@ -74,18 +46,7 @@ typedef struct usertpye{  //用户的数据结构
 	char Password[10];
 	int Type;					//未知|用户|管理员 -1|0|1
 	int CanBook;			//是否拥有机位(CanBook)
-	//int Login_User_Type;		//未知|用户|管理员 -1|0|1		//?????????
 	int Logined;				//登录状态
-	//int CanBook;				//预定功能
-	//usertpye& operator=(usertpye& value) {
-	//	strcpy(Username, value.Username);
-	//	strcpy(Password, value.Password);
-	//	Type = value.Type;
-	//	HaveComputer = value.HaveComputer;
-	//	Login_User_Type = value.Login_User_Type;
-	//	Logined = value.Logined;
-	//	return *this;
-	//}//无效果???（）//？
 }User_Type;
 
 typedef struct {  //预定信息的数据结构

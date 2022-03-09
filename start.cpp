@@ -85,7 +85,6 @@ int MainStart() {
 			}
 			else { //使恢复 
 				//左键抬起，如果有按钮被按下，解除按下状态
-
 				//if (PressButtonId != -1) { //点住123456按钮
 				//	ButtonLocation[PressButtonId].Pressed = false;
 				//	PressButtonId = -1;
@@ -133,7 +132,7 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 						if (Temp_User.Type != 1) { MessageBox(NULL, TEXT("您不是管理员！无权做此操作！"), TEXT("权限管理"), MB_OK | MB_SETFOREGROUND); break; }//如果是普通用户，无法点开，并提醒
 						{Page = Manage_Page;  break;}
 			}
-			break;	//Exit Page 0
+			break;	
 		}
 		case Book_Page:	{
 			switch (PressButtonId) {
@@ -168,7 +167,7 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 					break;
 				}
 			}
-			break;	//Exit Page 3
+			break;
 		}
 		case User_Manage_Page: {
 			switch (PressButtonId) {
@@ -202,7 +201,7 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 				break;
 			}
 			}
-			break;	//Exit Page 3
+			break;	
 		}
 		case Computer_Manage_Page: {
 			switch (PressButtonId) {
@@ -219,7 +218,7 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 				break;
 			}
 			}
-			break;	//Exit Page 3
+			break;	
 		}
 		case Book_Manage_Page: {
 			switch (PressButtonId) {
@@ -236,7 +235,7 @@ int Recovery_Button_State(int& PressButtonId, bool & ButtonLocationI_Press, bool
 				break;
 			}
 			}
-			break;	//Exit Page 3
+			break;	
 		}
 
 		 ////////////////////////////////////////////////////////////以下页面为空白页，用于查询功能的的清屏功能

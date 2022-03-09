@@ -341,10 +341,10 @@ int Delete_Computer_Room(){	//É¾³ý»ú·¿
 
 		FP_ComputerRoom = fopen("Files\\ComputerRooms.txt", "w");
 
-		if (ComputerRoom_Point)
+		if (ComputerRoomPoint)
 			do {
-				fprintf(FP_ComputerRoom, "ComputerRoomName£º%s\tState£º%d\n", ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name, ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_State);
-				ComputerRoom_Point = ComputerRoom_Point->ComputerRoom_Next;
+				fprintf(FP_ComputerRoom, "ComputerRoomName£º%s\tState£º%d\n", ComputerRoomPoint->ComputerRoom_Data.ComputerRoom_Name, ComputerRoomPoint->ComputerRoom_Data.ComputerRoom_State);
+				ComputerRoomPoint = ComputerRoomPoint->ComputerRoom_Next;
 
 			} while (ComputerRoom_Point);
 		fclose(FP_ComputerRoom);
