@@ -217,9 +217,9 @@ int Computer_Room_Query() {	//查询机房
 					/*if (ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_State)xyprintf(Data2x, Data2y, "开放");
 					else xyprintf(Data2x, Data2y, "关闭");*/
 					
-					xyprintf(Data2x, Data2y, "%04d/%02d/%02d %02d:%02d:%02d - %04d/%02d/%02d %02d:%02d:%02d", 
-						0,0,0,0,0,0,
-						0,0,0,0,0,0
+					xyprintf(Data2x, Data2y, "%02d:%02d - %02d:%02d", 
+						6,0,
+						22,30
 						//ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_CanBook_Time.Year,ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_CanBook_Time.Month, ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_CanBook_Time.Day,
 						//ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_CanBook_Time.Hour, ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_CanBook_Time.Minute, ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_CanBook_Time.Second
 					);

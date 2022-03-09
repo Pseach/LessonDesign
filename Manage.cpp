@@ -4,6 +4,35 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+ComputerRoom_List DeleteComputerRoomNode(ComputerRoom_List head, ComputerRoom_Type nodeData,int& state){
+	ComputerRoom_List p = head, pr = head;
+	if (head == NULL){
+		//printf("Linked table is empty!\n");
+		state = 0;
+		return NULL;
+	}
+	else {
+		p = head;
+		while (p->ComputerRoom_Next != NULL && strcmp(p->ComputerRoom_Data.ComputerRoom_Name, nodeData.ComputerRoom_Name) != 0) {
+			pr = p;
+			p = p->ComputerRoom_Next;
+		}
+		if (strcmp(p->ComputerRoom_Data.ComputerRoom_Name, nodeData.ComputerRoom_Name) == 0) {
+			if (p == head)
+				head = p->ComputerRoom_Next;
+			else
+				pr->ComputerRoom_Next = p->ComputerRoom_Next;
+		}
+		else {
+			//printf("Can not find list num.\n");
+			state = 0;
+			return NULL;
+		}
+	}
+	state = 1;
+	return head;
+}
+
 int Manage() {
 	return 1;
 }
@@ -295,7 +324,7 @@ int Delete_Computer_Room(){	//删除机房
 	fclose(FP_ComputerRoom);
 
 	ComputerRoom_Type Temp_ComputerRoom = {};
-	ComputerRoom_List ComputerRoom_Head, ComputerRoom_Read, ComputerRoom_Point;
+	ComputerRoom_List ComputerRoom_Head, ComputerRoom_Read, ComputerRoom_Point, ComputerRoom_Out;
 	
 	enum { isnotDelete, isDelete };
 	int state = isnotDelete;
@@ -317,40 +346,19 @@ int Delete_Computer_Room(){	//删除机房
 	fclose(FP_ComputerRoom);
 	ComputerRoom_Point = ComputerRoom_Head->ComputerRoom_Next;
 	/////////////////////////链表已建立//////////////////////
-	ComputerRoom_List ComputerRoomHead, ComputerRoomRead, ComputerRoomPoint;
+	ComputerRoom_Out = DeleteComputerRoomNode(ComputerRoom_Point, Temp_ComputerRoom,state);///删除链表
 
-	if (ComputerRoomHead = (ComputerRoom_List)malloc(sizeof(ComputerRoom_Size))) {
-		ComputerRoomHead->ComputerRoom_Next = NULL;
-	}
-	ComputerRoomRead = ComputerRoomHead;
-	if ((ComputerRoom_Point))
-		do {
-			ComputerRoomPoint = (ComputerRoom_List)malloc(sizeof(ComputerRoom_Size));
-				if ((strcmp(Temp_ComputerRoom.ComputerRoom_Name, ComputerRoom_Point->ComputerRoom_Data.ComputerRoom_Name) == 0)) {
-					ComputerRoom_Point = ComputerRoom_Point->ComputerRoom_Next;//直接下一个，不读入这条
-					state = isDelete;
-				}
-				ComputerRoomPoint = ComputerRoom_Point;
-				ComputerRoomRead->ComputerRoom_Next = ComputerRoomPoint;
-				ComputerRoomRead = ComputerRoomPoint;
-			if (ComputerRoom_Point != NULL)ComputerRoom_Point = ComputerRoom_Point->ComputerRoom_Next;
-		} while (ComputerRoom_Point);
-		if (ComputerRoomRead != NULL)ComputerRoomRead->ComputerRoom_Next = NULL;
-
-		ComputerRoomPoint = ComputerRoomHead->ComputerRoom_Next;//新链表
-
+	if (ComputerRoom_Out) {
 		FP_ComputerRoom = fopen("Files\\ComputerRooms.txt", "w");
-
-		if (ComputerRoomPoint)
 			do {
-				fprintf(FP_ComputerRoom, "ComputerRoomName：%s\tState：%d\n", ComputerRoomPoint->ComputerRoom_Data.ComputerRoom_Name, ComputerRoomPoint->ComputerRoom_Data.ComputerRoom_State);
-				ComputerRoomPoint = ComputerRoomPoint->ComputerRoom_Next;
+				fprintf(FP_ComputerRoom, "ComputerRoomName：%s\tState：%d\n", ComputerRoom_Out->ComputerRoom_Data.ComputerRoom_Name, ComputerRoom_Out->ComputerRoom_Data.ComputerRoom_State);
+				ComputerRoom_Out = ComputerRoom_Out->ComputerRoom_Next;
 
-			} while (ComputerRoom_Point);
+			} while (ComputerRoom_Out);
 		fclose(FP_ComputerRoom);
-
 			if (state)MessageBox(NULL, TEXT("已删除"), TEXT("提醒！"), MB_OK | MB_ICONWARNING | MB_SETFOREGROUND);
 			else MessageBox(NULL, TEXT("查无此房"), TEXT("提醒！"), MB_OK | MB_ICONWARNING | MB_SETFOREGROUND);
+	}
 	return 1;
 }
 int Transform_Computer_Room() {	//开放|关闭机房
